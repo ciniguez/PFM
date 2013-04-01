@@ -16,7 +16,9 @@ org.eclipse.persistence.jpa.PersistenceProvider
 		<class>pfm.entidades.Rol</class>
 		<class>pfm.entidades.Descuento</class>
 		<class>pfm.entidades.DescuentoProducto</class>
-		<class>pfm.entidades.Pedido</class>
+		<class>pfm.entidades.Factura</class>
+		<class>pfm.entidades.FacturaDetalle</class>
+		<class>pfm.entidades.MedioDePago</class>
 		
 		<properties>
 

@@ -31,9 +31,9 @@ public class Usuario implements Serializable {
 	@JoinColumn
 	private Rol rol;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-	private Set<Pedido> pedidoCliente;
+	private Set<Factura> pedidoCliente;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-	private Set<Pedido> pedidoEmpleado;
+	private Set<Factura> pedidoEmpleado;
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
@@ -134,19 +134,19 @@ public class Usuario implements Serializable {
 		this.rol = rol;
 	}
 
-	public Set<Pedido> getPedidoCliente() {
+	public Set<Factura> getPedidoCliente() {
 		return pedidoCliente;
 	}
 
-	public void setPedidoCliente(Set<Pedido> pedidoCliente) {
+	public void setPedidoCliente(Set<Factura> pedidoCliente) {
 		this.pedidoCliente = pedidoCliente;
 	}
 
-	public Set<Pedido> getPedidoEmpleado() {
+	public Set<Factura> getPedidoEmpleado() {
 		return pedidoEmpleado;
 	}
 
-	public void setPedidoEmpleado(Set<Pedido> pedidoEmpleado) {
+	public void setPedidoEmpleado(Set<Factura> pedidoEmpleado) {
 		this.pedidoEmpleado = pedidoEmpleado;
 	}
 

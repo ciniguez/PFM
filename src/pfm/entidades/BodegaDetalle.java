@@ -18,10 +18,10 @@ public class BodegaDetalle implements Serializable {
 	private int cantidad;
 	private double precio;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(unique = true)
 	private Bodega bodega;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(unique = true)
 	private Producto producto;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "bodegaDetalle")
 	private DescuentoProducto descuentoProducto;

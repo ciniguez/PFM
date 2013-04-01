@@ -16,15 +16,18 @@ public class Bodega implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(unique = true)
 	private String nombre;
 	private String direccion;
 	private String telefono;
 	private boolean eliminado;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(unique = true)
 	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodega")
 	private Set<BodegaDetalle> bodegaDetalle;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodega")
+	private Set<Factura> factura;
 
 	public Bodega() {
 
@@ -95,12 +98,20 @@ public class Bodega implements Serializable {
 		this.bodegaDetalle = bodegaDetalle;
 	}
 
+	public Set<Factura> getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Set<Factura> factura) {
+		this.factura = factura;
+	}
+
 	@Override
 	public String toString() {
 		return "Bodega [id=" + id + ", nombre=" + nombre + ", direccion="
 				+ direccion + ", telefono=" + telefono + ", eliminado="
 				+ eliminado + ", agencia=" + agencia + ", bodegaDetalle="
-				+ bodegaDetalle + "]";
+				+ bodegaDetalle + ", factura=" + factura + "]";
 	}
 
 	@Override
@@ -113,6 +124,7 @@ public class Bodega implements Serializable {
 		result = prime * result
 				+ ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
+		result = prime * result + ((factura == null) ? 0 : factura.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result
@@ -145,6 +157,11 @@ public class Bodega implements Serializable {
 		} else if (!direccion.equals(other.direccion))
 			return false;
 		if (eliminado != other.eliminado)
+			return false;
+		if (factura == null) {
+			if (other.factura != null)
+				return false;
+		} else if (!factura.equals(other.factura))
 			return false;
 		if (id != other.id)
 			return false;

@@ -16,12 +16,13 @@ public class Agencia implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(unique = true)
 	private String nombre;
 	private String direccion;
 	private String telefono;
 	private boolean eliminado;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(unique = true)
 	private Empresa empresa;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
 	private Set<Bodega> bodega;

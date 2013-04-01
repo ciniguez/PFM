@@ -16,7 +16,7 @@ public class Empresa implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	@Column(name = "RAZON_SOCIAL")
+	@Column(name = "RAZON_SOCIAL", unique = true)
 	private String razonSocial;
 	private String ruc;
 	private String direccion;

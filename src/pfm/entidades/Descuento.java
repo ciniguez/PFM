@@ -15,6 +15,7 @@ public class Descuento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(unique = true)
 	private String nombre;
 	private long valor;
 	private boolean eliminado;

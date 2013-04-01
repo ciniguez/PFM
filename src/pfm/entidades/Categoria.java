@@ -16,6 +16,7 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(unique = true)
 	private String nombre;
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
