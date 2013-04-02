@@ -16,7 +16,9 @@ public class Marca implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(unique = true, nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "marca")
 	private Set<Producto> producto;

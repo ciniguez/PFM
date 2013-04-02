@@ -16,13 +16,15 @@ public class Producto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(unique = true, nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private Marca marca;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private Categoria categoria;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
 	private Set<BodegaDetalle> bodegaDetalle;

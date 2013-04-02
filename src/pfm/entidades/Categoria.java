@@ -16,8 +16,9 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
 	private Set<Producto> producto;

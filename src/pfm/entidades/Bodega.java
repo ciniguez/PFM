@@ -16,13 +16,14 @@ public class Bodega implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String nombre;
 	private String direccion;
 	private String telefono;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@ManyToOne
-	@JoinColumn(unique = true)
+	@JoinColumn(nullable = false)
 	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodega")
 	private Set<BodegaDetalle> bodegaDetalle;

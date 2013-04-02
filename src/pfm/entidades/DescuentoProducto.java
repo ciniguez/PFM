@@ -3,22 +3,31 @@ package pfm.entidades;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.eclipse.persistence.annotations.Index;
+import org.eclipse.persistence.annotations.Indexes;
+
 /**
  * Entity implementation class for Entity: DescuentoProducto
  * 
  */
 @Entity
 @Table(name = "DESCUENTO_PRODUCTO")
+@Indexes({
+		@Index(name = "FK_DESCUENTO_PRODUCTO_BODEGADETALLE_ID", columnNames = { "BODEGADETALLE_ID" }),
+		@Index(name = "FK_DESCUENTO_PRODUCTO_DESCUENTO_ID", columnNames = { "DESCUENTO_ID" }),
+		@Index(name = "UK_DESCUENTO_PRODUCTO", columnNames = {
+				"BODEGADETALLE_ID", "DESCUENTO_ID" }, unique = true) })
 public class DescuentoProducto implements Serializable {
 
 	@Id
 	private int id;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private BodegaDetalle bodegaDetalle;
 	@OneToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private Descuento descuento;
 	private static final long serialVersionUID = 1L;
 

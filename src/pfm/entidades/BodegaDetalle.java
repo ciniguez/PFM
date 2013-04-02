@@ -4,24 +4,34 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.eclipse.persistence.annotations.Index;
+import org.eclipse.persistence.annotations.Indexes;
+
 /**
  * Entity implementation class for Entity: BodegaDetalle
  * 
  */
 @Entity
 @Table(name = "BODEGA_DETALLE")
+@Indexes({
+		@Index(name = "FK_BODEGA_DETALLE_PRODUCTO_ID", columnNames = { "PRODUCTO_ID" }),
+		@Index(name = "FK_BODEGA_DETALLE_BODEGA_ID", columnNames = { "BODEGA_ID" }),
+		@Index(name = "UK_BODEGA_DETALLE", columnNames = { "BODEGA_ID",
+				"PRODUCTO_ID" }, unique = true) })
 public class BodegaDetalle implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(nullable = false)
 	private int cantidad;
+	@Column(nullable = false)
 	private double precio;
 	@ManyToOne
-	@JoinColumn(unique = true)
+	@JoinColumn(nullable = false)
 	private Bodega bodega;
 	@ManyToOne
-	@JoinColumn(unique = true)
+	@JoinColumn(nullable = false)
 	private Producto producto;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "bodegaDetalle")
 	private DescuentoProducto descuentoProducto;

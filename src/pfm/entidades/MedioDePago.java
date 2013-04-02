@@ -16,7 +16,9 @@ public class MedioDePago implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(unique = true, nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "medioDePago")
 	private Factura factura;

@@ -17,18 +17,23 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(nullable = false)
 	private String nombres;
+	@Column(nullable = false)
 	private String apellidos;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "FECHA_NACIMIENTO")
 	private Date fechaNacimiento;
 	private String direccion;
 	private String telefono;
+	@Column(unique = true, nullable = false)
 	private String username;
+	@Column(nullable = false)
 	private String password;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private Rol rol;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
 	private Set<Factura> pedidoCliente;

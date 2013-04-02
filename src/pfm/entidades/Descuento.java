@@ -15,9 +15,11 @@ public class Descuento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String nombre;
-	private long valor;
+	@Column(nullable = false)
+	private double valor;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "descuento")
 	private DescuentoProducto descuentoProducto;
@@ -27,7 +29,7 @@ public class Descuento implements Serializable {
 
 	}
 
-	public Descuento(int id, String nombre, long valor, boolean eliminado) {
+	public Descuento(int id, String nombre, double valor, boolean eliminado) {
 		this.id = id;
 		this.nombre = nombre;
 		this.valor = valor;
@@ -50,11 +52,11 @@ public class Descuento implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public long getValor() {
+	public double getValor() {
 		return this.valor;
 	}
 
-	public void setValor(long valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
@@ -92,7 +94,9 @@ public class Descuento implements Serializable {
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + (int) (valor ^ (valor >>> 32));
+		long temp;
+		temp = Double.doubleToLongBits(valor);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -119,7 +123,8 @@ public class Descuento implements Serializable {
 				return false;
 		} else if (!nombre.equals(other.nombre))
 			return false;
-		if (valor != other.valor)
+		if (Double.doubleToLongBits(valor) != Double
+				.doubleToLongBits(other.valor))
 			return false;
 		return true;
 	}

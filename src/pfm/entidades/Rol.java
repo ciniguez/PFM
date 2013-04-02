@@ -15,7 +15,9 @@ public class Rol implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(unique = true, nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
 	private Set<Usuario> usuario;

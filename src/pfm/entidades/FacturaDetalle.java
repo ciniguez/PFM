@@ -3,29 +3,44 @@ package pfm.entidades;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.eclipse.persistence.annotations.Index;
+import org.eclipse.persistence.annotations.Indexes;
+
 /**
  * Entity implementation class for Entity: PedidoDetalle
  * 
  */
 @Entity
 @Table(name = "FACTURA_DETALLE")
+@Indexes({
+		@Index(name = "FK_FACTURA_DETALLE_PRODUCTO_ID", columnNames = { "PRODUCTO_ID" }),
+		@Index(name = "FK_FACTURA_DETALLE_FACTURA_ID", columnNames = { "FACTURA_ID" }),
+		@Index(name = "UK_FACTURA_DETALLE", columnNames = { "PRODUCTO_ID",
+				"FACTURA_ID" }, unique = true) })
 public class FacturaDetalle implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	@Column(nullable = false)
 	private int cantidad;
+	@Column(nullable = false)
 	private double precio;
+	@Column(nullable = false)
 	private double subtotal;
+	@Column(nullable = false)
 	private double iva;
+	@Column(nullable = false)
 	private double descuento;
+	@Column(nullable = false)
 	private double total;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@ManyToOne
-	@JoinColumn(unique = true)
+	@JoinColumn(nullable = false)
 	private Producto producto;
 	@ManyToOne
-	@JoinColumn(unique = true)
+	@JoinColumn(nullable = false)
 	private Factura factura;
 	private static final long serialVersionUID = 1L;
 

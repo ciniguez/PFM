@@ -14,29 +14,38 @@ import javax.persistence.*;
 public class Factura implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	@Temporal(TemporalType.DATE)
+	@Column(nullable = false)
 	private Date fecha;
+	@Column(nullable = false)
 	private boolean eliminado;
+	@Column(nullable = false)
 	private double subtotal;
+	@Column(nullable = false)
 	private double iva;
+	@Column(nullable = false)
 	private double descuento;
+	@Column(nullable = false)
 	private double total;
+	@Column(nullable = false)
 	private boolean pagado;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private Usuario cliente;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private Usuario empleado;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "factura")
-	private Set<FacturaDetalle> facturaDetalle;
 	@OneToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private MedioDePago medioDePago;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private Bodega bodega;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "factura")
+	private Set<FacturaDetalle> facturaDetalle;
+
 	private static final long serialVersionUID = 1L;
 
 	public Factura() {

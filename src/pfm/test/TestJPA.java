@@ -14,7 +14,7 @@ public class TestJPA {
 			empresa.setTelefono("");
 			empresa.setDireccion("Ninguna");
 			empresa.setEliminado(false);
-			empresa.setRazonSocial("Empresa XXX-4");
+			empresa.setRazonSocial("Empresa XXX-5");
 			empresa.setRuc("1111111111111");
 			JPADAOFactory.getFactory().getJPAEmpresaDAO().create(empresa);
 		} catch (Exception ex) {
