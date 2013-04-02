@@ -11,23 +11,21 @@
 
 		<h:form prependId="false">
 
-			<p:dataTable id="dataTable" var="emp" rowKey="#{emp.id}"
-				value="#{listarEmpresa.lista}" paginator="true" rows="10"
-				filteredValue="#{emp.filteredEmps}"
+			<p:dataTable id="dataTable" var="emp" value="#{listarEmpresa.lista}"
+				paginator="true" rows="10" filteredValue="#{listarEmpresa.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 				<f:facet name="header">
             Listado de Empresas
         </f:facet>
-				<p:ajax event="rowSelect" update=":form:display"
-					oncomplete="carDialog.show()" />
-				<p:column sortBy="#{emp.id}">
+
+				<p:column sortBy="#{emp.id}" filterBy="#{emp.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
 					<h:outputText value="#{emp.id}" />
 				</p:column>
 
-				<p:column sortBy="#{emp.razonSocial}">
+				<p:column sortBy="#{emp.razonSocial}" filterBy="#{emp.razonSocial}">
 					<f:facet name="header">
 						<h:outputText value="Razon Social" />
 					</f:facet>
