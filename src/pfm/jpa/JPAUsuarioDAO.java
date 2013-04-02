@@ -9,4 +9,7 @@ public class JPAUsuarioDAO extends JPAGenericDAO<Usuario, Integer> implements
 	public JPAUsuarioDAO() {
 		super(Usuario.class);
 	}
+
+
+	
 }
