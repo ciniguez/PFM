@@ -1,7 +1,6 @@
 package pfm.beans.empresa;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -16,8 +15,8 @@ public class ListarEmpresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.empresaDAO}")
 	private EmpresaDAO empresaDAO;
-	private List<Empresa> lista = new ArrayList<Empresa>();
-	private List<Empresa> filtered = new ArrayList<Empresa>();
+	private List<Empresa> lista;
+	private List<Empresa> filtered;
 
 	public ListarEmpresa() {
 	}
@@ -44,13 +43,7 @@ public class ListarEmpresa implements Serializable {
 		this.lista = lista;
 	}
 
-	public List<Empresa> getFiltered() {
-		String[] attributes = {};
-		String[] values = {};
-		String order = "razonSocial";
-		int index = -1;
-		int size = -1;
-		setFiltered(empresaDAO.find(attributes, values, order, index, size));
+	public List<Empresa> getFiltered() {		
 		return filtered;
 	}
 

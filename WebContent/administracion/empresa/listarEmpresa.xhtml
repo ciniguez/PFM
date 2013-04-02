@@ -13,26 +13,26 @@
 
 			<p:dataTable id="dataTable" var="emp" value="#{listarEmpresa.lista}"
 				paginator="true" rows="10" filteredValue="#{listarEmpresa.filtered}"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 				<f:facet name="header">
             Listado de Empresas
         </f:facet>
 
-				<p:column sortBy="#{emp.id}" filterBy="#{emp.id}">
+				<p:column filterBy="#{emp.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
 					<h:outputText value="#{emp.id}" />
 				</p:column>
 
-				<p:column sortBy="#{emp.razonSocial}" filterBy="#{emp.razonSocial}">
+				<p:column filterBy="#{emp.razonSocial}">
 					<f:facet name="header">
 						<h:outputText value="Razon Social" />
 					</f:facet>
 					<h:outputText value="#{emp.razonSocial}" />
 				</p:column>
 
-				<p:column>
+				<p:column filterBy="#{emp.ruc}">
 					<f:facet name="header">
 						<h:outputText value="Ruc" />
 					</f:facet>
