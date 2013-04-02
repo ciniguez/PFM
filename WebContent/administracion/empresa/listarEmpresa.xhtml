@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">EMPRESA</ui:define>
+
+	<ui:define name="body">
+
+		<h:form prependId="false">
+
+			<p:dataTable id="dataTable" var="emp" rowKey="#{emp.id}"
+				value="#{listarEmpresa.lista}" paginator="true" rows="10"
+				filteredValue="#{emp.filteredEmps}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+				<f:facet name="header">
+            Listado de Empresas
+        </f:facet>
+				<p:ajax event="rowSelect" update=":form:display"
+					oncomplete="carDialog.show()" />
+				<p:column sortBy="#{emp.id}">
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{emp.id}" />
+				</p:column>
+
+				<p:column sortBy="#{emp.razonSocial}">
+					<f:facet name="header">
+						<h:outputText value="Razon Social" />
+					</f:facet>
+					<h:outputText value="#{emp.razonSocial}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Ruc" />
+					</f:facet>
+					<h:outputText value="#{emp.ruc}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Direccion" />
+					</f:facet>
+					<h:outputText value="#{emp.direccion}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Telefono" />
+					</f:facet>
+					<h:outputText value="#{emp.telefono}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Eliminado" />
+					</f:facet>
+					<h:outputText value="#{emp.eliminado}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

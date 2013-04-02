@@ -1,5 +1,7 @@
 package pfm.jpa;
 
+import javax.faces.bean.ManagedBean;
+
 import pfm.dao.AgenciaDAO;
 import pfm.dao.BodegaDAO;
 import pfm.dao.BodegaDetalleDAO;
@@ -16,64 +18,77 @@ import pfm.dao.ProductoDAO;
 import pfm.dao.RolDAO;
 import pfm.dao.UsuarioDAO;
 
-
+@ManagedBean(name = "DAOFactory")
 public class JPADAOFactory extends DAOFactory {
 
 	@Override
-	public AgenciaDAO getJPAgenciaDAO(){
+	public AgenciaDAO getAgenciaDAO() {
 		return new JPAAgenciaDAO();
 	}
+
 	@Override
-	public BodegaDAO getJPABodegaDAO(){
+	public BodegaDAO getBodegaDAO() {
 		return new JPABodegaDAO();
 	}
+
 	@Override
-	public BodegaDetalleDAO getJPABodegaDetalleDAO(){
+	public BodegaDetalleDAO getBodegaDetalleDAO() {
 		return new JPABodegaDetalleDAO();
 	}
+
 	@Override
-	public CategoriaDAO getJPACategoriaDAO(){
+	public CategoriaDAO getCategoriaDAO() {
 		return new JPACategoriaDAO();
 	}
+
 	@Override
-	public DescuentoDAO getJPADescuentoDAO(){
+	public DescuentoDAO getDescuentoDAO() {
 		return new JPADescuentoDAO();
 	}
+
 	@Override
-	public DescuentoProductoDAO getJPADescuentoProductoDAO(){
+	public DescuentoProductoDAO getDescuentoProductoDAO() {
 		return new JPADescuentoProductoDAO();
 	}
+
 	@Override
-	public EmpresaDAO getJPAEmpresaDAO(){
+	public EmpresaDAO getEmpresaDAO() {
 		return new JPAEmpresaDAO();
 	}
+
 	@Override
-	public FacturaDAO getJPAFacturaDAO(){
+	public FacturaDAO getFacturaDAO() {
 		return new JPAFacturaDAO();
 	}
+
 	@Override
-	public FacturaDetalleDAO getJPAFacturaDetalleDAO(){
+	public FacturaDetalleDAO getFacturaDetalleDAO() {
 		return new JPAFacturaDetalleDAO();
 	}
+
 	@Override
-	public MarcaDAO getJPAMarcaDAO(){
+	public MarcaDAO getMarcaDAO() {
 		return new JPAMarcaDAO();
 	}
+
 	@Override
-	public MedioPagoDAO getJPAMedioPagoDAO(){
+	public MedioPagoDAO getMedioPagoDAO() {
 		return new JPAMedioPagoDAO();
 	}
+
 	@Override
-	public ProductoDAO getJPAProductoDAO(){
+	public ProductoDAO getProductoDAO() {
 		return new JPAProductoDAO();
 	}
+
 	@Override
-	public RolDAO getJPARolDAO(){
+	public RolDAO getRolDAO() {
 		return new JPARolDAO();
 	}
+
 	@Override
-	public UsuarioDAO getJPAUsuarioDAO(){
+	public UsuarioDAO getUsuarioDAO() {
 		return new JPAUsuarioDAO();
 	}
-	
+
 }

@@ -2,8 +2,6 @@ package pfm.dao;
 
 import pfm.jpa.JPADAOFactory;
 
-
-
 public abstract class DAOFactory {
 	protected static DAOFactory factory = new JPADAOFactory();
 
@@ -11,19 +9,32 @@ public abstract class DAOFactory {
 		return factory;
 	}
 
-	public abstract AgenciaDAO getJPAgenciaDAO();
-	public abstract BodegaDAO getJPABodegaDAO();
-	public abstract BodegaDetalleDAO getJPABodegaDetalleDAO();
-	public abstract CategoriaDAO getJPACategoriaDAO();
-	public abstract DescuentoDAO getJPADescuentoDAO();
-	public abstract DescuentoProductoDAO getJPADescuentoProductoDAO();
-	public abstract EmpresaDAO getJPAEmpresaDAO();
-	public abstract FacturaDAO getJPAFacturaDAO();
-	public abstract FacturaDetalleDAO getJPAFacturaDetalleDAO();
-	public abstract MarcaDAO getJPAMarcaDAO();
-	public abstract MedioPagoDAO getJPAMedioPagoDAO();
-	public abstract ProductoDAO getJPAProductoDAO();
-	public abstract RolDAO getJPARolDAO();
-	public abstract UsuarioDAO getJPAUsuarioDAO();
+	public abstract AgenciaDAO getAgenciaDAO();
+
+	public abstract BodegaDAO getBodegaDAO();
+
+	public abstract BodegaDetalleDAO getBodegaDetalleDAO();
+
+	public abstract CategoriaDAO getCategoriaDAO();
+
+	public abstract DescuentoDAO getDescuentoDAO();
+
+	public abstract DescuentoProductoDAO getDescuentoProductoDAO();
+
+	public abstract EmpresaDAO getEmpresaDAO();
+
+	public abstract FacturaDAO getFacturaDAO();
+
+	public abstract FacturaDetalleDAO getFacturaDetalleDAO();
+
+	public abstract MarcaDAO getMarcaDAO();
+
+	public abstract MedioPagoDAO getMedioPagoDAO();
+
+	public abstract ProductoDAO getProductoDAO();
+
+	public abstract RolDAO getRolDAO();
+
+	public abstract UsuarioDAO getUsuarioDAO();
 
 }
