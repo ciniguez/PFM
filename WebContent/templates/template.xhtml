@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title><ui:insert name="title">Practica 3 (JSF)</ui:insert></title>
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/css/style.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/css/tablas.css" />
+</h:head>
+<h:body>
+	<div id="pagina">
+		<div id="banner">
+			<div id="empresa">PFM</div>
+		</div>
+		<div id="cuenta">
+			<div class="texto3"></div>
+			<div id="nav">
+				<ui:include src="menu.xhtml"></ui:include>
+			</div>
+		</div>
+		<div id="centro">
+
+			<div class="content_p">
+				<ui:insert name="body">Cuerpo</ui:insert>
+			</div>
+		</div>
+		<div id="pie">
+			<div class="texto3">
+				<ui:insert name="foot">Realizado por Carlos Iniguez (2013)</ui:insert>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>
