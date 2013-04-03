@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../administracion/templates/plantilla.xhtml">
+	<ui:define name="title">LOGIN</ui:define>
+
+	<ui:define name="body">
+
+		<h:form prependId="false">
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Usuario" />
+				<p:inputText value="#{loginUsuario.nombre}" id="txtUsuario"></p:inputText>
+				<p:message for="txtUsuario"></p:message>
+				<p:outputLabel value="Clave" />
+				<p:inputMask value="#{loginUsuario.contrasenia}" id="txtClave"/>
+				<p:message for="txtClave"></p:message>
+				<h:panelGroup/>
+				<p:commandButton id="btnLogin" value="Login" action="#{loginUsuario.procesar}"></p:commandButton>
+			</h:panelGrid>
+
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

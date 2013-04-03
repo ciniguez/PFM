@@ -1,6 +1,9 @@
 package pfm.test;
 
+import java.util.List;
+
 import pfm.entidades.Empresa;
+import pfm.entidades.Usuario;
 import pfm.jpa.JPADAOFactory;
 
 public class TestJPA {
@@ -9,6 +12,13 @@ public class TestJPA {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		//Prueba de autenticacion de Usuario
+		List<Usuario> usuarios = JPADAOFactory.getFactory().getUsuarioDAO().find(new String[]{"username", "password"}, 
+				new String[]{"admin","admin"}, null, 0, 0);
+		for (Usuario usuario : usuarios) {
+			System.out.println(usuario.getApellidos());
+		}
+		/*
 		try {
 			Empresa empresa = new Empresa();
 			empresa.setTelefono("");
@@ -20,6 +30,6 @@ public class TestJPA {
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
+		*/
 	}
-
 }
