@@ -1,4 +1,4 @@
-package pfm.beans.empresa;
+package pfm.beans.login;
 
 import java.io.Serializable;
 import java.util.List;
