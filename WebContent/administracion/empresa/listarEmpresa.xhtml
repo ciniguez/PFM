@@ -9,14 +9,22 @@
 
 	<ui:define name="body">
 
-		<h:form prependId="false">
+		<h:form id="form">		
+			<p:growl id="messages" showDetail="true" />
 
 			<p:dataTable id="dataTable" var="emp" value="#{listarEmpresa.lista}"
 				paginator="true" rows="10" filteredValue="#{listarEmpresa.filtered}"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				editable="true">
+
 				<f:facet name="header">
-            Listado de Empresas
-        </f:facet>
+            		Listado de Empresas
+        		</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{listarEmpresa.onEdit}"
+					update=":form:messages" />
+				<p:ajax event="rowEditCancel" listener="#{listarEmpresa.onCancel}"
+					update=":form:messages" />
 
 				<p:column filterBy="#{emp.id}">
 					<f:facet name="header">
@@ -29,39 +37,84 @@
 					<f:facet name="header">
 						<h:outputText value="Razon Social" />
 					</f:facet>
-					<h:outputText value="#{emp.razonSocial}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{emp.razonSocial}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{emp.razonSocial}" style="width:100%"
+								label="Razon Social" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
 				<p:column filterBy="#{emp.ruc}">
 					<f:facet name="header">
 						<h:outputText value="Ruc" />
 					</f:facet>
-					<h:outputText value="#{emp.ruc}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{emp.ruc}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{emp.ruc}" style="width:100%" label="Ruc" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Direccion" />
 					</f:facet>
-					<h:outputText value="#{emp.direccion}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{emp.direccion}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{emp.direccion}" style="width:100%"
+								label="Direccion" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Telefono" />
 					</f:facet>
-					<h:outputText value="#{emp.telefono}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{emp.telefono}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{emp.telefono}" style="width:100%"
+								label="Telefono" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<h:outputText value="#{emp.eliminado}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="Si" rendered="#{emp.eliminado}" />
+							<h:outputText value="No" rendered="#{!emp.eliminado}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{emp.eliminado}">
+								<f:selectItem itemLabel="Si" itemValue="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />								
+							</h:selectOneMenu>							
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
+				<p:column style="width:6%">
+					<p:rowEditor />
+				</p:column>
 			</p:dataTable>
-
+		<p:button href="altaEmpresa.xhtml" value="Nueva Empresa"/>
 		</h:form>
 
 

@@ -33,6 +33,14 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 			System.out.println(">>>> ERROR:JPAGenericDAO:create " + e);
 			if (em.getTransaction().isActive())
 				em.getTransaction().rollback();
+
+			try {
+				throw new Exception();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 		}
 	}
 
@@ -51,6 +59,12 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 			System.out.println(">>>> ERROR:JPAGenericDAO:update " + e);
 			if (em.getTransaction().isActive())
 				em.getTransaction().rollback();
+			try {
+				throw new Exception();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
@@ -64,6 +78,14 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 			System.out.println(">>>> ERROR:JPAGenericDAO:delete " + e);
 			if (em.getTransaction().isActive())
 				em.getTransaction().rollback();
+
+			try {
+				throw new Exception();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 		}
 	}
 
@@ -117,4 +139,5 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 		}
 
 	}
+
 }
