@@ -5,26 +5,25 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="../templates/plantilla.xhtml">
-	<ui:define name="title">Categoria</ui:define>
+	<ui:define name="title">rol</ui:define>
 
 	<ui:define name="body">
 
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item"
-				value="#{listarCategoria.lista}" paginator="true" rows="10"
-				filteredValue="#{listarCategoria.filtered}"
+			<p:dataTable id="dataTable" var="item" value="#{listarRol.lista}"
+				paginator="true" rows="10" filteredValue="#{listarRol.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true">
 
 				<f:facet name="header">
-            		Listado de Categoria
+            		Listado de Rol
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarCategoria.onEdit}"
+				<p:ajax event="rowEdit" listener="#{listarRol.onEdit}"
 					update=":form:messages" />
-				<p:ajax event="rowEditCancel" listener="#{listarCategoria.onCancel}"
+				<p:ajax event="rowEditCancel" listener="#{listarRol.onCancel}"
 					update=":form:messages" />
 
 
@@ -37,9 +36,10 @@
 					<h:outputText value="#{item.id}" />
 				</p:column>
 
+
 				<p:column filterBy="#{item.nombre}">
 					<f:facet name="header">
-						<h:outputText value="nombre" />
+						<h:outputText value="NOMBRE" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
@@ -47,7 +47,7 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{item.nombre}" style="width:100%"
-								label="nombre" />
+								label="NOMBRE" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -66,8 +66,8 @@
 						<f:facet name="input">
 							<p:selectOneMenu value="#{item.eliminado}" style="width:100px">
 								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />								
-							</p:selectOneMenu>							
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -76,7 +76,7 @@
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-			<p:button href="altaCategoria.xhtml" value="Nueva Categoria" />
+			<p:button href="altaRol.xhtml" value="Nueva rol" />
 		</h:form>
 
 
