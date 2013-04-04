@@ -23,6 +23,7 @@ public class ListarEmpresa implements Serializable {
 	private List<Empresa> filtered;
 
 	public ListarEmpresa() {
+
 	}
 
 	public EmpresaDAO getEmpresaDAO() {
