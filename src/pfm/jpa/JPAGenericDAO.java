@@ -11,6 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.eclipse.persistence.exceptions.EclipseLinkException;
+
 import pfm.dao.GenericDAO;
 
 public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
@@ -29,15 +31,13 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 		try {
 			em.persist(entity);
 			em.getTransaction().commit();
-		} catch (Exception e) {
-			System.out.println(">>>> ERROR:JPAGenericDAO:create " + e);
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-
+		} catch (EclipseLinkException e) {
 			try {
+				System.out.println(">>>> ERROR:JPAGenericDAO:create " + e);
+				if (em.getTransaction().isActive())
+					em.getTransaction().rollback();
 				throw new Exception();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
@@ -55,14 +55,13 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 		try {
 			em.merge(entity);
 			em.getTransaction().commit();
-		} catch (Exception e) {
-			System.out.println(">>>> ERROR:JPAGenericDAO:update " + e);
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
+		} catch (EclipseLinkException e) {
 			try {
+				System.out.println(">>>> ERROR:JPAGenericDAO:update " + e);
+				if (em.getTransaction().isActive())
+					em.getTransaction().rollback();
 				throw new Exception();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -74,15 +73,13 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 		try {
 			em.remove(entity);
 			em.getTransaction().commit();
-		} catch (Exception e) {
-			System.out.println(">>>> ERROR:JPAGenericDAO:delete " + e);
-			if (em.getTransaction().isActive())
-				em.getTransaction().rollback();
-
+		} catch (EclipseLinkException e) {
 			try {
+				System.out.println(">>>> ERROR:JPAGenericDAO:delete " + e);
+				if (em.getTransaction().isActive())
+					em.getTransaction().rollback();
 				throw new Exception();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
