@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">Categoria</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:dataTable id="dataTable" var="item"
+				value="#{listarCategoria.lista}" paginator="true" rows="10"
+				filteredValue="#{listarCategoria.filtered}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				editable="true">
+
+				<f:facet name="header">
+            		Listado de Categoria
+        		</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{listarCategoria.onEdit}"
+					update=":form:messages" />
+				<p:ajax event="rowEditCancel" listener="#{listarCategoria.onCancel}"
+					update=":form:messages" />
+
+
+
+
+				<p:column filterBy="#{item.id}">
+					<f:facet name="header">
+						<h:outputText value="id" />
+					</f:facet>
+					<h:outputText value="#{item.id}" />
+				</p:column>
+
+				<p:column filterBy="#{item.nombre}">
+					<f:facet name="header">
+						<h:outputText value="nombre" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{item.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{item.nombre}" style="width:100%"
+								label="nombre" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Eliminado" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="Si" rendered="#{item.eliminado}" />
+							<h:outputText value="No" rendered="#{item.eliminado}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{item.eliminado}">
+								<f:selectItem itemLabel="Si" itemValue="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:6%">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+			<p:button href="altaCategoria.xhtml" value="Nueva Categoria" />
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
