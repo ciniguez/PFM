@@ -5,59 +5,45 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="../templates/plantilla.xhtml">
-	<ui:define name="title">EMPRESA</ui:define>
+	<ui:define name="title">AGENCIA</ui:define>
 
 	<ui:define name="body">
 
-		<h:form id="form">		
+		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="emp" value="#{listarEmpresa.lista}"
-				paginator="true" rows="10" filteredValue="#{listarEmpresa.filtered}"
+			<p:dataTable id="dataTable" var="age" value="#{listarAgencia.lista}"
+				paginator="true" rows="10" filteredValue="#{listarAgencia.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true">
 
 				<f:facet name="header">
-            		Listado de Empresas
+            		Listado de Agencias
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarEmpresa.onEdit}"
+				<p:ajax event="rowEdit" listener="#{listarAgencia.onEdit}"
 					update=":form:messages" />
-				<p:ajax event="rowEditCancel" listener="#{listarEmpresa.onCancel}"
+				<p:ajax event="rowEditCancel" listener="#{listarAgencia.onCancel}"
 					update=":form:messages" />
 
-				<p:column filterBy="#{emp.id}">
+				<p:column filterBy="#{age.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{emp.id}" />
+					<h:outputText value="#{age.id}" />
 				</p:column>
 
-				<p:column filterBy="#{emp.razonSocial}">
+				<p:column filterBy="#{age.nombre}">
 					<f:facet name="header">
-						<h:outputText value="Razon Social" />
+						<h:outputText value="Nombre" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{emp.razonSocial}" />
+							<h:outputText value="#{age.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{emp.razonSocial}" style="width:100%"
-								label="Razon Social" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column filterBy="#{emp.ruc}">
-					<f:facet name="header">
-						<h:outputText value="Ruc" />
-					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{emp.ruc}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{emp.ruc}" style="width:100%" label="Ruc" />
+							<p:inputText value="#{age.nombre}" style="width:100%"
+								label="Nombre" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -68,10 +54,10 @@
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{emp.direccion}" />
+							<h:outputText value="#{age.direccion}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{emp.direccion}" style="width:100%"
+							<p:inputText value="#{age.direccion}" style="width:100%"
 								label="Direccion" />
 						</f:facet>
 					</p:cellEditor>
@@ -83,11 +69,27 @@
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{emp.telefono}" />
+							<h:outputText value="#{age.telefono}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{emp.telefono}" style="width:100%"
+							<p:inputText value="#{age.telefono}" style="width:100%"
 								label="Telefono" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{age.empresa}">
+					<f:facet name="header">
+						<h:outputText value="Empresa" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{age.empresa}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{listarAgencia.empresa}" style="width:150px">
+								<f:selectItems value="#{listarAgencia.empresas}" />
+							</p:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -98,14 +100,14 @@
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="Si" rendered="#{emp.eliminado}" />
-							<h:outputText value="No" rendered="#{!emp.eliminado}" />
+							<h:outputText value="Si" rendered="#{age.eliminado}" />
+							<h:outputText value="No" rendered="#{!age.eliminado}" />
 						</f:facet>
-						<f:facet name="input">
-							<p:selectOneMenu value="#{emp.eliminado}" style="width:100px">
+						<f:facet name="input">							
+							<p:selectOneMenu value="#{age.eliminado}" style="width:100px">
 								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />								
-							</p:selectOneMenu>							
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -114,7 +116,7 @@
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-		<p:button href="altaEmpresa.xhtml" value="Nueva Empresa"/>
+			<p:button href="altaAgencia.xhtml" value="Nueva Agencia" />
 		</h:form>
 
 

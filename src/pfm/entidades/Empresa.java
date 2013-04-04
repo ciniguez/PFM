@@ -100,9 +100,7 @@ public class Empresa implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Empresa [id=" + id + ", razonSocial=" + razonSocial + ", ruc="
-				+ ruc + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", eliminado=" + eliminado + ", agencia=" + agencia + "]";
+		return razonSocial;
 	}
 
 	@Override

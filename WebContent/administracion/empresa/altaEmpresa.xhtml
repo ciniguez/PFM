@@ -11,34 +11,38 @@
 
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
-			<h:panelGrid id="grid" columns="3" cellpadding="5">
+
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
+				<f:facet name="header">  
+        			Alta de Empresa
+        			<p:messages />
+				</f:facet>
+
 				<h:outputLabel for="razonSocial" value="Razon Social:"
 					style="font-weight:bold" />
 				<p:inputText id="razonSocial"
 					value="#{altaEmpresa.empresa.razonSocial}" required="true"
 					requiredMessage="Debe ingresar la razon social de la empresa" />
-				<p:message for="razonSocial" />
 
 				<h:outputLabel for="ruc" value="Ruc:" style="font-weight:bold" />
 				<p:inputText id="ruc" value="#{altaEmpresa.empresa.ruc}"
 					required="true"
 					requiredMessage="Debe ingresar el ruc de la empresa" />
-				<p:message for="ruc" />
 
 				<h:outputLabel for="direccion" value="Direccion"
 					style="font-weight:bold" />
 				<p:inputText id="direccion" value="#{altaEmpresa.empresa.direccion}" />
-				<p:message for="direccion" />
 
 				<h:outputLabel for="telefono" value="Telefono"
 					style="font-weight:bold" />
 				<p:inputText id="telefono" value="#{altaEmpresa.empresa.telefono}" />
-				<p:message for="telefono" />
-
-				<p:commandButton value="Aceptar" action="#{altaEmpresa.create}"
-					ajax="false" />
-				<p:button value="Cancelar" href="listarEmpresa.xhtml" />
-			</h:panelGrid>
+				
+				<f:facet name="footer">
+					<p:commandButton value="Aceptar" action="#{altaEmpresa.create}"
+						ajax="false" icon="ui-icon-check"/>
+					<p:button value="Cancelar" href="listarEmpresa.xhtml" icon="ui-icon-cancel"/>
+				</f:facet>
+			</p:panelGrid>
 
 		</h:form>
 
