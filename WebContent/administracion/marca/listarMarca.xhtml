@@ -31,7 +31,7 @@
 
 				<p:column filterBy="#{item.id}">
 					<f:facet name="header">
-						<h:outputText value="id" />
+						<h:outputText value="Id" />
 					</f:facet>
 					<h:outputText value="#{item.id}" />
 				</p:column>
@@ -39,7 +39,7 @@
 
 				<p:column filterBy="#{item.nombre}">
 					<f:facet name="header">
-						<h:outputText value="NOMBRE" />
+						<h:outputText value="Nombre" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
@@ -47,7 +47,7 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{item.nombre}" style="width:100%"
-								label="NOMBRE" />
+								label="Nombre" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>

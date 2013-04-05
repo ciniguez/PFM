@@ -11,13 +11,12 @@
 
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
-			<h:panelGrid id="grid" columns="3" cellpadding="5">
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
 
-				<h:outputLabel for="nombre" value="nombre:" style="font-weight:bold" />
+				<h:outputLabel for="nombre" value="Nombre:" style="font-weight:bold" />
 				<p:inputText id="nombre" value="#{altaProducto.producto.nombre}"
 					required="true"
 					requiredMessage="Debe ingresar el NOMBRE de la Producto" />
-				<p:message for="nombre" />
 
 				<h:outputLabel for="categoria_id" value="Categoria:"
 					style="font-weight:bold" />
@@ -27,6 +26,7 @@
 						name="itemsListCategoria" var="item" itemValue="#{item.id}"
 						itemLabel="#{item.nombre}" />
 				</p:selectOneMenu>
+		
 
 				<h:outputLabel for="marca_id" value="Marca:"
 					style="font-weight:bold" />
@@ -36,12 +36,15 @@
 						name="itemsListMarca" var="item" itemValue="#{item.id}"
 						itemLabel="#{item.nombre}" />
 				</p:selectOneMenu>
+				
 
+				<f:facet name="footer">
+					<p:commandButton value="Aceptar" action="#{altaProducto.create}"
+						ajax="false" />
+					<p:button value="Cancelar" href="listarProducto.xhtml" />
+				</f:facet>
+			</p:panelGrid>
 
-				<p:commandButton value="Aceptar" action="#{altaProducto.create}"
-					ajax="false" />
-				<p:button value="Cancelar" href="listarProducto.xhtml" />
-			</h:panelGrid>
 
 		</h:form>
 	</ui:define>
