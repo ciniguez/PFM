@@ -9,11 +9,12 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">		
+		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item" value="#{listarProducto.lista}"
-				paginator="true" rows="10" filteredValue="#{listarProducto.filtered}"
+			<p:dataTable id="dataTable" var="item"
+				value="#{listarProducto.lista}" paginator="true" rows="10"
+				filteredValue="#{listarProducto.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true">
 
@@ -21,20 +22,22 @@
             		Listado de Productos
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarProducto.onEdit}" update=":form:messages" />
-				<p:ajax event="rowEditCancel" listener="#{listarProducto.onCancel}" update=":form:messages" />
-				
-				
+				<p:ajax event="rowEdit" listener="#{listarProducto.onEdit}"
+					update=":form:messages" />
+				<p:ajax event="rowEditCancel" listener="#{listarProducto.onCancel}"
+					update=":form:messages" />
 
-		
-			<p:column filterBy="#{item.id}">
+
+
+
+				<p:column filterBy="#{item.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
 					<h:outputText value="#{item.id}" />
-			</p:column>
-			
-		
+				</p:column>
+
+
 				<p:column filterBy="#{item.nombre}">
 					<f:facet name="header">
 						<h:outputText value="Nombre" />
@@ -49,8 +52,8 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-			
-		
+
+
 				<p:column filterBy="#{item.categoria}">
 					<f:facet name="header">
 						<h:outputText value="Categoria" />
@@ -60,13 +63,15 @@
 							<h:outputText value="#{item.categoria}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.categoria}" style="width:100%"
-								label="categoriaId" />
+							<p:selectOneMenu value="#{listarProducto.categoria}"
+								style="width:150px">
+								<f:selectItems value="#{listarProducto.categorias}" />
+							</p:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-			
-		
+
+
 				<p:column filterBy="#{item.marca.id}">
 					<f:facet name="header">
 						<h:outputText value="Marca" />
@@ -76,14 +81,16 @@
 							<h:outputText value="#{item.marca}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.marca}" style="width:100%"
-								label="MARCA_ID" />
+							<p:selectOneMenu value="#{listarProducto.marca}"
+								style="width:150px">
+								<f:selectItems value="#{listarProducto.marcas}" />
+							</p:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-			
-		
-		
+
+
+
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
@@ -96,8 +103,8 @@
 						<f:facet name="input">
 							<p:selectOneMenu value="#{item.eliminado}" style="width:100px">
 								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />								
-							</p:selectOneMenu>							
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -106,7 +113,7 @@
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-		<p:button href="altaProducto.xhtml" value="Nueva Producto"/>
+			<p:button href="altaProducto.xhtml" value="Nueva Producto" />
 		</h:form>
 
 
