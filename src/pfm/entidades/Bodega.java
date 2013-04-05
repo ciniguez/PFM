@@ -109,10 +109,7 @@ public class Bodega implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Bodega [id=" + id + ", nombre=" + nombre + ", direccion="
-				+ direccion + ", telefono=" + telefono + ", eliminado="
-				+ eliminado + ", agencia=" + agencia + ", bodegaDetalle="
-				+ bodegaDetalle + ", factura=" + factura + "]";
+		return nombre;
 	}
 
 	@Override

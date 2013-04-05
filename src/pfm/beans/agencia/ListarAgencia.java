@@ -113,8 +113,7 @@ public class ListarAgencia implements Serializable {
 					String.valueOf(((Agencia) event.getObject()).getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		} catch (Exception e) {
-			System.out.println(e);
+		} catch (Exception e) {			
 			FacesMessage msg = new FacesMessage("Error",
 					"Agencia no actualizada");
 			FacesContext.getCurrentInstance().addMessage(null, msg);

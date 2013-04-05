@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">BODEGA</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:dataTable id="dataTable" var="bod" value="#{listarBodega.lista}"
+				paginator="true" rows="10" filteredValue="#{listarBodega.filtered}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				editable="true">
+
+				<f:facet name="header">
+            		Listado de Bodegas
+        		</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{listarBodega.onEdit}"
+					update=":form:messages" />
+				<p:ajax event="rowEditCancel" listener="#{listarBodega.onCancel}"
+					update=":form:messages" />
+
+				<p:column filterBy="#{bod.id}">
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{bod.id}" />
+				</p:column>
+
+				<p:column filterBy="#{bod.nombre}">
+					<f:facet name="header">
+						<h:outputText value="Nombre" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bod.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{bod.nombre}" style="width:100%"
+								label="Nombre" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Direccion" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bod.direccion}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{bod.direccion}" style="width:100%"
+								label="Direccion" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Telefono" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bod.telefono}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{bod.telefono}" style="width:100%"
+								label="Telefono" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{bod.agencia}">
+					<f:facet name="header">
+						<h:outputText value="Agencia" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bod.agencia}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{listarBodega.agencia}" style="width:150px">
+								<f:selectItems value="#{listarBodega.agencias}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Eliminado" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="Si" rendered="#{bod.eliminado}" />
+							<h:outputText value="No" rendered="#{!bod.eliminado}" />
+						</f:facet>
+						<f:facet name="input">							
+							<p:selectOneMenu value="#{bod.eliminado}" style="width:100px">
+								<f:selectItem itemLabel="Si" itemValue="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:6%">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+			<p:button href="altaBodega.xhtml" value="Nueva Bodega" />
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

@@ -99,10 +99,7 @@ public class Agencia implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Agencia [id=" + id + ", nombre=" + nombre + ", direccion="
-				+ direccion + ", telefono=" + telefono + ", eliminado="
-				+ eliminado + ", empresa=" + empresa + ", bodega=" + bodega
-				+ "]";
+		return nombre;
 	}
 
 	@Override
