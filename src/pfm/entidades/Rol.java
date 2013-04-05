@@ -67,8 +67,7 @@ public class Rol implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Rol [id=" + id + ", nombre=" + nombre + ", eliminado="
-				+ eliminado + ", usuario=" + usuario + "]";
+		return nombre;
 	}
 
 	@Override
@@ -78,7 +77,6 @@ public class Rol implements Serializable {
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
 
@@ -99,11 +97,6 @@ public class Rol implements Serializable {
 			if (other.nombre != null)
 				return false;
 		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
-				return false;
-		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
 	}

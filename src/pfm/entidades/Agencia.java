@@ -106,7 +106,6 @@ public class Agencia implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bodega == null) ? 0 : bodega.hashCode());
 		result = prime * result
 				+ ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
@@ -127,11 +126,6 @@ public class Agencia implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Agencia other = (Agencia) obj;
-		if (bodega == null) {
-			if (other.bodega != null)
-				return false;
-		} else if (!bodega.equals(other.bodega))
-			return false;
 		if (direccion == null) {
 			if (other.direccion != null)
 				return false;
@@ -159,4 +153,5 @@ public class Agencia implements Serializable {
 		return true;
 	}
 
+	
 }

@@ -189,8 +189,6 @@ public class Factura implements Serializable {
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result
 				+ ((empleado == null) ? 0 : empleado.hashCode());
-		result = prime * result
-				+ ((facturaDetalle == null) ? 0 : facturaDetalle.hashCode());
 		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + id;
 		temp = Double.doubleToLongBits(iva);
@@ -233,11 +231,6 @@ public class Factura implements Serializable {
 			if (other.empleado != null)
 				return false;
 		} else if (!empleado.equals(other.empleado))
-			return false;
-		if (facturaDetalle == null) {
-			if (other.facturaDetalle != null)
-				return false;
-		} else if (!facturaDetalle.equals(other.facturaDetalle))
 			return false;
 		if (fecha == null) {
 			if (other.fecha != null)

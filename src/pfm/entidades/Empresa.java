@@ -107,7 +107,6 @@ public class Empresa implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((agencia == null) ? 0 : agencia.hashCode());
 		result = prime * result
 				+ ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
@@ -129,11 +128,6 @@ public class Empresa implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Empresa other = (Empresa) obj;
-		if (agencia == null) {
-			if (other.agencia != null)
-				return false;
-		} else if (!agencia.equals(other.agencia))
-			return false;
 		if (direccion == null) {
 			if (other.direccion != null)
 				return false;

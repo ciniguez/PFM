@@ -60,8 +60,7 @@ public class MedioDePago implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MedioDePago [id=" + id + ", nombre=" + nombre + ", eliminado="
-				+ eliminado + ", factura=" + factura + "]";
+		return nombre;
 	}
 
 	@Override
@@ -69,7 +68,6 @@ public class MedioDePago implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (eliminado ? 1231 : 1237);
-		result = prime * result + ((factura == null) ? 0 : factura.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
@@ -85,11 +83,6 @@ public class MedioDePago implements Serializable {
 			return false;
 		MedioDePago other = (MedioDePago) obj;
 		if (eliminado != other.eliminado)
-			return false;
-		if (factura == null) {
-			if (other.factura != null)
-				return false;
-		} else if (!factura.equals(other.factura))
 			return false;
 		if (id != other.id)
 			return false;

@@ -100,10 +100,7 @@ public class Producto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", eliminado="
-				+ eliminado + ", marca=" + marca + ", categoria=" + categoria
-				+ ", bodegaDetalle=" + bodegaDetalle + ", facturaDetalle="
-				+ facturaDetalle + "]";
+		return nombre;
 	}
 
 	@Override
@@ -111,12 +108,8 @@ public class Producto implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((bodegaDetalle == null) ? 0 : bodegaDetalle.hashCode());
-		result = prime * result
 				+ ((categoria == null) ? 0 : categoria.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
-		result = prime * result
-				+ ((facturaDetalle == null) ? 0 : facturaDetalle.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
@@ -132,22 +125,12 @@ public class Producto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Producto other = (Producto) obj;
-		if (bodegaDetalle == null) {
-			if (other.bodegaDetalle != null)
-				return false;
-		} else if (!bodegaDetalle.equals(other.bodegaDetalle))
-			return false;
 		if (categoria == null) {
 			if (other.categoria != null)
 				return false;
 		} else if (!categoria.equals(other.categoria))
 			return false;
 		if (eliminado != other.eliminado)
-			return false;
-		if (facturaDetalle == null) {
-			if (other.facturaDetalle != null)
-				return false;
-		} else if (!facturaDetalle.equals(other.facturaDetalle))
 			return false;
 		if (id != other.id)
 			return false;
@@ -164,4 +147,5 @@ public class Producto implements Serializable {
 		return true;
 	}
 
+	
 }

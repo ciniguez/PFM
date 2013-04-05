@@ -118,11 +118,8 @@ public class Bodega implements Serializable {
 		int result = 1;
 		result = prime * result + ((agencia == null) ? 0 : agencia.hashCode());
 		result = prime * result
-				+ ((bodegaDetalle == null) ? 0 : bodegaDetalle.hashCode());
-		result = prime * result
 				+ ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
-		result = prime * result + ((factura == null) ? 0 : factura.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result
@@ -144,22 +141,12 @@ public class Bodega implements Serializable {
 				return false;
 		} else if (!agencia.equals(other.agencia))
 			return false;
-		if (bodegaDetalle == null) {
-			if (other.bodegaDetalle != null)
-				return false;
-		} else if (!bodegaDetalle.equals(other.bodegaDetalle))
-			return false;
 		if (direccion == null) {
 			if (other.direccion != null)
 				return false;
 		} else if (!direccion.equals(other.direccion))
 			return false;
 		if (eliminado != other.eliminado)
-			return false;
-		if (factura == null) {
-			if (other.factura != null)
-				return false;
-		} else if (!factura.equals(other.factura))
 			return false;
 		if (id != other.id)
 			return false;

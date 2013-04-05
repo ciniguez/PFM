@@ -78,19 +78,13 @@ public class Descuento implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Descuento [id=" + id + ", nombre=" + nombre + ", valor="
-				+ valor + ", eliminado=" + eliminado + ", descuentoProducto="
-				+ descuentoProducto + "]";
+		return nombre;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((descuentoProducto == null) ? 0 : descuentoProducto
-						.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
@@ -109,11 +103,6 @@ public class Descuento implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Descuento other = (Descuento) obj;
-		if (descuentoProducto == null) {
-			if (other.descuentoProducto != null)
-				return false;
-		} else if (!descuentoProducto.equals(other.descuentoProducto))
-			return false;
 		if (eliminado != other.eliminado)
 			return false;
 		if (id != other.id)

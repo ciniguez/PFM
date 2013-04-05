@@ -109,10 +109,6 @@ public class BodegaDetalle implements Serializable {
 		int result = 1;
 		result = prime * result + ((bodega == null) ? 0 : bodega.hashCode());
 		result = prime * result + cantidad;
-		result = prime
-				* result
-				+ ((descuentoProducto == null) ? 0 : descuentoProducto
-						.hashCode());
 		result = prime * result + id;
 		long temp;
 		temp = Double.doubleToLongBits(precio);
@@ -138,11 +134,6 @@ public class BodegaDetalle implements Serializable {
 			return false;
 		if (cantidad != other.cantidad)
 			return false;
-		if (descuentoProducto == null) {
-			if (other.descuentoProducto != null)
-				return false;
-		} else if (!descuentoProducto.equals(other.descuentoProducto))
-			return false;
 		if (id != other.id)
 			return false;
 		if (Double.doubleToLongBits(precio) != Double
@@ -156,4 +147,5 @@ public class BodegaDetalle implements Serializable {
 		return true;
 	}
 
+	
 }

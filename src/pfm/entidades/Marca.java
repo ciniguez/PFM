@@ -68,8 +68,7 @@ public class Marca implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Marca [id=" + id + ", nombre=" + nombre + ", eliminado="
-				+ eliminado + ", producto=" + producto + "]";
+		return nombre;
 	}
 
 	@Override
@@ -79,8 +78,6 @@ public class Marca implements Serializable {
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result
-				+ ((producto == null) ? 0 : producto.hashCode());
 		return result;
 	}
 
@@ -101,11 +98,6 @@ public class Marca implements Serializable {
 			if (other.nombre != null)
 				return false;
 		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (producto == null) {
-			if (other.producto != null)
-				return false;
-		} else if (!producto.equals(other.producto))
 			return false;
 		return true;
 	}

@@ -181,10 +181,6 @@ public class Usuario implements Serializable {
 		result = prime * result + ((nombres == null) ? 0 : nombres.hashCode());
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result
-				+ ((pedidoCliente == null) ? 0 : pedidoCliente.hashCode());
-		result = prime * result
-				+ ((pedidoEmpleado == null) ? 0 : pedidoEmpleado.hashCode());
 		result = prime * result + ((rol == null) ? 0 : rol.hashCode());
 		result = prime * result
 				+ ((telefono == null) ? 0 : telefono.hashCode());
@@ -230,16 +226,6 @@ public class Usuario implements Serializable {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
-			return false;
-		if (pedidoCliente == null) {
-			if (other.pedidoCliente != null)
-				return false;
-		} else if (!pedidoCliente.equals(other.pedidoCliente))
-			return false;
-		if (pedidoEmpleado == null) {
-			if (other.pedidoEmpleado != null)
-				return false;
-		} else if (!pedidoEmpleado.equals(other.pedidoEmpleado))
 			return false;
 		if (rol == null) {
 			if (other.rol != null)
