@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">DESCUENTO</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
+				<f:facet name="header">  
+        			Alta de Descuento
+        			<p:messages />
+				</f:facet>
+
+				<h:outputLabel for="nombre" value="Nombre:" style="font-weight:bold" />
+				<p:inputText id="nombre" value="#{altaDescuento.descuento.nombre}"
+					required="true"
+					requiredMessage="Debe ingresar el nombre del descuento" />
+
+				<h:outputLabel for="valor" value="Valor:" style="font-weight:bold" />
+				<p:inputText id="valor" value="#{altaDescuento.descuento.valor}"
+					required="true"
+					requiredMessage="Debe ingresar el valor del descuento"
+					converterMessage="Debe ingresar un valor numerico">
+					<f:convertNumber maxFractionDigits="2" />
+				</p:inputText>
+
+				<f:facet name="footer">
+					<p:commandButton value="Aceptar" action="#{altaDescuento.create}"
+						ajax="false" icon="ui-icon-check" />
+					<p:button value="Cancelar" href="listarDescuento.xhtml"
+						icon="ui-icon-cancel" />
+				</f:facet>
+			</p:panelGrid>
+
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
