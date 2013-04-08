@@ -11,6 +11,7 @@ import org.eclipse.persistence.annotations.Indexes;
  * Entity implementation class for Entity: BodegaDetalle
  * 
  */
+@NamedQuery(name = "getBodegaDetalleByBodegaAndProducto", query = "SELECT d FROM BodegaDetalle d WHERE d.producto = :producto AND d.bodega = :bodega")
 @Entity
 @Table(name = "BODEGA_DETALLE")
 @Indexes({
@@ -147,5 +148,4 @@ public class BodegaDetalle implements Serializable {
 		return true;
 	}
 
-	
 }
