@@ -28,7 +28,6 @@ public class TestJPA {
 			pr.setCategoria(JPADAOFactory.getFactory().getCategoriaDAO().read(2));
 			System.out.println(pr.toString());
 			JPADAOFactory.getFactory().getProductoDAO().update(pr);
-			System.out.println(pr.toString());
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
