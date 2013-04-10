@@ -19,8 +19,15 @@ public class ListarRol implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.rolDAO}")
 	private RolDAO rolDAO;
+	@ManagedProperty(value = "#{modificarRol}")
+	private ModificarRol modificarRolBEAN;
+	@ManagedProperty(value = "#{bajaRol}")
+	private BajaRol bajaRolBEAN;
+	@ManagedProperty(value = "#{altaRol}")
+	private AltaRol altaRolBEAN;
 	private List<Rol> lista;
 	private List<Rol> filtered;
+	private Rol[] selectedRoles;
 
 	public ListarRol() {
 
@@ -32,6 +39,30 @@ public class ListarRol implements Serializable {
 
 	public void setRolDAO(RolDAO rolDAO) {
 		this.rolDAO = rolDAO;
+	}
+
+	public ModificarRol getModificarRolBEAN() {
+		return modificarRolBEAN;
+	}
+
+	public void setModificarRolBEAN(ModificarRol modificarRolBEAN) {
+		this.modificarRolBEAN = modificarRolBEAN;
+	}
+
+	public BajaRol getBajaRolBEAN() {
+		return bajaRolBEAN;
+	}
+
+	public void setBajaRolBEAN(BajaRol bajaRolBEAN) {
+		this.bajaRolBEAN = bajaRolBEAN;
+	}
+
+	public AltaRol getAltaRolBEAN() {
+		return altaRolBEAN;
+	}
+
+	public void setAltaRolBEAN(AltaRol altaRolBEAN) {
+		this.altaRolBEAN = altaRolBEAN;
 	}
 
 	public List<Rol> getLista() {
@@ -56,22 +87,21 @@ public class ListarRol implements Serializable {
 		this.filtered = filtered;
 	}
 
-	public void onEdit(RowEditEvent event) {
-		try {
-			Rol rol = new Rol();
-			rol = (Rol) event.getObject();
-			rolDAO.update(rol);
+	public Rol[] getSelectedRoles() {
+		return selectedRoles;
+	}
 
-			FacesMessage msg = new FacesMessage("Rol actualizada",
-					String.valueOf(((Rol) event.getObject()).getId()));
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void setSelectedRoles(Rol[] selectedRoles) {
+		this.selectedRoles = selectedRoles;
+	}
 
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error",
-					"Rol no actualizada");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public String onCrear() {
+		return "crearRol";
+	}
 
-		}
+	public void onModificar(RowEditEvent event) {
+		modificarRolBEAN.setRol((Rol) event.getObject());
+		modificarRolBEAN.modificar();
 	}
 
 	public void onCancel(RowEditEvent event) {
@@ -80,5 +110,33 @@ public class ListarRol implements Serializable {
 				String.valueOf(((Rol) event.getObject()).getId()));
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public String onBaja() {
+		if (selectedRoles.length > 0) {
+			for (Rol r : selectedRoles) {
+				bajaRolBEAN.setRol(r);
+				bajaRolBEAN.baja();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas roles");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarRol";
+	}
+
+	public String onAlta() {
+		if (selectedRoles.length > 0) {
+			for (Rol r : selectedRoles) {
+				altaRolBEAN.setRol(r);
+				altaRolBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas roles");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarRol";
 	}
 }

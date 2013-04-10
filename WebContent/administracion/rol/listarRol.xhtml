@@ -5,80 +5,73 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="../templates/plantilla.xhtml">
-	<ui:define name="title">rol</ui:define>
+	<ui:define name="title">ROL</ui:define>
 
 	<ui:define name="body">
 
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item" value="#{listarRol.lista}"
+			<p:dataTable id="dataTable" var="rol" value="#{listarRol.lista}"
 				paginator="true" rows="10" filteredValue="#{listarRol.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				editable="true">
+				editable="true" selection="#{listarRol.selectedRoles}"
+				rowKey="#{rol.id}">
 
 				<f:facet name="header">
-            		Listado de Rol
+            		Listado de Roles
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarRol.onEdit}"
+				<p:ajax event="rowEdit" listener="#{listarRol.onModificar}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarRol.onCancel}"
 					update=":form:messages" />
 
+				<p:column selectionMode="multiple" style="width:2%" />
 
-
-
-				<p:column filterBy="#{item.id}">
+				<p:column filterBy="#{rol.id}">
 					<f:facet name="header">
-						<h:outputText value="id" />
+						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{item.id}" />
+					<h:outputText value="#{rol.id}" />
 				</p:column>
 
 
-				<p:column filterBy="#{item.nombre}">
+				<p:column filterBy="#{rol.nombre}">
 					<f:facet name="header">
-						<h:outputText value="NOMBRE" />
+						<h:outputText value="Nombre" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.nombre}" />
+							<h:outputText value="#{rol.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.nombre}" style="width:100%"
-								label="NOMBRE" />
+							<p:inputText value="#{rol.nombre}" style="width:100%"
+								label="Nombre" required="true"
+								requiredMessage="Debe ingresar un nombre de rol" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="Si" rendered="#{item.eliminado}" />
-							<h:outputText value="No" rendered="#{!item.eliminado}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:selectOneMenu value="#{item.eliminado}" style="width:100px">
-								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />
-							</p:selectOneMenu>
-						</f:facet>
-					</p:cellEditor>
+					<h:outputText value="Si" rendered="#{rol.eliminado}" />
+					<h:outputText value="No" rendered="#{!rol.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-			<p:button href="altaRol.xhtml" value="Nueva rol" />
+			<p:commandButton action="#{listarRol.onCrear}" value="Crear Rol"
+				ajax="false" />
+			<p:commandButton actionListener="#{listarRol.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarRol.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
 		</h:form>
-
 
 	</ui:define>
 </ui:composition>
