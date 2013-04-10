@@ -25,10 +25,17 @@ public class ListarBodega implements Serializable {
 	private BodegaDAO bodegaDAO;
 	@ManagedProperty(value = "#{DAOFactory.agenciaDAO}")
 	private AgenciaDAO agenciaDAO;
+	@ManagedProperty(value = "#{modificarBodega}")
+	private ModificarBodega modificarBodegaBEAN;
+	@ManagedProperty(value = "#{altaBodega}")
+	private AltaBodega altaBodegaBEAN;
+	@ManagedProperty(value = "#{bajaBodega}")
+	private BajaBodega bajaBodegaBEAN;
 	private List<Bodega> lista;
 	private List<Bodega> filtered;
 	private SelectItem[] agencias;
 	private String agencia;
+	private Bodega[] selectedBodegas;
 
 	public ListarBodega() {
 	}
@@ -47,6 +54,30 @@ public class ListarBodega implements Serializable {
 
 	public void setAgenciaDAO(AgenciaDAO agenciaDAO) {
 		this.agenciaDAO = agenciaDAO;
+	}
+
+	public ModificarBodega getModificarBodegaBEAN() {
+		return modificarBodegaBEAN;
+	}
+
+	public void setModificarBodegaBEAN(ModificarBodega modificarBodegaBEAN) {
+		this.modificarBodegaBEAN = modificarBodegaBEAN;
+	}
+
+	public AltaBodega getAltaBodegaBEAN() {
+		return altaBodegaBEAN;
+	}
+
+	public void setAltaBodegaBEAN(AltaBodega altaBodegaBEAN) {
+		this.altaBodegaBEAN = altaBodegaBEAN;
+	}
+
+	public BajaBodega getBajaBodegaBEAN() {
+		return bajaBodegaBEAN;
+	}
+
+	public void setBajaBodegaBEAN(BajaBodega bajaBodegaBEAN) {
+		this.bajaBodegaBEAN = bajaBodegaBEAN;
 	}
 
 	public List<Bodega> getLista() {
@@ -101,23 +132,26 @@ public class ListarBodega implements Serializable {
 		this.agencia = agencia;
 	}
 
+	public Bodega[] getSelectedBodegas() {
+		return selectedBodegas;
+	}
+
+	public void setSelectedBodegas(Bodega[] selectedBodegas) {
+		this.selectedBodegas = selectedBodegas;
+	}
+
+	public String onCrear() {
+		return "crearBodega";
+	}
+
 	public void onEdit(RowEditEvent event) {
-		try {
-			Bodega bodega = new Bodega();
-			bodega = (Bodega) event.getObject();
-			bodega.setAgencia(agenciaDAO.read(Integer.parseInt(getAgencia())));			
-			bodegaDAO.update(bodega);
 
-			FacesMessage msg = new FacesMessage("Bodega actualizada",
-					String.valueOf(((Bodega) event.getObject()).getId()));
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		} catch (Exception e) {
+		Bodega bodega = new Bodega();
+		bodega = (Bodega) event.getObject();
+		bodega.setAgencia(agenciaDAO.read(Integer.parseInt(getAgencia())));
+		modificarBodegaBEAN.setBodega(bodega);
+		modificarBodegaBEAN.modificar();
 
-			FacesMessage msg = new FacesMessage("Error",
-					"Bodega no actualizada");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-
-		}
 	}
 
 	public void onCancel(RowEditEvent event) {
@@ -126,5 +160,33 @@ public class ListarBodega implements Serializable {
 				String.valueOf(((Bodega) event.getObject()).getId()));
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public String onBaja() {
+		if (selectedBodegas.length > 0) {
+			for (Bodega b : selectedBodegas) {
+				bajaBodegaBEAN.setBodega(b);
+				bajaBodegaBEAN.baja();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas bodegas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarBodega";
+	}
+
+	public String onAlta() {
+		if (selectedBodegas.length > 0) {
+			for (Bodega b : selectedBodegas) {
+				altaBodegaBEAN.setBodega(b);
+				altaBodegaBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas bodegas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarBodega";
 	}
 }

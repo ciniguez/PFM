@@ -19,26 +19,26 @@
 				</f:facet>
 
 				<h:outputLabel for="nombre" value="Nombre:" style="font-weight:bold" />
-				<p:inputText id="nombre" value="#{altaBodega.bodega.nombre}"
+				<p:inputText id="nombre" value="#{crearBodega.bodega.nombre}"
 					required="true"
 					requiredMessage="Debe ingresar el nombre de la bodega" />
 
 				<h:outputLabel for="direccion" value="Direccion"
 					style="font-weight:bold" />
-				<p:inputText id="direccion" value="#{altaBodega.bodega.direccion}" />
+				<p:inputText id="direccion" value="#{crearBodega.bodega.direccion}" />
 
 				<h:outputLabel for="telefono" value="Telefono"
 					style="font-weight:bold" />
-				<p:inputText id="telefono" value="#{altaBodega.bodega.telefono}" />
+				<p:inputText id="telefono" value="#{crearBodega.bodega.telefono}" />
 
 				<h:outputLabel for="agencia" value="Agencia"
 					style="font-weight:bold" />
-				<p:selectOneMenu id="agencia" value="#{altaBodega.agencia}" style="width:210px">
-					<f:selectItems value="#{altaBodega.agencias}" />
+				<p:selectOneMenu id="agencia" value="#{crearBodega.agencia}" style="width:210px">
+					<f:selectItems value="#{crearBodega.agencias}" />
 				</p:selectOneMenu>
 
 				<f:facet name="footer">
-					<p:commandButton value="Aceptar" action="#{altaBodega.create}"
+					<p:commandButton value="Aceptar" action="#{crearBodega.crear}"
 						ajax="false" icon="ui-icon-check" />
 					<p:button value="Cancelar" href="listarBodega.xhtml" icon="ui-icon-cancel"/>
 				</f:facet>

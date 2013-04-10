@@ -15,7 +15,8 @@
 			<p:dataTable id="dataTable" var="bod" value="#{listarBodega.lista}"
 				paginator="true" rows="10" filteredValue="#{listarBodega.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				editable="true">
+				editable="true" selection="#{listarBodega.selectedBodegas}"
+				rowKey="#{bod.id}">
 
 				<f:facet name="header">
             		Listado de Bodegas
@@ -25,6 +26,8 @@
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarBodega.onCancel}"
 					update=":form:messages" />
+
+				<p:column selectionMode="multiple" style="width:2%" />
 
 				<p:column filterBy="#{bod.id}">
 					<f:facet name="header">
@@ -87,7 +90,8 @@
 							<h:outputText value="#{bod.agencia}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectOneMenu value="#{listarBodega.agencia}" style="width:150px">
+							<p:selectOneMenu value="#{listarBodega.agencia}"
+								style="width:150px">
 								<f:selectItems value="#{listarBodega.agencias}" />
 							</p:selectOneMenu>
 						</f:facet>
@@ -98,25 +102,20 @@
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="Si" rendered="#{bod.eliminado}" />
-							<h:outputText value="No" rendered="#{!bod.eliminado}" />
-						</f:facet>
-						<f:facet name="input">							
-							<p:selectOneMenu value="#{bod.eliminado}" style="width:100px">
-								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />
-							</p:selectOneMenu>
-						</f:facet>
-					</p:cellEditor>
+					<h:outputText value="Si" rendered="#{bod.eliminado}" />
+					<h:outputText value="No" rendered="#{!bod.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-			<p:button href="altaBodega.xhtml" value="Nueva Bodega" />
+			<p:commandButton action="#{listarBodega.onCrear}"
+				value="Crear Bodega" ajax="false" />
+			<p:commandButton actionListener="#{listarBodega.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarBodega.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
 		</h:form>
 
 
