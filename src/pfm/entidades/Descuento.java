@@ -22,10 +22,10 @@ public class Descuento implements Serializable {
 	@Column(nullable = false)
 	private double valor;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "FECHA_INICIO")
+	@Column(name = "FECHA_INICIO", nullable = false)
 	private Date fechaInicio;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "FECHA_FIN")
+	@Column(name = "FECHA_FIN", nullable = false)
 	private Date fechaFin;
 	@Column(nullable = false)
 	private boolean eliminado;

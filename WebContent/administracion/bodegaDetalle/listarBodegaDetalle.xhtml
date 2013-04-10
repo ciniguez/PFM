@@ -5,130 +5,111 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="../templates/plantilla.xhtml">
-	<ui:define name="title">BODEGA DETALLE</ui:define>
+	<ui:define name="title">PRODUCTOS POR BODEGA</ui:define>
 
 	<ui:define name="body">
+
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:panelGrid id="grid1" columns="2" cellpadding="2">
-				<p:dataTable id="dataTable1" var="bod"
-					value="#{listarBodegaDetalle.listaBodegas}" paginator="true"
-					rows="10" filteredValue="#{listarBodegaDetalle.filteredBodegas}"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-					rowKey="#{bod.id}"
-					selection="#{listarBodegaDetalle.selectedBodega}"
-					selectionMode="single">
+			<p:dataTable id="dataTable" var="bod"
+				value="#{listarBodegaDetalle.lista}" paginator="true" rows="10"
+				filteredValue="#{listarBodegaDetalle.filtered}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				editable="true"
+				selection="#{listarBodegaDetalle.selectedBodegaDetalle}"
+				rowKey="#{bod.id}">
 
-					<f:facet name="header">
-            		Seleccione una Bodega
+				<f:facet name="header">
+            		Listado de Productos por Bodega
         		</f:facet>
 
-					<p:ajax event="rowSelect"
-						listener="#{listarBodegaDetalle.onRowSelect}"
-						update=":form:messages" />
+				<p:ajax event="rowEdit" listener="#{listarBodegaDetalle.onModificar}"
+					update=":form:messages" />
+				<p:ajax event="rowEditCancel"
+					listener="#{listarBodegaDetalle.onCancel}" update=":form:messages" />
 
-					<p:column filterBy="#{bod.id}">
-						<f:facet name="header">
-							<h:outputText value="Id" />
-						</f:facet>
-						<h:outputText value="#{bod.id}" />
-					</p:column>
+				<p:column selectionMode="multiple" style="width:2%" />
 
-					<p:column filterBy="#{bod.nombre}">
-						<f:facet name="header">
-							<h:outputText value="Nombre" />
-						</f:facet>
-						<h:outputText value="#{bod.nombre}" />
-					</p:column>
-				</p:dataTable>
-
-				<p:dataTable id="dataTable2" var="pro"
-					value="#{listarBodegaDetalle.listaProductos}" paginator="true"
-					rows="10" filteredValue="#{listarBodegaDetalle.filteredProductos}"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-					rowKey="#{pro.id}"
-					selection="#{listarBodegaDetalle.selectedProducto}"
-					selectionMode="single">
-
+				<p:column filterBy="#{bod.id}">
 					<f:facet name="header">
-            			Seleccione un Producto
-        			</f:facet>
-
-					<p:ajax event="rowSelect"
-						listener="#{listarBodegaDetalle.onRowSelect}"
-						update=":form:messages" />
-
-					<p:column filterBy="#{pro.id}">
-						<f:facet name="header">
-							<h:outputText value="Id" />
-						</f:facet>
-						<h:outputText value="#{pro.id}" />
-					</p:column>
-
-					<p:column filterBy="#{pro.nombre}">
-						<f:facet name="header">
-							<h:outputText value="Nombre" />
-						</f:facet>
-						<h:outputText value="#{pro.nombre}" />
-					</p:column>
-
-					<p:column filterBy="#{pro.categoria}">
-						<f:facet name="header">
-							<h:outputText value="Categoria" />
-						</f:facet>
-						<h:outputText value="#{pro.categoria}" />
-					</p:column>
-					<p:column filterBy="#{pro.marca}">
-						<f:facet name="header">
-							<h:outputText value="Marca" />
-						</f:facet>
-						<h:outputText value="#{pro.marca}" />
-					</p:column>
-				</p:dataTable>
-				<f:facet name="footer">
-					<p:commandButton id="viewButton" value="Ver" icon="ui-icon-search"
-						update=":form:grid2"
-						actionListener="#{listarBodegaDetalle.buscarBodegaDetalle()}"									
-						oncomplete="carDialog.show()" />
-				</f:facet>
-			</p:panelGrid>
-
-			<p:dialog id="dialog" header="Producto por Bodega"
-				widgetVar="carDialog" resizable="false" showEffect="fade"
-				hideEffect="explode">
-				<p:panelGrid id="grid2" columns="2" cellpadding="5">
-					<f:facet name="header">  
-        			Producto por Bodega
-        			<p:messages />
+						<h:outputText value="Id" />
 					</f:facet>
+					<h:outputText value="#{bod.id}" />
+				</p:column>
 
-					<h:outputLabel for="cantidad" value="Cantidad:"
-						style="font-weight:bold" />
-					<p:inputText id="cantidad"
-						value="#{listarBodegaDetalle.bodegaDetalle.cantidad}"
-						required="true" requiredMessage="Debe ingresar la cantidad"
-						converterMessage="Debe ingresar una cantidad valida">
-						<f:convertNumber />
-					</p:inputText>
-
-					<h:outputLabel for="precio" value="Precio:"
-						style="font-weight:bold" />
-					<p:inputText id="precio"
-						value="#{listarBodegaDetalle.bodegaDetalle.precio}"
-						required="true" requiredMessage="Debe ingresar el precio"
-						converterMessage="Debe ingresar un precio valido">
-						<f:convertNumber maxFractionDigits="2" />
-					</p:inputText>
-
-
-					<f:facet name="footer">
-						<p:commandButton value="Aceptar"
-							actionListener="#{listarBodegaDetalle.create}" update=":form"
-							icon="ui-icon-check" />
+				<p:column filterBy="#{bod.bodega}">
+					<f:facet name="header">
+						<h:outputText value="Bodega" />
 					</f:facet>
-				</p:panelGrid>
-			</p:dialog>
+					<h:outputText value="#{bod.bodega}" />
+				</p:column>
+
+				<p:column filterBy="#{bod.producto}">
+					<f:facet name="header">
+						<h:outputText value="Producto" />
+					</f:facet>
+					<h:outputText value="#{bod.producto}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Cantidad" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bod.cantidad}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{bod.cantidad}" style="width:100%"
+								label="Cantidad" required="true"
+								requiredMessage="Debe ingresar una cantidad"
+								validatorMessage="Debe ingresar un valor numerico entero">
+								<f:convertNumber integerOnly="true" />
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Precio" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bod.precio}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{bod.precio}" style="width:100%"
+								label="Precio" required="true"
+								requiredMessage="Debe ingresar un precio"
+								converterMessage="Debe ingresar un valor decimal">
+								<f:convertNumber maxFractionDigits="2" />
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Eliminado" />
+					</f:facet>
+					<h:outputText value="Si" rendered="#{bod.eliminado}" />
+					<h:outputText value="No" rendered="#{!bod.eliminado}" />
+				</p:column>
+
+				<p:column style="width:6%">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton action="#{listarBodegaDetalle.onCrear}"
+				value="Crear Producto por Bodega" ajax="false" />
+			<p:commandButton actionListener="#{listarBodegaDetalle.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarBodegaDetalle.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
 		</h:form>
+
+
 	</ui:define>
 </ui:composition>

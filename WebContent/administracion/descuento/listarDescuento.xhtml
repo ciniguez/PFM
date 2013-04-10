@@ -16,16 +16,19 @@
 				value="#{listarDescuento.lista}" paginator="true" rows="10"
 				filteredValue="#{listarDescuento.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				editable="true">
+				editable="true" selection="#{listarDescuento.selectedDescuentos}"
+				rowKey="#{des.id}">
 
 				<f:facet name="header">
             		Listado de Descuento
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarDescuento.onEdit}"
+				<p:ajax event="rowEdit" listener="#{listarDescuento.onModificar}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarDescuento.onCancel}"
 					update=":form:messages" />
+
+				<p:column selectionMode="multiple" style="width:2%" />
 
 				<p:column filterBy="#{des.id}">
 					<f:facet name="header">
@@ -45,7 +48,8 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{des.nombre}" style="width:100%"
-								label="Nombre" />
+								label="Nombre" required="true"
+								requiredMessage="Debe ingresar un nombre" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -60,7 +64,48 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{des.valor}" style="width:100%"
-								label="Valor" />
+								label="Valor"
+								converterMessage="Debe ingresar un valor numerico decimal">
+								<f:convertNumber maxFractionDigits="2" />
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Fecha inicio" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{des.fechaInicio}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar id="fechaInicio" effect="slideDown"
+								value="#{des.fechaInicio}" style="width:100%"
+								label="Fecha inicio" required="true"
+								requiredMessage="Debe ingresar una fecha de inicio" />
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Fecha fin" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{des.fechaFin}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar id="fechaFin" effect="slideDown"
+								value="#{des.fechaFin}" style="width:100%" label="Fecha fin"
+								required="true" requiredMessage="Debe ingresar una fecha de fin" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -69,25 +114,20 @@
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="Si" rendered="#{des.eliminado}" />
-							<h:outputText value="No" rendered="#{!des.eliminado}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:selectOneMenu value="#{des.eliminado}" style="width:100px">
-								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />
-							</p:selectOneMenu>
-						</f:facet>
-					</p:cellEditor>
+					<h:outputText value="Si" rendered="#{des.eliminado}" />
+					<h:outputText value="No" rendered="#{!des.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-			<p:button href="altaDescuento.xhtml" value="Nuevo Descuento" />
+			<p:commandButton action="#{listarDescuento.onCrear}"
+				value="Crear Descuento" ajax="false" />
+			<p:commandButton actionListener="#{listarDescuento.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarDescuento.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
 		</h:form>
 
 

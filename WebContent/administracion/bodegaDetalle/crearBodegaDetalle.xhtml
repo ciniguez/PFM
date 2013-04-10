@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">PRODUCTOS POR BODEGA</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
+				<f:facet name="header">  
+        			Crear Producto por Bodega
+        			<p:messages />
+				</f:facet>
+
+				<h:outputLabel for="bodega" value="Bodega" style="font-weight:bold" />
+				<p:selectOneMenu id="bodega" value="#{crearBodegaDetalle.bodega}"
+					style="width:210px">
+					<f:selectItems value="#{crearBodegaDetalle.bodegas}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="producto" value="Producto"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="producto"
+					value="#{crearBodegaDetalle.producto}" style="width:210px">
+					<f:selectItems value="#{crearBodegaDetalle.productos}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="cantidad" value="Cantidad"
+					style="font-weight:bold" />
+				<p:inputText id="cantidad"
+					value="#{crearBodegaDetalle.bodegaDetalle.cantidad}"
+					required="true" requiredMessage="Debe ingresar la cantidad"
+					converterMessage="Debe ingresar un valor numerico entero">
+					<f:convertNumber integerOnly="true" />
+				</p:inputText>
+
+				<h:outputLabel for="precio" value="Precio" style="font-weight:bold" />
+				<p:inputText id="precio"
+					value="#{crearBodegaDetalle.bodegaDetalle.precio}" required="true"
+					requiredMessage="Debe ingresar el precio"
+					converterMessage="Debe ingresar un valor numerico decimal">
+					<f:convertNumber maxFractionDigits="2" />
+				</p:inputText>
+
+				<f:facet name="footer">
+					<p:commandButton value="Aceptar"
+						action="#{crearBodegaDetalle.crear}" ajax="false"
+						icon="ui-icon-check" />
+					<p:button value="Cancelar" href="listarBodegaDetalle.xhtml"
+						icon="ui-icon-cancel" />
+				</f:facet>
+			</p:panelGrid>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

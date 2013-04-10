@@ -144,7 +144,7 @@ public class ListarBodega implements Serializable {
 		return "crearBodega";
 	}
 
-	public void onEdit(RowEditEvent event) {
+	public void onModificar(RowEditEvent event) {
 
 		Bodega bodega = new Bodega();
 		bodega = (Bodega) event.getObject();
