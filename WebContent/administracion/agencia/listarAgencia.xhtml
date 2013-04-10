@@ -15,7 +15,8 @@
 			<p:dataTable id="dataTable" var="age" value="#{listarAgencia.lista}"
 				paginator="true" rows="10" filteredValue="#{listarAgencia.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				editable="true">
+				editable="true" rowKey="#{age.id}"
+				selection="#{listarAgencia.selectedAgencias}">
 
 				<f:facet name="header">
             		Listado de Agencias
@@ -25,6 +26,8 @@
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarAgencia.onCancel}"
 					update=":form:messages" />
+
+				<p:column selectionMode="multiple" style="width:2%" />
 
 				<p:column filterBy="#{age.id}">
 					<f:facet name="header">
@@ -43,7 +46,8 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{age.nombre}" style="width:100%"
-								label="Nombre" />
+								label="Nombre" required="true"
+								requiredMessage="Debe ingresar el nombre de la agencia" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -87,7 +91,8 @@
 							<h:outputText value="#{age.empresa}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectOneMenu value="#{listarAgencia.empresa}" style="width:150px">
+							<p:selectOneMenu value="#{listarAgencia.empresa}"
+								style="width:150px">
 								<f:selectItems value="#{listarAgencia.empresas}" />
 							</p:selectOneMenu>
 						</f:facet>
@@ -98,25 +103,20 @@
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="Si" rendered="#{age.eliminado}" />
-							<h:outputText value="No" rendered="#{!age.eliminado}" />
-						</f:facet>
-						<f:facet name="input">							
-							<p:selectOneMenu value="#{age.eliminado}" style="width:100px">
-								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />
-							</p:selectOneMenu>
-						</f:facet>
-					</p:cellEditor>
+					<h:outputText value="Si" rendered="#{age.eliminado}" />
+					<h:outputText value="No" rendered="#{!age.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-			<p:button href="altaAgencia.xhtml" value="Nueva Agencia" />
+			<p:commandButton action="#{listarAgencia.onCrear}"
+				value="Crear Agencia" ajax="false" />
+			<p:commandButton actionListener="#{listarAgencia.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarAgencia.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
 		</h:form>
 
 

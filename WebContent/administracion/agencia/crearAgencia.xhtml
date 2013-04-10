@@ -19,28 +19,31 @@
 				</f:facet>
 
 				<h:outputLabel for="nombre" value="Nombre:" style="font-weight:bold" />
-				<p:inputText id="nombre" value="#{altaAgencia.agencia.nombre}"
+				<p:inputText id="nombre" value="#{crearAgencia.agencia.nombre}"
 					required="true"
 					requiredMessage="Debe ingresar el nombre de la agencia" />
 
 				<h:outputLabel for="direccion" value="Direccion"
 					style="font-weight:bold" />
-				<p:inputText id="direccion" value="#{altaAgencia.agencia.direccion}" />
+				<p:inputText id="direccion"
+					value="#{crearAgencia.agencia.direccion}" />
 
 				<h:outputLabel for="telefono" value="Telefono"
 					style="font-weight:bold" />
-				<p:inputText id="telefono" value="#{altaAgencia.agencia.telefono}" />
+				<p:inputText id="telefono" value="#{crearAgencia.agencia.telefono}" />
 
 				<h:outputLabel for="empresa" value="Empresa:"
 					style="font-weight:bold" />
-				<p:selectOneMenu id="empresa" value="#{altaAgencia.empresa}" style="width:210px">
-					<f:selectItems value="#{altaAgencia.empresas}" />
+				<p:selectOneMenu id="empresa" value="#{crearAgencia.empresa}"
+					style="width:210px">
+					<f:selectItems value="#{crearAgencia.empresas}" />
 				</p:selectOneMenu>
 
 				<f:facet name="footer">
-					<p:commandButton value="Aceptar" action="#{altaAgencia.create}"
+					<p:commandButton value="Aceptar" action="#{crearAgencia.crear}"
 						ajax="false" icon="ui-icon-check" />
-					<p:button value="Cancelar" href="listarAgencia.xhtml" icon="ui-icon-cancel"/>
+					<p:button value="Cancelar" href="listarAgencia.xhtml"
+						icon="ui-icon-cancel" />
 				</f:facet>
 			</p:panelGrid>
 
