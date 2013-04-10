@@ -10,15 +10,15 @@ import javax.faces.context.FacesContext;
 import pfm.dao.EmpresaDAO;
 import pfm.entidades.Empresa;
 
-@ManagedBean(name = "altaEmpresa")
-public class AltaEmpresa implements Serializable {
+@ManagedBean(name = "bajaEmpresa")
+public class BajaEmpresa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.empresaDAO}")
 	private EmpresaDAO empresaDAO;
 	private Empresa empresa;
 
-	public AltaEmpresa() {
+	public BajaEmpresa() {
 	}
 
 	public EmpresaDAO getEmpresaDAO() {
@@ -37,16 +37,16 @@ public class AltaEmpresa implements Serializable {
 		this.empresa = empresa;
 	}
 
-	public String alta() {
+	public String baja() {
 		try {
-			empresa.setEliminado(false);
+			empresa.setEliminado(true);
 			getEmpresaDAO().update(empresa);
-			FacesMessage msg = new FacesMessage("Empresa dada de alta",
+			FacesMessage msg = new FacesMessage("Empresa dada de baja",
 					String.valueOf(empresa.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Error",
-					"Empresa no dada de alta");
+					"Empresa no dada de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarEmpresa";

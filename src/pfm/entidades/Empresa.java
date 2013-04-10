@@ -22,6 +22,7 @@ public class Empresa implements Serializable {
 	private String ruc;
 	private String direccion;
 	private String telefono;
+	@Column(nullable = false)
 	private double iva;
 	@Column(nullable = false)
 	private boolean eliminado;
