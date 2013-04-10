@@ -10,15 +10,15 @@ import javax.faces.context.FacesContext;
 import pfm.dao.BodegaDAO;
 import pfm.entidades.Bodega;
 
-@ManagedBean(name = "altaBodega")
-public class AltaBodega implements Serializable {
+@ManagedBean(name = "bajaBodega")
+public class BajaBodega implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.bodegaDAO}")
 	private BodegaDAO bodegaDAO;
 	private Bodega bodega;
 
-	public AltaBodega() {
+	public BajaBodega() {
 	}
 
 	public BodegaDAO getBodegaDAO() {
@@ -37,16 +37,16 @@ public class AltaBodega implements Serializable {
 		this.bodega = bodega;
 	}
 
-	public String alta() {
+	public String baja() {
 		try {
-			bodega.setEliminado(false);
+			bodega.setEliminado(true);
 			getBodegaDAO().update(bodega);
-			FacesMessage msg = new FacesMessage("Bodega dada de alta",
+			FacesMessage msg = new FacesMessage("Bodega dada de baja",
 					String.valueOf(bodega.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Error",
-					"Bodega no dada de alta");
+					"Bodega no dada de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarBodega";

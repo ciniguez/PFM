@@ -2,6 +2,9 @@ package pfm.test;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
 import pfm.entidades.Empresa;
 import pfm.entidades.Producto;
 import pfm.entidades.Usuario;
@@ -13,7 +16,7 @@ public class TestJPA {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//Prueba de autenticacion de Usuario
+		// Prueba de autenticacion de Usuario
 		/*
 		 * List<Usuario> usuarios =
 		 * JPADAOFactory.getFactory().getUsuarioDAO().find(new
@@ -21,13 +24,26 @@ public class TestJPA {
 		 * null, 0, 0); for (Usuario usuario : usuarios) {
 		 * System.out.println(usuario.getApellidos()); }
 		 */
-		//Prueba de actualizacion de Producto
+		// Prueba de actualizacion de Producto
+		/*
+		 * try { Producto pr =
+		 * JPADAOFactory.getFactory().getProductoDAO().read(1);
+		 * System.out.println(pr.toString());
+		 * pr.setCategoria(JPADAOFactory.getFactory
+		 * ().getCategoriaDAO().read(2)); System.out.println(pr.toString());
+		 * JPADAOFactory.getFactory().getProductoDAO().update(pr); } catch
+		 * (Exception ex) { System.out.println(ex); }
+		 */
+
+		//Prueba de actualizacion de empresa
 		try {
-			Producto pr = JPADAOFactory.getFactory().getProductoDAO().read(1);
-			System.out.println(pr.toString());
-			pr.setCategoria(JPADAOFactory.getFactory().getCategoriaDAO().read(2));
-			System.out.println(pr.toString());
-			JPADAOFactory.getFactory().getProductoDAO().update(pr);
+			Empresa em = JPADAOFactory.getFactory().getEmpresaDAO().read(1);
+			System.out.println(em.toString());
+			em.setIva(19.20);
+			System.out.println(em.toString());
+			JPADAOFactory.getFactory().getEmpresaDAO().update(em);
+			// EntityManager em =
+			// Persistence.createEntityManagerFactory("jpa").createEntityManager();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}

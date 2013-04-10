@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="jpa" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>pfm.entidades.FacturaDetalle</class>
-    <class>pfm.entidades.Bodega</class>
-    <class>pfm.entidades.Rol</class>
-    <class>pfm.entidades.Marca</class>
-    <class>pfm.entidades.MedioDePago</class>
-    <class>pfm.entidades.Producto</class>
-    <class>pfm.entidades.BodegaDetalle</class>
-    <class>pfm.entidades.DescuentoProducto</class>
-    <class>pfm.entidades.Agencia</class>
-    <class>pfm.entidades.Usuario</class>
-    <class>pfm.entidades.Empresa</class>
-    <class>pfm.entidades.Categoria</class>
-    <class>pfm.entidades.Factura</class>
-    <class>pfm.entidades.Descuento</class>
-    <properties>
-      <property name="eclipselink.ddl-generation" value="none" />
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="jpa" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>pfm.entidades.FacturaDetalle</class>
+		<class>pfm.entidades.Bodega</class>
+		<class>pfm.entidades.Rol</class>
+		<class>pfm.entidades.Marca</class>
+		<class>pfm.entidades.MedioDePago</class>
+		<class>pfm.entidades.Producto</class>
+		<class>pfm.entidades.BodegaDetalle</class>
+		<class>pfm.entidades.DescuentoProducto</class>
+		<class>pfm.entidades.Agencia</class>
+		<class>pfm.entidades.Usuario</class>
+		<class>pfm.entidades.Empresa</class>
+		<class>pfm.entidades.Categoria</class>
+		<class>pfm.entidades.Factura</class>
+		<class>pfm.entidades.Descuento</class>
+		<properties>
+			<property name="eclipselink.ddl-generation" value="none" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:8889/pfm" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="root" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />					
-    </properties>
-  </persistence-unit>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+		</properties>
+	</persistence-unit>
 </persistence>

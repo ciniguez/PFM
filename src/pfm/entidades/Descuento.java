@@ -2,6 +2,8 @@ package pfm.entidades;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -19,20 +21,29 @@ public class Descuento implements Serializable {
 	private String nombre;
 	@Column(nullable = false)
 	private double valor;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "FECHA_INICIO")
+	private Date fechaInicio;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "FECHA_FIN")
+	private Date fechaFin;
 	@Column(nullable = false)
 	private boolean eliminado;
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "descuento")
-	private DescuentoProducto descuentoProducto;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "descuento")
+	private Set<DescuentoProducto> descuentoProducto;
 	private static final long serialVersionUID = 1L;
 
 	public Descuento() {
 
 	}
 
-	public Descuento(int id, String nombre, double valor, boolean eliminado) {
+	public Descuento(int id, String nombre, double valor, Date fechaInicio,
+			Date fechaFin, boolean eliminado) {
 		this.id = id;
 		this.nombre = nombre;
 		this.valor = valor;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
 		this.eliminado = eliminado;
 	}
 
@@ -60,6 +71,22 @@ public class Descuento implements Serializable {
 		this.valor = valor;
 	}
 
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
 	public boolean isEliminado() {
 		return eliminado;
 	}
@@ -68,11 +95,11 @@ public class Descuento implements Serializable {
 		this.eliminado = eliminado;
 	}
 
-	public DescuentoProducto getDescuentoProducto() {
+	public Set<DescuentoProducto> getDescuentoProducto() {
 		return descuentoProducto;
 	}
 
-	public void setDescuentoProducto(DescuentoProducto descuentoProducto) {
+	public void setDescuentoProducto(Set<DescuentoProducto> descuentoProducto) {
 		this.descuentoProducto = descuentoProducto;
 	}
 
@@ -86,6 +113,10 @@ public class Descuento implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (eliminado ? 1231 : 1237);
+		result = prime * result
+				+ ((fechaFin == null) ? 0 : fechaFin.hashCode());
+		result = prime * result
+				+ ((fechaInicio == null) ? 0 : fechaInicio.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		long temp;
@@ -104,6 +135,16 @@ public class Descuento implements Serializable {
 			return false;
 		Descuento other = (Descuento) obj;
 		if (eliminado != other.eliminado)
+			return false;
+		if (fechaFin == null) {
+			if (other.fechaFin != null)
+				return false;
+		} else if (!fechaFin.equals(other.fechaFin))
+			return false;
+		if (fechaInicio == null) {
+			if (other.fechaInicio != null)
+				return false;
+		} else if (!fechaInicio.equals(other.fechaInicio))
 			return false;
 		if (id != other.id)
 			return false;

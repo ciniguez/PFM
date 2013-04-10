@@ -25,10 +25,17 @@ public class ListarAgencia implements Serializable {
 	private AgenciaDAO agenciaDAO;
 	@ManagedProperty(value = "#{DAOFactory.empresaDAO}")
 	private EmpresaDAO empresaDAO;
+	@ManagedProperty(value = "#{modificarAgencia}")
+	private ModificarAgencia modificarAgenciaBEAN;
+	@ManagedProperty(value = "#{altaAgencia}")
+	private AltaAgencia altaAgenciaBEAN;
+	@ManagedProperty(value = "#{bajaAgencia}")
+	private BajaAgencia bajaAgenciaBEAN;
 	private List<Agencia> lista;
 	private List<Agencia> filtered;
 	private SelectItem[] empresas;
 	private String empresa;
+	private Agencia[] selectedAgencias;
 
 	public ListarAgencia() {
 
@@ -48,6 +55,30 @@ public class ListarAgencia implements Serializable {
 
 	public void setEmpresaDAO(EmpresaDAO empresaDAO) {
 		this.empresaDAO = empresaDAO;
+	}
+
+	public ModificarAgencia getModificarAgenciaBEAN() {
+		return modificarAgenciaBEAN;
+	}
+
+	public void setModificarAgenciaBEAN(ModificarAgencia modificarAgenciaBEAN) {
+		this.modificarAgenciaBEAN = modificarAgenciaBEAN;
+	}
+
+	public AltaAgencia getAltaAgenciaBEAN() {
+		return altaAgenciaBEAN;
+	}
+
+	public void setAltaAgenciaBEAN(AltaAgencia altaAgenciaBEAN) {
+		this.altaAgenciaBEAN = altaAgenciaBEAN;
+	}
+
+	public BajaAgencia getBajaAgenciaBEAN() {
+		return bajaAgenciaBEAN;
+	}
+
+	public void setBajaAgenciaBEAN(BajaAgencia bajaAgenciaBEAN) {
+		this.bajaAgenciaBEAN = bajaAgenciaBEAN;
 	}
 
 	public List<Agencia> getLista() {
@@ -102,23 +133,26 @@ public class ListarAgencia implements Serializable {
 		this.empresa = empresa;
 	}
 
+	public Agencia[] getSelectedAgencias() {
+		return selectedAgencias;
+	}
+
+	public void setSelectedAgencias(Agencia[] selectedAgencias) {
+		this.selectedAgencias = selectedAgencias;
+	}
+
+	public String onCrear() {
+		return "crearAgencia";
+	}
+
 	public void onEdit(RowEditEvent event) {
 
-		try {
-			Agencia agencia = new Agencia();
-			agencia = (Agencia) event.getObject();
-			agencia.setEmpresa(empresaDAO.read(Integer.parseInt(getEmpresa())));
-			agenciaDAO.update(agencia);
-			FacesMessage msg = new FacesMessage("Agencia actualizada",
-					String.valueOf(((Agencia) event.getObject()).getId()));
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+		Agencia agencia = new Agencia();
+		agencia = (Agencia) event.getObject();
+		agencia.setEmpresa(empresaDAO.read(Integer.parseInt(getEmpresa())));
+		modificarAgenciaBEAN.setAgencia(agencia);
+		modificarAgenciaBEAN.modificar();
 
-		} catch (Exception e) {			
-			FacesMessage msg = new FacesMessage("Error",
-					"Agencia no actualizada");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-
-		}
 	}
 
 	public void onCancel(RowEditEvent event) {
@@ -129,4 +163,31 @@ public class ListarAgencia implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
+	public String onBaja() {
+		if (selectedAgencias.length > 0) {
+			for (Agencia a : selectedAgencias) {
+				bajaAgenciaBEAN.setAgencia(a);
+				bajaAgenciaBEAN.baja();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas agencias");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarEmpresa";
+	}
+
+	public String onAlta() {
+		if (selectedAgencias.length > 0) {
+			for (Agencia a : selectedAgencias) {
+				altaAgenciaBEAN.setAgencia(a);
+				altaAgenciaBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas agencias");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarEmpresa";
+	}
 }

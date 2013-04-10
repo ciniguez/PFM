@@ -9,22 +9,25 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">		
+		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
 			<p:dataTable id="dataTable" var="emp" value="#{listarEmpresa.lista}"
 				paginator="true" rows="10" filteredValue="#{listarEmpresa.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				editable="true">
+				editable="true" selection="#{listarEmpresa.selectedEmpresas}"
+				rowKey="#{emp.id}">
 
 				<f:facet name="header">
             		Listado de Empresas
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarEmpresa.onEdit}"
+				<p:ajax event="rowEdit" listener="#{listarEmpresa.onModificar}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarEmpresa.onCancel}"
 					update=":form:messages" />
+
+				<p:column selectionMode="multiple" style="width:2%" />
 
 				<p:column filterBy="#{emp.id}">
 					<f:facet name="header">
@@ -43,7 +46,8 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{emp.razonSocial}" style="width:100%"
-								label="Razon Social" />
+								label="Razon Social" required="true"
+								requiredMessage="Debe ingresar la razon social de la empresa" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -57,7 +61,25 @@
 							<h:outputText value="#{emp.ruc}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{emp.ruc}" style="width:100%" label="Ruc" />
+							<p:inputText value="#{emp.ruc}" style="width:100%" label="Ruc"
+								required="true"
+								requiredMessage="Debe ingresar el ruc de la empresa" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Iva" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{emp.iva}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{emp.iva}" style="width:100%" label="Iva"
+								required="true"
+								requiredMessage="Debe ingresar el iva de la empresa" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -96,25 +118,21 @@
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="Si" rendered="#{emp.eliminado}" />
-							<h:outputText value="No" rendered="#{!emp.eliminado}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:selectOneMenu value="#{emp.eliminado}" style="width:100px">
-								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />								
-							</p:selectOneMenu>							
-						</f:facet>
-					</p:cellEditor>
+
+					<h:outputText value="Si" rendered="#{emp.eliminado}" />
+					<h:outputText value="No" rendered="#{!emp.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-		<p:button href="altaEmpresa.xhtml" value="Nueva Empresa"/>
+			<p:commandButton action="#{listarEmpresa.onCrear}"
+				value="Crear Empresa" ajax="false" />
+			<p:commandButton actionListener="#{listarEmpresa.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarEmpresa.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
 		</h:form>
 
 

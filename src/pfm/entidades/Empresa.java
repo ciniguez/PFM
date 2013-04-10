@@ -23,6 +23,8 @@ public class Empresa implements Serializable {
 	private String direccion;
 	private String telefono;
 	@Column(nullable = false)
+	private double iva;
+	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empresa")
 	private Set<Agencia> agencia;
@@ -32,13 +34,14 @@ public class Empresa implements Serializable {
 	}
 
 	public Empresa(int id, String razonSocial, String ruc, String direccion,
-			String telefono, boolean eliminado) {
+			String telefono, double iva, boolean eliminado) {
 
 		this.id = id;
 		this.razonSocial = razonSocial;
 		this.ruc = ruc;
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.iva = iva;
 		this.eliminado = eliminado;
 	}
 
@@ -82,6 +85,14 @@ public class Empresa implements Serializable {
 		this.telefono = telefono;
 	}
 
+	public double getIva() {
+		return iva;
+	}
+
+	public void setIva(double iva) {
+		this.iva = iva;
+	}
+
 	public boolean isEliminado() {
 		return eliminado;
 	}
@@ -111,6 +122,9 @@ public class Empresa implements Serializable {
 				+ ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result + id;
+		long temp;
+		temp = Double.doubleToLongBits(iva);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result
 				+ ((razonSocial == null) ? 0 : razonSocial.hashCode());
 		result = prime * result + ((ruc == null) ? 0 : ruc.hashCode());
@@ -136,6 +150,8 @@ public class Empresa implements Serializable {
 		if (eliminado != other.eliminado)
 			return false;
 		if (id != other.id)
+			return false;
+		if (Double.doubleToLongBits(iva) != Double.doubleToLongBits(other.iva))
 			return false;
 		if (razonSocial == null) {
 			if (other.razonSocial != null)

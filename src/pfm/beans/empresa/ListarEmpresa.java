@@ -19,8 +19,15 @@ public class ListarEmpresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.empresaDAO}")
 	private EmpresaDAO empresaDAO;
+	@ManagedProperty(value = "#{modificarEmpresa}")
+	private ModificarEmpresa modificarEmpresaBEAN;
+	@ManagedProperty(value = "#{bajaEmpresa}")
+	private BajaEmpresa bajaEmpresaBEAN;
+	@ManagedProperty(value = "#{altaEmpresa}")
+	private AltaEmpresa altaEmpresaBEAN;
 	private List<Empresa> lista;
 	private List<Empresa> filtered;
+	private Empresa[] selectedEmpresas;
 
 	public ListarEmpresa() {
 
@@ -32,6 +39,30 @@ public class ListarEmpresa implements Serializable {
 
 	public void setEmpresaDAO(EmpresaDAO empresaDAO) {
 		this.empresaDAO = empresaDAO;
+	}
+
+	public ModificarEmpresa getModificarEmpresaBEAN() {
+		return modificarEmpresaBEAN;
+	}
+
+	public void setModificarEmpresaBEAN(ModificarEmpresa modificarEmpresaBEAN) {
+		this.modificarEmpresaBEAN = modificarEmpresaBEAN;
+	}
+
+	public BajaEmpresa getBajaEmpresaBEAN() {
+		return bajaEmpresaBEAN;
+	}
+
+	public void setBajaEmpresaBEAN(BajaEmpresa bajaEmpresaBEAN) {
+		this.bajaEmpresaBEAN = bajaEmpresaBEAN;
+	}
+
+	public AltaEmpresa getAltaEmpresaBEAN() {
+		return altaEmpresaBEAN;
+	}
+
+	public void setAltaEmpresaBEAN(AltaEmpresa altaEmpresaBEAN) {
+		this.altaEmpresaBEAN = altaEmpresaBEAN;
 	}
 
 	public List<Empresa> getLista() {
@@ -56,22 +87,21 @@ public class ListarEmpresa implements Serializable {
 		this.filtered = filtered;
 	}
 
-	public void onEdit(RowEditEvent event) {
-		try {
-			Empresa empresa = new Empresa();
-			empresa = (Empresa) event.getObject();
-			empresaDAO.update(empresa);
+	public Empresa[] getSelectedEmpresas() {
+		return selectedEmpresas;
+	}
 
-			FacesMessage msg = new FacesMessage("Empresa actualizada",
-					String.valueOf(((Empresa) event.getObject()).getId()));
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void setSelectedEmpresas(Empresa[] selectedEmpresas) {
+		this.selectedEmpresas = selectedEmpresas;
+	}
 
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error",
-					"Empresa no actualizada");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public String onCrear() {
+		return "crearEmpresa";
+	}
 
-		}
+	public void onModificar(RowEditEvent event) {
+		modificarEmpresaBEAN.setEmpresa((Empresa) event.getObject());
+		modificarEmpresaBEAN.modificar();
 	}
 
 	public void onCancel(RowEditEvent event) {
@@ -80,5 +110,33 @@ public class ListarEmpresa implements Serializable {
 				String.valueOf(((Empresa) event.getObject()).getId()));
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public String onBaja() {
+		if (selectedEmpresas.length > 0) {
+			for (Empresa e : selectedEmpresas) {
+				bajaEmpresaBEAN.setEmpresa(e);
+				bajaEmpresaBEAN.baja();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas empresas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarEmpresa";
+	}
+
+	public String onAlta() {
+		if (selectedEmpresas.length > 0) {
+			for (Empresa e : selectedEmpresas) {
+				altaEmpresaBEAN.setEmpresa(e);
+				altaEmpresaBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas empresas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarEmpresa";
 	}
 }
