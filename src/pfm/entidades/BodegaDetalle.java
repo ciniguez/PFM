@@ -28,14 +28,14 @@ public class BodegaDetalle implements Serializable {
 	private int cantidad;
 	@Column(nullable = false)
 	private double precio;
+	@Column(nullable = false)
+	private boolean eliminado;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Bodega bodega;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Producto producto;
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "bodegaDetalle")
-	private DescuentoProducto descuentoProducto;
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,10 +43,11 @@ public class BodegaDetalle implements Serializable {
 
 	}
 
-	public BodegaDetalle(int id, int cantidad, double precio) {
+	public BodegaDetalle(int id, int cantidad, double precio, boolean eliminado) {
 		this.id = id;
 		this.cantidad = cantidad;
 		this.precio = precio;
+		this.eliminado = eliminado;
 	}
 
 	public int getId() {
@@ -73,6 +74,14 @@ public class BodegaDetalle implements Serializable {
 		this.precio = precio;
 	}
 
+	public boolean isEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(boolean eliminado) {
+		this.eliminado = eliminado;
+	}
+
 	public Bodega getBodega() {
 		return bodega;
 	}
@@ -89,19 +98,11 @@ public class BodegaDetalle implements Serializable {
 		this.producto = producto;
 	}
 
-	public DescuentoProducto getDescuentoProducto() {
-		return descuentoProducto;
-	}
-
-	public void setDescuentoProducto(DescuentoProducto descuentoProducto) {
-		this.descuentoProducto = descuentoProducto;
-	}
-
 	@Override
 	public String toString() {
 		return "BodegaDetalle [id=" + id + ", cantidad=" + cantidad
-				+ ", precio=" + precio + ", bodega=" + bodega + ", producto="
-				+ producto + ", descuentoProducto=" + descuentoProducto + "]";
+				+ ", precio=" + precio + ", eliminado=" + eliminado
+				+ ", bodega=" + bodega + ", producto=" + producto + "]";
 	}
 
 	@Override
@@ -110,6 +111,7 @@ public class BodegaDetalle implements Serializable {
 		int result = 1;
 		result = prime * result + ((bodega == null) ? 0 : bodega.hashCode());
 		result = prime * result + cantidad;
+		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result + id;
 		long temp;
 		temp = Double.doubleToLongBits(precio);
@@ -134,6 +136,8 @@ public class BodegaDetalle implements Serializable {
 		} else if (!bodega.equals(other.bodega))
 			return false;
 		if (cantidad != other.cantidad)
+			return false;
+		if (eliminado != other.eliminado)
 			return false;
 		if (id != other.id)
 			return false;

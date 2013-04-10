@@ -13,20 +13,21 @@ import org.eclipse.persistence.annotations.Indexes;
 @Entity
 @Table(name = "DESCUENTO_PRODUCTO")
 @Indexes({
-		@Index(name = "FK_DESCUENTO_PRODUCTO_BODEGADETALLE_ID", columnNames = { "BODEGADETALLE_ID" }),
+		@Index(name = "FK_DESCUENTO_PRODUCTO_PRODUCTO_ID", columnNames = { "PRODUCTO_ID" }),
 		@Index(name = "FK_DESCUENTO_PRODUCTO_DESCUENTO_ID", columnNames = { "DESCUENTO_ID" }),
 		@Index(name = "UK_DESCUENTO_PRODUCTO", columnNames = {
-				"BODEGADETALLE_ID", "DESCUENTO_ID" }, unique = true) })
+				"PRODUCTO_ID", "DESCUENTO_ID" }, unique = true) })
 public class DescuentoProducto implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	@Column(nullable = false)
 	private boolean eliminado;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(nullable = false)
-	private BodegaDetalle bodegaDetalle;
-	@OneToOne
+	private Producto producto;
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Descuento descuento;
 	private static final long serialVersionUID = 1L;
@@ -47,12 +48,20 @@ public class DescuentoProducto implements Serializable {
 		this.id = id;
 	}
 
-	public BodegaDetalle getBodegaDetalle() {
-		return bodegaDetalle;
+	public boolean isEliminado() {
+		return eliminado;
 	}
 
-	public void setBodegaDetalle(BodegaDetalle bodegaDetalle) {
-		this.bodegaDetalle = bodegaDetalle;
+	public void setEliminado(boolean eliminado) {
+		this.eliminado = eliminado;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
 	}
 
 	public Descuento getDescuento() {
@@ -63,19 +72,10 @@ public class DescuentoProducto implements Serializable {
 		this.descuento = descuento;
 	}
 
-	public boolean isEliminado() {
-		return eliminado;
-	}
-
-	public void setEliminado(boolean eliminado) {
-		this.eliminado = eliminado;
-	}
-
 	@Override
 	public String toString() {
 		return "DescuentoProducto [id=" + id + ", eliminado=" + eliminado
-				+ ", bodegaDetalle=" + bodegaDetalle + ", descuento="
-				+ descuento + "]";
+				+ ", producto=" + producto + ", descuento=" + descuento + "]";
 	}
 
 	@Override
@@ -83,11 +83,11 @@ public class DescuentoProducto implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((bodegaDetalle == null) ? 0 : bodegaDetalle.hashCode());
-		result = prime * result
 				+ ((descuento == null) ? 0 : descuento.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result + id;
+		result = prime * result
+				+ ((producto == null) ? 0 : producto.hashCode());
 		return result;
 	}
 
@@ -100,11 +100,6 @@ public class DescuentoProducto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		DescuentoProducto other = (DescuentoProducto) obj;
-		if (bodegaDetalle == null) {
-			if (other.bodegaDetalle != null)
-				return false;
-		} else if (!bodegaDetalle.equals(other.bodegaDetalle))
-			return false;
 		if (descuento == null) {
 			if (other.descuento != null)
 				return false;
@@ -113,6 +108,11 @@ public class DescuentoProducto implements Serializable {
 		if (eliminado != other.eliminado)
 			return false;
 		if (id != other.id)
+			return false;
+		if (producto == null) {
+			if (other.producto != null)
+				return false;
+		} else if (!producto.equals(other.producto))
 			return false;
 		return true;
 	}

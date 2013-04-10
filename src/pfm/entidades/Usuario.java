@@ -27,6 +27,8 @@ public class Usuario implements Serializable {
 	private String direccion;
 	private String telefono;
 	@Column(unique = true, nullable = false)
+	private String email;
+	@Column(unique = true, nullable = false)
 	private String username;
 	@Column(nullable = false)
 	private String password;
@@ -36,9 +38,9 @@ public class Usuario implements Serializable {
 	@JoinColumn(nullable = false)
 	private Rol rol;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-	private Set<Factura> pedidoCliente;
+	private Set<Factura> facturaCliente;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-	private Set<Factura> pedidoEmpleado;
+	private Set<Factura> facturaEmpleado;
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
@@ -47,13 +49,14 @@ public class Usuario implements Serializable {
 
 	public Usuario(int id, String nombres, String apellidos,
 			Date fechaNacimiento, String direccion, String telefono,
-			String username, String password, boolean eliminado) {
+			String email, String username, String password, boolean eliminado) {
 		this.id = id;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.fechaNacimiento = fechaNacimiento;
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.eliminado = eliminado;
@@ -107,6 +110,14 @@ public class Usuario implements Serializable {
 		this.telefono = telefono;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getUsername() {
 		return this.username;
 	}
@@ -139,31 +150,25 @@ public class Usuario implements Serializable {
 		this.rol = rol;
 	}
 
-	public Set<Factura> getPedidoCliente() {
-		return pedidoCliente;
+	public Set<Factura> getFacturaCliente() {
+		return facturaCliente;
 	}
 
-	public void setPedidoCliente(Set<Factura> pedidoCliente) {
-		this.pedidoCliente = pedidoCliente;
+	public void setFacturaCliente(Set<Factura> facturaCliente) {
+		this.facturaCliente = facturaCliente;
 	}
 
-	public Set<Factura> getPedidoEmpleado() {
-		return pedidoEmpleado;
+	public Set<Factura> getFacturaEmpleado() {
+		return facturaEmpleado;
 	}
 
-	public void setPedidoEmpleado(Set<Factura> pedidoEmpleado) {
-		this.pedidoEmpleado = pedidoEmpleado;
+	public void setFacturaEmpleado(Set<Factura> facturaEmpleado) {
+		this.facturaEmpleado = facturaEmpleado;
 	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombres=" + nombres + ", apellidos="
-				+ apellidos + ", fechaNacimiento=" + fechaNacimiento
-				+ ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", username=" + username + ", password=" + password
-				+ ", eliminado=" + eliminado + ", rol=" + rol
-				+ ", pedidoCliente=" + pedidoCliente + ", pedidoEmpleado="
-				+ pedidoEmpleado + "]";
+		return username;
 	}
 
 	@Override
@@ -175,6 +180,7 @@ public class Usuario implements Serializable {
 		result = prime * result
 				+ ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
 		result = prime * result + id;
@@ -209,6 +215,11 @@ public class Usuario implements Serializable {
 		} else if (!direccion.equals(other.direccion))
 			return false;
 		if (eliminado != other.eliminado)
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
 			return false;
 		if (fechaNacimiento == null) {
 			if (other.fechaNacimiento != null)

@@ -30,6 +30,8 @@ public class Producto implements Serializable {
 	private Set<BodegaDetalle> bodegaDetalle;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
 	private Set<FacturaDetalle> facturaDetalle;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+	private Set<DescuentoProducto> descuentoProducto;
 	private static final long serialVersionUID = 1L;
 
 	public Producto() {
@@ -147,5 +149,4 @@ public class Producto implements Serializable {
 		return true;
 	}
 
-	
 }

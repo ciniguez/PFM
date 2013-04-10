@@ -2,6 +2,9 @@ package pfm.test;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
 import pfm.entidades.Empresa;
 import pfm.entidades.Producto;
 import pfm.entidades.Usuario;
@@ -22,12 +25,13 @@ public class TestJPA {
 		 * System.out.println(usuario.getApellidos()); }
 		 */
 		//Prueba de actualizacion de Producto
-		try {
+		try {/*
 			Producto pr = JPADAOFactory.getFactory().getProductoDAO().read(1);
 			System.out.println(pr.toString());
 			pr.setCategoria(JPADAOFactory.getFactory().getCategoriaDAO().read(2));
 			System.out.println(pr.toString());
-			JPADAOFactory.getFactory().getProductoDAO().update(pr);
+			JPADAOFactory.getFactory().getProductoDAO().update(pr);*/
+			EntityManager em = Persistence.createEntityManagerFactory("jpa").createEntityManager();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}

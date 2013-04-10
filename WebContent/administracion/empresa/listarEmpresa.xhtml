@@ -9,7 +9,7 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">		
+		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
 			<p:dataTable id="dataTable" var="emp" value="#{listarEmpresa.lista}"
@@ -104,8 +104,8 @@
 						<f:facet name="input">
 							<p:selectOneMenu value="#{emp.eliminado}" style="width:100px">
 								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />								
-							</p:selectOneMenu>							
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -114,7 +114,10 @@
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-		<p:button href="altaEmpresa.xhtml" value="Nueva Empresa"/>
+			<p:button href="altaEmpresa.xhtml" value="Nueva Empresa" />
+			<p:button href="bajaEmpresa.xhtml" value="Baja de Empresa">
+				<f:param name="id" value="enlace" />
+			</p:button>
 		</h:form>
 
 
