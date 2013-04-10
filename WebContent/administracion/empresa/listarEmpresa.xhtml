@@ -127,7 +127,8 @@
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-			<p:button href="crearEmpresa.xhtml" value="Crear Empresa" />
+			<p:commandButton action="#{listarEmpresa.onCrear}"
+				value="Crear Empresa" ajax="false" />
 			<p:commandButton actionListener="#{listarEmpresa.onBaja}"
 				update=":form :form:messages" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarEmpresa.onAlta}"

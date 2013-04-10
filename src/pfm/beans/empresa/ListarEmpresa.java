@@ -95,6 +95,10 @@ public class ListarEmpresa implements Serializable {
 		this.selectedEmpresas = selectedEmpresas;
 	}
 
+	public String onCrear() {
+		return "crearEmpresa";
+	}
+
 	public void onModificar(RowEditEvent event) {
 		modificarEmpresaBEAN.setEmpresa((Empresa) event.getObject());
 		modificarEmpresaBEAN.modificar();
