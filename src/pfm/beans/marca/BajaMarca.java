@@ -10,15 +10,15 @@ import javax.faces.context.FacesContext;
 import pfm.dao.MarcaDAO;
 import pfm.entidades.Marca;
 
-@ManagedBean(name = "altaMarca")
-public class AltaMarca implements Serializable {
+@ManagedBean(name = "bajaMarca")
+public class BajaMarca implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.marcaDAO}")
 	private MarcaDAO marcaDAO;
 	private Marca marca;
 
-	public AltaMarca() {
+	public BajaMarca() {
 	}
 
 	public MarcaDAO getMarcaDAO() {
@@ -37,16 +37,16 @@ public class AltaMarca implements Serializable {
 		this.marca = marca;
 	}
 
-	public String alta() {
+	public String baja() {
 		try {
-			marca.setEliminado(false);
+			marca.setEliminado(true);
 			getMarcaDAO().update(marca);
-			FacesMessage msg = new FacesMessage("Marca dada de alta",
+			FacesMessage msg = new FacesMessage("Marca dada de baja",
 					String.valueOf(marca.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Error",
-					"Marca no dada de alta");
+					"Marca no dada de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarMarca";

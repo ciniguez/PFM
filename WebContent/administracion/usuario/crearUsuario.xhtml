@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">USUARIO</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
+				<f:facet name="header">  
+        			Crear de Usuario
+        			<p:messages />
+				</f:facet>
+
+
+				<h:outputLabel for="apellidos" value="Apellidos:"
+					style="font-weight:bold" />
+				<p:inputText id="apellidos"
+					value="#{crearUsuario.usuario.apellidos}" required="true"
+					requiredMessage="Debe ingresar el APELLIDOS de la Usuario" />
+
+				<h:outputLabel for="direccion" value="Direccion:"
+					style="font-weight:bold" />
+				<p:inputText id="direccion"
+					value="#{crearUsuario.usuario.direccion}" required="true"
+					requiredMessage="Debe ingresar el DIRECCION de la Usuario" />
+
+
+				<h:outputLabel for="email" value="Email:" style="font-weight:bold" />
+				<p:inputText id="email" value="#{crearUsuario.usuario.email}"
+					required="true"
+					requiredMessage="Debe ingresar el EMAIL de la Usuario" />
+
+				<h:outputLabel for="fecha_nacimiento" value="Fecha Nacimiento:"
+					style="font-weight:bold" />
+				<p:inputText id="fecha_nacimiento"
+					value="#{crearUsuario.usuario.fechaNacimiento}" required="true"
+					requiredMessage="Debe ingresar el FECHA_NACIMIENTO de la Usuario" />
+
+				<h:outputLabel for="nombres" value="Nombres:"
+					style="font-weight:bold" />
+				<p:inputText id="nombres" value="#{crearUsuario.usuario.nombres}"
+					required="true"
+					requiredMessage="Debe ingresar el NOMBRES de la Usuario" />
+
+				<h:outputLabel for="password" value="Clave:"
+					style="font-weight:bold" />
+				<p:inputText id="password" value="#{crearUsuario.usuario.password}"
+					required="true"
+					requiredMessage="Debe ingresar el PASSWORD de la Usuario" />
+
+				<h:outputLabel for="telefono" value="Telefono:"
+					style="font-weight:bold" />
+				<p:inputText id="telefono" value="#{crearUsuario.usuario.telefono}"
+					required="true"
+					requiredMessage="Debe ingresar el TELEFONO de la Usuario" />
+
+				<h:outputLabel for="username" value="Nombre de Usuario:"
+					style="font-weight:bold" />
+				<p:inputText id="username" value="#{crearUsuario.usuario.username}"
+					required="true"
+					requiredMessage="Debe ingresar el USERNAME de la Usuario" />
+
+				<h:outputLabel for="rol_id" value="Rol:"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="rol_id" value="#{crearUsuario.rol}"
+					style="width:210px">
+					<f:selectItems value="#{crearUsuario.roles}" />
+				</p:selectOneMenu>
+
+
+				<f:facet name="footer">
+					<p:commandButton value="Aceptar" action="#{crearUsuario.crear}"
+						ajax="false" icon="ui-icon-check" />
+					<p:button value="Cancelar" href="listarUsuario.xhtml"
+						icon="ui-icon-cancel" />
+				</f:facet>
+			</p:panelGrid>
+
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
+

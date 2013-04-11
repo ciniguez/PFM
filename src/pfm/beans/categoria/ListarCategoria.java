@@ -19,8 +19,15 @@ public class ListarCategoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.categoriaDAO}")
 	private CategoriaDAO categoriaDAO;
+	@ManagedProperty(value = "#{modificarCategoria}")
+	private ModificarCategoria modificarCategoriaBEAN;
+	@ManagedProperty(value = "#{bajaCategoria}")
+	private BajaCategoria bajaCategoriaBEAN;
+	@ManagedProperty(value = "#{altaCategoria}")
+	private AltaCategoria altaCategoriaBEAN;
 	private List<Categoria> lista;
 	private List<Categoria> filtered;
+	private Categoria[] selectedCategorias;
 
 	public ListarCategoria() {
 
@@ -30,8 +37,32 @@ public class ListarCategoria implements Serializable {
 		return categoriaDAO;
 	}
 
-	public void setCategoriaDAO(CategoriaDAO CategoriaDAO) {
-		this.categoriaDAO = CategoriaDAO;
+	public void setCategoriaDAO(CategoriaDAO categoriaDAO) {
+		this.categoriaDAO = categoriaDAO;
+	}
+
+	public ModificarCategoria getModificarCategoriaBEAN() {
+		return modificarCategoriaBEAN;
+	}
+
+	public void setModificarCategoriaBEAN(ModificarCategoria modificarCategoriaBEAN) {
+		this.modificarCategoriaBEAN = modificarCategoriaBEAN;
+	}
+
+	public BajaCategoria getBajaCategoriaBEAN() {
+		return bajaCategoriaBEAN;
+	}
+
+	public void setBajaCategoriaBEAN(BajaCategoria bajaCategoriaBEAN) {
+		this.bajaCategoriaBEAN = bajaCategoriaBEAN;
+	}
+
+	public AltaCategoria getAltaCategoriaBEAN() {
+		return altaCategoriaBEAN;
+	}
+
+	public void setAltaCategoriaBEAN(AltaCategoria altaCategoriaBEAN) {
+		this.altaCategoriaBEAN = altaCategoriaBEAN;
 	}
 
 	public List<Categoria> getLista() {
@@ -56,22 +87,21 @@ public class ListarCategoria implements Serializable {
 		this.filtered = filtered;
 	}
 
-	public void onEdit(RowEditEvent event) {
-		try {
-			Categoria Categoria = new Categoria();
-			Categoria = (Categoria) event.getObject();
-			categoriaDAO.update(Categoria);
+	public Categoria[] getSelectedCategorias() {
+		return selectedCategorias;
+	}
 
-			FacesMessage msg = new FacesMessage("Categoria actualizada",
-					String.valueOf(((Categoria) event.getObject()).getId()));
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void setSelectedCategorias(Categoria[] selectedCategorias) {
+		this.selectedCategorias = selectedCategorias;
+	}
 
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error",
-					"Categoria no actualizada");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public String onCrear() {
+		return "crearCategoria";
+	}
 
-		}
+	public void onModificar(RowEditEvent event) {
+		modificarCategoriaBEAN.setCategoria((Categoria) event.getObject());
+		modificarCategoriaBEAN.modificar();
 	}
 
 	public void onCancel(RowEditEvent event) {
@@ -80,5 +110,33 @@ public class ListarCategoria implements Serializable {
 				String.valueOf(((Categoria) event.getObject()).getId()));
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public String onBaja() {
+		if (selectedCategorias.length > 0) {
+			for (Categoria e : selectedCategorias) {
+				bajaCategoriaBEAN.setCategoria(e);
+				bajaCategoriaBEAN.baja();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas categorias");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarCategoria";
+	}
+
+	public String onAlta() {
+		if (selectedCategorias.length > 0) {
+			for (Categoria e : selectedCategorias) {
+				altaCategoriaBEAN.setCategoria(e);
+				altaCategoriaBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas categorias");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarCategoria";
 	}
 }

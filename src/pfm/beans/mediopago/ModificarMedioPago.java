@@ -10,15 +10,15 @@ import javax.faces.context.FacesContext;
 import pfm.dao.MedioPagoDAO;
 import pfm.entidades.MedioDePago;
 
-@ManagedBean(name = "altaMedioPago")
-public class AltaMedioPago implements Serializable {
+@ManagedBean(name = "modificarMedioPago")
+public class ModificarMedioPago implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.medioPagoDAO}")
 	private MedioPagoDAO medioPagoDAO;
 	private MedioDePago medioPago;
 
-	public AltaMedioPago() {
+	public ModificarMedioPago() {
 	}
 
 	public MedioPagoDAO getMedioPagoDAO() {
@@ -37,14 +37,13 @@ public class AltaMedioPago implements Serializable {
 		this.medioPago = medioPago;
 	}
 
-	public String alta() {
+	public String modificar() {
 		try {
-			medioPago.setEliminado(false);
 			getMedioPagoDAO().update(medioPago);
-			FacesMessage msg = new FacesMessage("MedioPago dada de alta", String.valueOf(medioPago.getId()));
+			FacesMessage msg = new FacesMessage("MedioPago actualizada", String.valueOf(medioPago.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error", "MedioPago no dada de alta");
+			FacesMessage msg = new FacesMessage("Error", "MedioPago no actualizada");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarMedioPago";

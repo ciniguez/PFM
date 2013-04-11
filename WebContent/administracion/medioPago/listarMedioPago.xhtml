@@ -5,38 +5,45 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="../templates/plantilla.xhtml">
-	<ui:define name="title">Medios de Pago</ui:define>
+	<ui:define name="title">MEDIO DE PAGO</ui:define>
 
 	<ui:define name="body">
 
-		<h:form id="form">		
+		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item" value="#{listarMedioPago.lista}"
-				paginator="true" rows="10" filteredValue="#{listarMedioPago.filtered}"
+			<p:dataTable id="dataTable" var="item"
+				value="#{listarMedioPago.lista}" paginator="true" rows="10"
+				filteredValue="#{listarMedioPago.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				editable="true">
+				editable="true" selection="#{listarMedioPago.selectedMedioPagos}"
+				rowKey="#{item.id}">
 
 				<f:facet name="header">
-            		Listado de Medio de Pago
+            		Listado de Medios de Pago
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarMedioPago.onEdit}" update=":form:messages" />
-				<p:ajax event="rowEditCancel" listener="#{listarMedioPago.onCancel}" update=":form:messages" />
-				
-				
+				<p:ajax event="rowEdit" listener="#{listarMedioPago.onModificar}"
+					update=":form:messages" />
+				<p:ajax event="rowEditCancel" listener="#{listarMedioPago.onCancel}"
+					update=":form:messages" />
 
-		
-			<p:column filterBy="#{item.id}">
+				<p:column selectionMode="multiple" style="width:2%" />
+
+
+
+				<p:column filterBy="#{item.id}">
 					<f:facet name="header">
-						<h:outputText value="id" />
+						<h:outputText value="Id" />
 					</f:facet>
 					<h:outputText value="#{item.id}" />
-			</p:column>
-		
+				</p:column>
+
+
+
 				<p:column filterBy="#{item.nombre}">
 					<f:facet name="header">
-						<h:outputText value="NOMBRE" />
+						<h:outputText value="MedioPago" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
@@ -44,36 +51,31 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{item.nombre}" style="width:100%"
-								label="NOMBRE" />
+								label="Nombre" required="true"
+								requiredMessage="Debe ingresar la nombre de la medio_pago" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-			
-		
-		
+
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="Si" rendered="#{item.eliminado}" />
-							<h:outputText value="No" rendered="#{!item.eliminado}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:selectOneMenu value="#{item.eliminado}" style="width:100px">
-								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />								
-							</p:selectOneMenu>							
-						</f:facet>
-					</p:cellEditor>
+
+					<h:outputText value="Si" rendered="#{item.eliminado}" />
+					<h:outputText value="No" rendered="#{!item.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-		<p:button href="altaMedioPago.xhtml" value="Nueva MedioPago"/>
+			<p:commandButton action="#{listarMedioPago.onCrear}"
+				value="Crear MedioPago" ajax="false" />
+			<p:commandButton actionListener="#{listarMedioPago.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarMedioPago.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
 		</h:form>
 
 

@@ -10,15 +10,15 @@ import javax.faces.context.FacesContext;
 import pfm.dao.CategoriaDAO;
 import pfm.entidades.Categoria;
 
-@ManagedBean(name = "altaCategoria")
-public class AltaCategoria implements Serializable {
+@ManagedBean(name = "bajaCategoria")
+public class BajaCategoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.categoriaDAO}")
 	private CategoriaDAO categoriaDAO;
 	private Categoria categoria;
 
-	public AltaCategoria() {
+	public BajaCategoria() {
 	}
 
 	public CategoriaDAO getCategoriaDAO() {
@@ -37,14 +37,14 @@ public class AltaCategoria implements Serializable {
 		this.categoria = categoria;
 	}
 
-	public String alta() {
+	public String baja() {
 		try {
-			categoria.setEliminado(false);
+			categoria.setEliminado(true);
 			getCategoriaDAO().update(categoria);
-			FacesMessage msg = new FacesMessage("Categoria dada de alta", String.valueOf(categoria.getId()));
+			FacesMessage msg = new FacesMessage("Categoria dada de baja", String.valueOf(categoria.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error", "Categoria no dada de alta");
+			FacesMessage msg = new FacesMessage("Error", "Categoria no dada de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarCategoria";
