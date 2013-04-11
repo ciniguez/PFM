@@ -10,15 +10,15 @@ import javax.faces.context.FacesContext;
 import pfm.dao.ProductoDAO;
 import pfm.entidades.Producto;
 
-@ManagedBean(name = "altaProducto")
-public class AltaProducto implements Serializable {
+@ManagedBean(name = "modificarProducto")
+public class ModificarProducto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.productoDAO}")
 	private ProductoDAO productoDAO;
 	private Producto producto;
 
-	public AltaProducto() {
+	public ModificarProducto() {
 
 	}
 
@@ -38,16 +38,15 @@ public class AltaProducto implements Serializable {
 		this.producto = producto;
 	}
 
-	public String alta() {
+	public String modificar() {
 		try {
-			producto.setEliminado(false);
 			getProductoDAO().update(producto);
-			FacesMessage msg = new FacesMessage("Producto dado de alta",
+			FacesMessage msg = new FacesMessage("Producto actualizado",
 					String.valueOf(producto.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Error",
-					"Producto no dado de alta");
+					"Producto no actualizado");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 

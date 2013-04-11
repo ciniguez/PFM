@@ -12,55 +12,54 @@
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item"
-				value="#{listarProducto.lista}" paginator="true" rows="10"
+			<p:dataTable id="dataTable" var="pro" value="#{listarProducto.lista}"
+				paginator="true" rows="10"
 				filteredValue="#{listarProducto.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				editable="true">
+				editable="true" selection="#{listarProducto.selectedProductos}"
+				rowKey="#{pro.id}">
 
 				<f:facet name="header">
             		Listado de Productos
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarProducto.onEdit}"
+				<p:ajax event="rowEdit" listener="#{listarProducto.onModificar}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarProducto.onCancel}"
 					update=":form:messages" />
 
+				<p:column selectionMode="multiple" style="width:2%" />
 
-
-
-				<p:column filterBy="#{item.id}">
+				<p:column filterBy="#{pro.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{item.id}" />
+					<h:outputText value="#{pro.id}" />
 				</p:column>
 
-
-				<p:column filterBy="#{item.nombre}">
+				<p:column filterBy="#{pro.nombre}">
 					<f:facet name="header">
 						<h:outputText value="Nombre" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.nombre}" />
+							<h:outputText value="#{pro.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.nombre}" style="width:100%"
-								label="nombre" />
+							<p:inputText value="#{pro.nombre}" style="width:100%"
+								label="nombre" required="true"
+								requiredMessage="Debe ingresar el nombre del producto" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
-
-				<p:column filterBy="#{item.categoria}">
+				<p:column filterBy="#{pro.categoria}">
 					<f:facet name="header">
 						<h:outputText value="Categoria" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.categoria}" />
+							<h:outputText value="#{pro.categoria}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:selectOneMenu value="#{listarProducto.categoria}"
@@ -71,14 +70,13 @@
 					</p:cellEditor>
 				</p:column>
 
-
-				<p:column filterBy="#{item.marca.id}">
+				<p:column filterBy="#{pro.marca}">
 					<f:facet name="header">
 						<h:outputText value="Marca" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.marca}" />
+							<h:outputText value="#{pro.marca}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:selectOneMenu value="#{listarProducto.marca}"
@@ -89,31 +87,24 @@
 					</p:cellEditor>
 				</p:column>
 
-
-
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="Si" rendered="#{item.eliminado}" />
-							<h:outputText value="No" rendered="#{!item.eliminado}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:selectOneMenu value="#{item.eliminado}" style="width:100px">
-								<f:selectItem itemLabel="Si" itemValue="true" />
-								<f:selectItem itemLabel="No" itemValue="false" />
-							</p:selectOneMenu>
-						</f:facet>
-					</p:cellEditor>
+					<h:outputText value="Si" rendered="#{pro.eliminado}" />
+					<h:outputText value="No" rendered="#{!pro.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
 					<p:rowEditor />
 				</p:column>
 			</p:dataTable>
-			<p:button href="altaProducto.xhtml" value="Nueva Producto" />
+			<p:commandButton action="#{listarProducto.onCrear}"
+				value="Crear Producto" ajax="false" />
+			<p:commandButton actionListener="#{listarProducto.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarProducto.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
 		</h:form>
 
 
