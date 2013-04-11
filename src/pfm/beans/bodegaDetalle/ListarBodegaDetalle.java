@@ -1,7 +1,7 @@
 package pfm.beans.bodegaDetalle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -9,14 +9,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.SelectEvent;
+import org.primefaces.event.RowEditEvent;
 
 import pfm.dao.BodegaDAO;
 import pfm.dao.BodegaDetalleDAO;
 import pfm.dao.ProductoDAO;
 import pfm.entidades.Bodega;
 import pfm.entidades.BodegaDetalle;
-import pfm.entidades.Producto;
 
 @ManagedBean(name = "listarBodegaDetalle")
 public class ListarBodegaDetalle implements Serializable {
@@ -28,13 +27,15 @@ public class ListarBodegaDetalle implements Serializable {
 	private BodegaDAO bodegaDAO;
 	@ManagedProperty(value = "#{DAOFactory.productoDAO}")
 	private ProductoDAO productoDAO;
-	private List<Bodega> listaBodegas;
-	private List<Producto> listaProductos;
-	private List<Bodega> filteredBodegas;
-	private List<Producto> filteredProductos;
-	private Bodega selectedBodega = new Bodega();
-	private Producto selectedProducto = new Producto();
-	private BodegaDetalle bodegaDetalle = new BodegaDetalle();
+	@ManagedProperty(value = "#{modificarBodegaDetalle}")
+	private ModificarBodegaDetalle modificarBodegaDetalleBEAN;
+	@ManagedProperty(value = "#{bajaBodegaDetalle}")
+	private BajaBodegaDetalle bajaBodegaDetalleBEAN;
+	@ManagedProperty(value = "#{altaBodegaDetalle}")
+	private AltaBodegaDetalle altaBodegaDetalleBEAN;
+	private List<BodegaDetalle> lista;
+	private List<BodegaDetalle> filtered;
+	private BodegaDetalle[] selectedBodegaDetalle;
 
 	public ListarBodegaDetalle() {
 	}
@@ -63,157 +64,106 @@ public class ListarBodegaDetalle implements Serializable {
 		this.productoDAO = productoDAO;
 	}
 
-	public List<Bodega> getListaBodegas() {
-		String[] attributes = { "eliminado" };
-		String[] values = { "0" };
+	public ModificarBodegaDetalle getModificarBodegaDetalleBEAN() {
+		return modificarBodegaDetalleBEAN;
+	}
+
+	public void setModificarBodegaDetalleBEAN(
+			ModificarBodegaDetalle modificarBodegaDetalleBEAN) {
+		this.modificarBodegaDetalleBEAN = modificarBodegaDetalleBEAN;
+	}
+
+	public BajaBodegaDetalle getBajaBodegaDetalleBEAN() {
+		return bajaBodegaDetalleBEAN;
+	}
+
+	public void setBajaBodegaDetalleBEAN(BajaBodegaDetalle bajaBodegaDetalleBEAN) {
+		this.bajaBodegaDetalleBEAN = bajaBodegaDetalleBEAN;
+	}
+
+	public AltaBodegaDetalle getAltaBodegaDetalleBEAN() {
+		return altaBodegaDetalleBEAN;
+	}
+
+	public void setAltaBodegaDetalleBEAN(AltaBodegaDetalle altaBodegaDetalleBEAN) {
+		this.altaBodegaDetalleBEAN = altaBodegaDetalleBEAN;
+	}
+
+	public List<BodegaDetalle> getLista() {
+		String[] attributes = {};
+		String[] values = {};
 		String order = "id";
 		int index = -1;
 		int size = -1;
-		setListaBodegas(bodegaDAO.find(attributes, values, order, index, size));
-		return listaBodegas;
+		setLista(bodegaDetalleDAO.find(attributes, values, order, index, size));
+		return lista;
 	}
 
-	public void setListaBodegas(List<Bodega> listaBodegas) {
-		this.listaBodegas = listaBodegas;
+	public void setLista(List<BodegaDetalle> lista) {
+		this.lista = lista;
 	}
 
-	public List<Producto> getListaProductos() {
-		String[] attributes = { "eliminado" };
-		String[] values = { "0" };
-		String order = "id";
-		int index = -1;
-		int size = -1;
-		setListaProductos(productoDAO.find(attributes, values, order, index,
-				size));
-		return listaProductos;
+	public List<BodegaDetalle> getFiltered() {
+		return filtered;
 	}
 
-	public void setListaProductos(List<Producto> listaProductos) {
-		this.listaProductos = listaProductos;
+	public void setFiltered(List<BodegaDetalle> filtered) {
+		this.filtered = filtered;
 	}
 
-	public List<Bodega> getFilteredBodegas() {
-		return filteredBodegas;
+	public BodegaDetalle[] getSelectedBodegaDetalle() {
+		return selectedBodegaDetalle;
 	}
 
-	public void setFilteredBodegas(List<Bodega> filteredBodegas) {
-		this.filteredBodegas = filteredBodegas;
+	public void setSelectedBodegaDetalle(BodegaDetalle[] selectedBodegaDetalle) {
+		this.selectedBodegaDetalle = selectedBodegaDetalle;
 	}
 
-	public List<Producto> getFilteredProductos() {
-		return filteredProductos;
+	public String onCrear() {
+		return "crearBodegaDetalle";
 	}
 
-	public void setFilteredProductos(List<Producto> filteredProductos) {
-		this.filteredProductos = filteredProductos;
+	public void onModificar(RowEditEvent event) {
+
+		modificarBodegaDetalleBEAN.setBodegaDetalle((BodegaDetalle) event
+				.getObject());
+		modificarBodegaDetalleBEAN.modificar();
+
 	}
 
-	public Bodega getSelectedBodega() {
-		return selectedBodega;
-	}
+	public void onCancel(RowEditEvent event) {
 
-	public void setSelectedBodega(Bodega selectedBodega) {
-		this.selectedBodega = selectedBodega;
-	}
+		FacesMessage msg = new FacesMessage("Bodega cancelada",
+				String.valueOf(((Bodega) event.getObject()).getId()));
 
-	public Producto getSelectedProducto() {
-		return selectedProducto;
-	}
-
-	public void setSelectedProducto(Producto selectedProducto) {
-		this.selectedProducto = selectedProducto;
-	}
-
-	public BodegaDetalle getBodegaDetalle() {
-		return bodegaDetalle;
-	}
-
-	public void setBodegaDetalle(BodegaDetalle bodegaDetalle) {
-		this.bodegaDetalle = bodegaDetalle;
-	}
-
-	public void onRowSelect(SelectEvent event) {
-		FacesMessage msg;
-		if (event.getObject().getClass() == Bodega.class) {
-			msg = new FacesMessage("Bodega Seleccionada",
-					((Bodega) event.getObject()).getNombre());
-
-		} else {
-			msg = new FacesMessage("Producto Seleccionado",
-					((Producto) event.getObject()).getNombre());
-		}
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	public void buscarBodegaDetalle() {
-
-		List<BodegaDetalle> lista = new ArrayList<BodegaDetalle>();
-		lista = bodegaDetalleDAO.getBodegaDetalleByBodegaAndProducto(
-				selectedProducto, selectedBodega);
-		if (lista.size() > 0) {
-			bodegaDetalle = lista.get(0);
-		} else {
-			bodegaDetalle = new BodegaDetalle();
-		}
-	}
-
-	public boolean existeBodegaDetalle() {
-		List<BodegaDetalle> lista = new ArrayList<BodegaDetalle>();
-		lista = bodegaDetalleDAO.getBodegaDetalleByBodegaAndProducto(
-				selectedProducto, selectedBodega);
-		if (lista.size() > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public String create() {
-		if (selectedProducto != null && selectedBodega != null) {
-			if (existeBodegaDetalle()) {
-				// se debe actualizar
-				try {
-					List<BodegaDetalle> lista = new ArrayList<BodegaDetalle>();
-					lista = bodegaDetalleDAO
-							.getBodegaDetalleByBodegaAndProducto(
-									selectedProducto, selectedBodega);
-					BodegaDetalle bod = new BodegaDetalle();
-					bod = lista.get(0);
-					bod.setCantidad(bodegaDetalle.getCantidad());
-					bod.setPrecio(bodegaDetalle.getPrecio());
-
-					bodegaDetalleDAO.update(bod);
-
-					FacesMessage msg = new FacesMessage("Detalle actualizado");
-					FacesContext.getCurrentInstance().addMessage(null, msg);
-				} catch (Exception e) {
-					FacesMessage msg = new FacesMessage("Error",
-							"Detalle no actualizado");
-					FacesContext.getCurrentInstance().addMessage(null, msg);
-				}
-
-			} else {
-				// se debe crear un nuevo
-				try {
-					bodegaDetalle.setBodega(selectedBodega);
-					bodegaDetalle.setProducto(selectedProducto);
-					bodegaDetalleDAO.create(bodegaDetalle);
-
-					FacesMessage msg = new FacesMessage("Detalle creado");
-					FacesContext.getCurrentInstance().addMessage(null, msg);
-				} catch (Exception e) {
-					FacesMessage msg = new FacesMessage("Error",
-							"Detalle no creado");
-					FacesContext.getCurrentInstance().addMessage(null, msg);
-				}
+	public String onBaja() {
+		if (selectedBodegaDetalle.length > 0) {
+			for (BodegaDetalle b : selectedBodegaDetalle) {
+				bajaBodegaDetalleBEAN.setBodegaDetalle(b);
+				bajaBodegaDetalleBEAN.baja();
 			}
 		} else {
 			FacesMessage msg = new FacesMessage("Error",
-					"Debe seleccionar la bodega y producto");
+					"Debe seleccionar uno o mas productos por bodega");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
-
 		}
+		return "listarBodegaDetalle";
+	}
 
+	public String onAlta() {
+		if (selectedBodegaDetalle.length > 0) {
+			for (BodegaDetalle b : selectedBodegaDetalle) {
+				altaBodegaDetalleBEAN.setBodegaDetalle(b);
+				altaBodegaDetalleBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas productos por bodega");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
 		return "listarBodegaDetalle";
 	}
 }

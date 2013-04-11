@@ -19,8 +19,15 @@ public class ListarDescuento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.descuentoDAO}")
 	private DescuentoDAO descuentoDAO;
+	@ManagedProperty(value = "#{modificarDescuento}")
+	private ModificarDescuento modificarDescuentoBEAN;
+	@ManagedProperty(value = "#{bajaDescuento}")
+	private BajaDescuento bajaDescuentoBEAN;
+	@ManagedProperty(value = "#{altaDescuento}")
+	private AltaDescuento altaDescuentoBEAN;
 	private List<Descuento> lista;
 	private List<Descuento> filtered;
+	private Descuento[] selectedDescuentos;
 
 	public ListarDescuento() {
 	}
@@ -31,6 +38,31 @@ public class ListarDescuento implements Serializable {
 
 	public void setDescuentoDAO(DescuentoDAO descuentoDAO) {
 		this.descuentoDAO = descuentoDAO;
+	}
+
+	public ModificarDescuento getModificarDescuentoBEAN() {
+		return modificarDescuentoBEAN;
+	}
+
+	public void setModificarDescuentoBEAN(
+			ModificarDescuento modificarDescuentoBEAN) {
+		this.modificarDescuentoBEAN = modificarDescuentoBEAN;
+	}
+
+	public BajaDescuento getBajaDescuentoBEAN() {
+		return bajaDescuentoBEAN;
+	}
+
+	public void setBajaDescuentoBEAN(BajaDescuento bajaDescuentoBEAN) {
+		this.bajaDescuentoBEAN = bajaDescuentoBEAN;
+	}
+
+	public AltaDescuento getAltaDescuentoBEAN() {
+		return altaDescuentoBEAN;
+	}
+
+	public void setAltaDescuentoBEAN(AltaDescuento altaDescuentoBEAN) {
+		this.altaDescuentoBEAN = altaDescuentoBEAN;
 	}
 
 	public List<Descuento> getLista() {
@@ -55,22 +87,21 @@ public class ListarDescuento implements Serializable {
 		this.filtered = filtered;
 	}
 
-	public void onEdit(RowEditEvent event) {
-		try {
-			Descuento descuento = new Descuento();
-			descuento = (Descuento) event.getObject();
-			descuentoDAO.update(descuento);
+	public Descuento[] getSelectedDescuentos() {
+		return selectedDescuentos;
+	}
 
-			FacesMessage msg = new FacesMessage("Descuento actualizada",
-					String.valueOf(((Descuento) event.getObject()).getId()));
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void setSelectedDescuentos(Descuento[] selectedDescuentos) {
+		this.selectedDescuentos = selectedDescuentos;
+	}
 
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error",
-					"Descuento no actualizada");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public String onCrear() {
+		return "crearDescuento";
+	}
 
-		}
+	public void onModificar(RowEditEvent event) {
+		modificarDescuentoBEAN.setDescuento((Descuento) event.getObject());
+		modificarDescuentoBEAN.modificar();
 	}
 
 	public void onCancel(RowEditEvent event) {
@@ -79,6 +110,34 @@ public class ListarDescuento implements Serializable {
 				String.valueOf(((Descuento) event.getObject()).getId()));
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public String onBaja() {
+		if (selectedDescuentos.length > 0) {
+			for (Descuento d : selectedDescuentos) {
+				bajaDescuentoBEAN.setDescuento(d);
+				bajaDescuentoBEAN.baja();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas descuentos");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarDescuento";
+	}
+
+	public String onAlta() {
+		if (selectedDescuentos.length > 0) {
+			for (Descuento d : selectedDescuentos) {
+				altaDescuentoBEAN.setDescuento(d);
+				altaDescuentoBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas descuentos");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarDescuento";
 	}
 
 }

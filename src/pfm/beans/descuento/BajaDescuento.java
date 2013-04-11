@@ -10,15 +10,15 @@ import javax.faces.context.FacesContext;
 import pfm.dao.DescuentoDAO;
 import pfm.entidades.Descuento;
 
-@ManagedBean(name = "altaDescuento")
-public class AltaDescuento implements Serializable {
+@ManagedBean(name = "bajaDescuento")
+public class BajaDescuento implements Serializable {
 
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.descuentoDAO}")
 	private DescuentoDAO descuentoDAO;
 	private Descuento descuento;
 
-	public AltaDescuento() {
+	public BajaDescuento() {
 
 	}
 
@@ -38,19 +38,20 @@ public class AltaDescuento implements Serializable {
 		this.descuento = descuento;
 	}
 
-	public String alta() {
+	public String baja() {
 
 		try {
-			descuento.setEliminado(false);
+			descuento.setEliminado(true);
 			getDescuentoDAO().update(descuento);
-			FacesMessage msg = new FacesMessage("Descuento dado de alta",
+			FacesMessage msg = new FacesMessage("Descuento dado de baja",
 					String.valueOf(descuento.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Error",
-					"Descuento no dado de alta");
+					"Descuento no dado de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarDescuento";
 	}
+
 }

@@ -145,7 +145,7 @@ public class ListarAgencia implements Serializable {
 		return "crearAgencia";
 	}
 
-	public void onEdit(RowEditEvent event) {
+	public void onModificar(RowEditEvent event) {
 
 		Agencia agencia = new Agencia();
 		agencia = (Agencia) event.getObject();

@@ -14,25 +14,39 @@
 
 			<p:panelGrid id="grid" columns="2" cellpadding="5">
 				<f:facet name="header">  
-        			Alta de Descuento
+        			Crear Descuento
         			<p:messages />
 				</f:facet>
 
 				<h:outputLabel for="nombre" value="Nombre:" style="font-weight:bold" />
-				<p:inputText id="nombre" value="#{altaDescuento.descuento.nombre}"
+				<p:inputText id="nombre" value="#{crearDescuento.descuento.nombre}"
 					required="true"
 					requiredMessage="Debe ingresar el nombre del descuento" />
 
 				<h:outputLabel for="valor" value="Valor:" style="font-weight:bold" />
-				<p:inputText id="valor" value="#{altaDescuento.descuento.valor}"
+				<p:inputText id="valor" value="#{crearDescuento.descuento.valor}"
 					required="true"
 					requiredMessage="Debe ingresar el valor del descuento"
 					converterMessage="Debe ingresar un valor numerico">
 					<f:convertNumber maxFractionDigits="2" />
 				</p:inputText>
 
+				<h:outputLabel for="fechaInicio" value="Fecha Inicio:"
+					style="font-weight:bold" />
+				<p:calendar id="fechaInicio" effect="slideDown"
+					value="#{crearDescuento.descuento.fechaInicio}" style="width:100%"
+					label="Fecha inicio" required="true"
+					requiredMessage="Debe ingresar una fecha de inicio" />
+
+				<h:outputLabel for="fechaInicio" value="Fecha Inicio:"
+					style="font-weight:bold" />
+				<p:calendar id="fechaFin" effect="slideDown"
+					value="#{crearDescuento.descuento.fechaFin}" style="width:100%"
+					label="Fecha fin" required="true"
+					requiredMessage="Debe ingresar una fecha de fin" />
+
 				<f:facet name="footer">
-					<p:commandButton value="Aceptar" action="#{altaDescuento.create}"
+					<p:commandButton value="Aceptar" action="#{crearDescuento.crear}"
 						ajax="false" icon="ui-icon-check" />
 					<p:button value="Cancelar" href="listarDescuento.xhtml"
 						icon="ui-icon-cancel" />
