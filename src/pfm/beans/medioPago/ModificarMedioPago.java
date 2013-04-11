@@ -1,4 +1,4 @@
-package pfm.beans.mediopago;
+package pfm.beans.medioPago;
 
 import java.io.Serializable;
 
