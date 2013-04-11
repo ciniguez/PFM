@@ -11,10 +11,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 
-import pfm.dao.BodegaDAO;
 import pfm.dao.BodegaDetalleDAO;
-import pfm.dao.ProductoDAO;
-import pfm.entidades.Bodega;
 import pfm.entidades.BodegaDetalle;
 
 @ManagedBean(name = "listarBodegaDetalle")
@@ -23,10 +20,6 @@ public class ListarBodegaDetalle implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.bodegaDetalleDAO}")
 	private BodegaDetalleDAO bodegaDetalleDAO;
-	@ManagedProperty(value = "#{DAOFactory.bodegaDAO}")
-	private BodegaDAO bodegaDAO;
-	@ManagedProperty(value = "#{DAOFactory.productoDAO}")
-	private ProductoDAO productoDAO;
 	@ManagedProperty(value = "#{modificarBodegaDetalle}")
 	private ModificarBodegaDetalle modificarBodegaDetalleBEAN;
 	@ManagedProperty(value = "#{bajaBodegaDetalle}")
@@ -46,22 +39,6 @@ public class ListarBodegaDetalle implements Serializable {
 
 	public void setBodegaDetalleDAO(BodegaDetalleDAO bodegaDetalleDAO) {
 		this.bodegaDetalleDAO = bodegaDetalleDAO;
-	}
-
-	public BodegaDAO getBodegaDAO() {
-		return bodegaDAO;
-	}
-
-	public void setBodegaDAO(BodegaDAO bodegaDAO) {
-		this.bodegaDAO = bodegaDAO;
-	}
-
-	public ProductoDAO getProductoDAO() {
-		return productoDAO;
-	}
-
-	public void setProductoDAO(ProductoDAO productoDAO) {
-		this.productoDAO = productoDAO;
 	}
 
 	public ModificarBodegaDetalle getModificarBodegaDetalleBEAN() {
@@ -134,7 +111,7 @@ public class ListarBodegaDetalle implements Serializable {
 	public void onCancel(RowEditEvent event) {
 
 		FacesMessage msg = new FacesMessage("Bodega cancelada",
-				String.valueOf(((Bodega) event.getObject()).getId()));
+				String.valueOf(((BodegaDetalle) event.getObject()).getId()));
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}

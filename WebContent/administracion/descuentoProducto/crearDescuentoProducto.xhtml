@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">DESCUENTO POR PRODUCTO</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
+				<f:facet name="header">  
+        			Crear Descuento por Producto
+        			<p:messages />
+				</f:facet>
+
+				<h:outputLabel for="descuento" value="Descuento"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="descuento"
+					value="#{crearDescuentoProducto.descuento}" style="width:210px">
+					<f:selectItems value="#{crearDescuentoProducto.descuentos}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="producto" value="Producto"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="producto"
+					value="#{crearDescuentoProducto.producto}" style="width:210px">
+					<f:selectItems value="#{crearDescuentoProducto.productos}" />
+				</p:selectOneMenu>
+
+				<f:facet name="footer">
+					<p:commandButton value="Aceptar"
+						action="#{crearDescuentoProducto.crear}" ajax="false"
+						icon="ui-icon-check" />
+					<p:button value="Cancelar" href="listarDescuentoProducto.xhtml"
+						icon="ui-icon-cancel" />
+				</f:facet>
+			</p:panelGrid>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
