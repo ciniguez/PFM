@@ -1,13 +1,7 @@
 package pfm.test;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 
 import pfm.entidades.Empresa;
-import pfm.entidades.Producto;
-import pfm.entidades.Usuario;
 import pfm.jpa.JPADAOFactory;
 
 public class TestJPA {
