@@ -1,4 +1,3 @@
-
 package pfm.beans.categoria;
 
 import java.io.Serializable;
@@ -17,10 +16,9 @@ public class AltaCategoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.categoriaDAO}")
 	private CategoriaDAO categoriaDAO;
-	private Categoria categoria = new Categoria();
+	private Categoria categoria;
 
 	public AltaCategoria() {
-
 	}
 
 	public CategoriaDAO getCategoriaDAO() {
@@ -39,17 +37,16 @@ public class AltaCategoria implements Serializable {
 		this.categoria = categoria;
 	}
 
-	public String create() {
+	public String alta() {
 		try {
-			categoriaDAO.create(categoria);
-			FacesMessage msg = new FacesMessage("Categoria creada");
+			categoria.setEliminado(false);
+			getCategoriaDAO().update(categoria);
+			FacesMessage msg = new FacesMessage("Categoria dada de alta", String.valueOf(categoria.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error", "Categoria no creada");
+			FacesMessage msg = new FacesMessage("Error", "Categoria no dada de alta");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-
 		return "listarCategoria";
 	}
-
 }

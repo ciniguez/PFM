@@ -1,4 +1,3 @@
-
 package pfm.beans.rol;
 
 import java.io.Serializable;
@@ -17,10 +16,9 @@ public class AltaRol implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.rolDAO}")
 	private RolDAO rolDAO;
-	private Rol rol = new Rol();
+	private Rol rol;
 
 	public AltaRol() {
-
 	}
 
 	public RolDAO getRolDAO() {
@@ -39,17 +37,16 @@ public class AltaRol implements Serializable {
 		this.rol = rol;
 	}
 
-	public String create() {
+	public String alta() {
 		try {
-			rolDAO.create(rol);
-			FacesMessage msg = new FacesMessage("Rol creada");
+			rol.setEliminado(false);
+			getRolDAO().update(rol);
+			FacesMessage msg = new FacesMessage("Rol dada de alta", String.valueOf(rol.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error", "Rol no creada");
+			FacesMessage msg = new FacesMessage("Error", "Rol no dada de alta");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-
 		return "listarRol";
 	}
-
 }

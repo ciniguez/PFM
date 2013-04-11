@@ -1,4 +1,3 @@
-
 package pfm.beans.marca;
 
 import java.io.Serializable;
@@ -20,8 +19,15 @@ public class ListarMarca implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.marcaDAO}")
 	private MarcaDAO marcaDAO;
+	@ManagedProperty(value = "#{modificarMarca}")
+	private ModificarMarca modificarMarcaBEAN;
+	@ManagedProperty(value = "#{bajaMarca}")
+	private BajaMarca bajaMarcaBEAN;
+	@ManagedProperty(value = "#{altaMarca}")
+	private AltaMarca altaMarcaBEAN;
 	private List<Marca> lista;
 	private List<Marca> filtered;
+	private Marca[] selectedMarcas;
 
 	public ListarMarca() {
 
@@ -33,6 +39,30 @@ public class ListarMarca implements Serializable {
 
 	public void setMarcaDAO(MarcaDAO marcaDAO) {
 		this.marcaDAO = marcaDAO;
+	}
+
+	public ModificarMarca getModificarMarcaBEAN() {
+		return modificarMarcaBEAN;
+	}
+
+	public void setModificarMarcaBEAN(ModificarMarca modificarMarcaBEAN) {
+		this.modificarMarcaBEAN = modificarMarcaBEAN;
+	}
+
+	public BajaMarca getBajaMarcaBEAN() {
+		return bajaMarcaBEAN;
+	}
+
+	public void setBajaMarcaBEAN(BajaMarca bajaMarcaBEAN) {
+		this.bajaMarcaBEAN = bajaMarcaBEAN;
+	}
+
+	public AltaMarca getAltaMarcaBEAN() {
+		return altaMarcaBEAN;
+	}
+
+	public void setAltaMarcaBEAN(AltaMarca altaMarcaBEAN) {
+		this.altaMarcaBEAN = altaMarcaBEAN;
 	}
 
 	public List<Marca> getLista() {
@@ -57,22 +87,21 @@ public class ListarMarca implements Serializable {
 		this.filtered = filtered;
 	}
 
-	public void onEdit(RowEditEvent event) {
-		try {
-			Marca marca = new Marca();
-			marca = (Marca) event.getObject();
-			marcaDAO.update(marca);
+	public Marca[] getSelectedMarcas() {
+		return selectedMarcas;
+	}
 
-			FacesMessage msg = new FacesMessage("Marca actualizada",
-					String.valueOf(((Marca) event.getObject()).getId()));
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void setSelectedMarcas(Marca[] selectedMarcas) {
+		this.selectedMarcas = selectedMarcas;
+	}
 
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error",
-					"Marca no actualizada");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public String onCrear() {
+		return "crearMarca";
+	}
 
-		}
+	public void onModificar(RowEditEvent event) {
+		modificarMarcaBEAN.setMarca((Marca) event.getObject());
+		modificarMarcaBEAN.modificar();
 	}
 
 	public void onCancel(RowEditEvent event) {
@@ -81,5 +110,33 @@ public class ListarMarca implements Serializable {
 				String.valueOf(((Marca) event.getObject()).getId()));
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public String onBaja() {
+		if (selectedMarcas.length > 0) {
+			for (Marca e : selectedMarcas) {
+				bajaMarcaBEAN.setMarca(e);
+				bajaMarcaBEAN.baja();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas marcas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarMarca";
+	}
+
+	public String onAlta() {
+		if (selectedMarcas.length > 0) {
+			for (Marca e : selectedMarcas) {
+				altaMarcaBEAN.setMarca(e);
+				altaMarcaBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas marcas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarMarca";
 	}
 }

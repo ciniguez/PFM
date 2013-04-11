@@ -16,10 +16,9 @@ public class AltaMedioPago implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.medioPagoDAO}")
 	private MedioPagoDAO medioPagoDAO;
-	private MedioDePago medioPago = new MedioDePago();
+	private MedioDePago medioPago;
 
 	public AltaMedioPago() {
-
 	}
 
 	public MedioPagoDAO getMedioPagoDAO() {
@@ -38,17 +37,16 @@ public class AltaMedioPago implements Serializable {
 		this.medioPago = medioPago;
 	}
 
-	public String create() {
+	public String alta() {
 		try {
-			medioPagoDAO.create(medioPago);
-			FacesMessage msg = new FacesMessage("MedioPago creada");
+			medioPago.setEliminado(false);
+			getMedioPagoDAO().update(medioPago);
+			FacesMessage msg = new FacesMessage("MedioPago dada de alta", String.valueOf(medioPago.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error", "MedioPago no creada");
+			FacesMessage msg = new FacesMessage("Error", "MedioPago no dada de alta");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-
 		return "listarMedioPago";
 	}
-
 }

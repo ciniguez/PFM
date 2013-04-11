@@ -16,10 +16,9 @@ public class AltaMarca implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.marcaDAO}")
 	private MarcaDAO marcaDAO;
-	private Marca marca = new Marca();
+	private Marca marca;
 
 	public AltaMarca() {
-
 	}
 
 	public MarcaDAO getMarcaDAO() {
@@ -34,21 +33,22 @@ public class AltaMarca implements Serializable {
 		return marca;
 	}
 
-	public void setMarca(Marca Marca) {
-		this.marca = Marca;
+	public void setMarca(Marca marca) {
+		this.marca = marca;
 	}
 
-	public String create() {
+	public String alta() {
 		try {
-			marcaDAO.create(marca);
-			FacesMessage msg = new FacesMessage("Marca creada");
+			marca.setEliminado(false);
+			getMarcaDAO().update(marca);
+			FacesMessage msg = new FacesMessage("Marca dada de alta",
+					String.valueOf(marca.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error", "Marca no creada");
+			FacesMessage msg = new FacesMessage("Error",
+					"Marca no dada de alta");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-
 		return "listarMarca";
 	}
-
 }

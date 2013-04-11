@@ -11,20 +11,25 @@
 
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
-			<p:panelGrid id="grid" columns="3" cellpadding="5">
 
-				<h:outputLabel for="nombre" value="NOMBRE:" style="font-weight:bold" />
-				<p:inputText id="nombre" value="#{altaMarca.marca.nombre}"
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
+				<f:facet name="header">  
+        			Alta de Marca
+        			<p:messages />
+				</f:facet>
+
+
+				<h:outputLabel for="nombre" value="Nombre:" style="font-weight:bold" />
+				<p:inputText id="nombre" value="#{crearMarca.marca.nombre}"
 					required="true"
 					requiredMessage="Debe ingresar el NOMBRE de la Marca" />
-				<p:message for="nombre" />
 
 
 				<f:facet name="footer">
-					<p:commandButton value="Aceptar" action="#{altaMarca.create}"
-						ajax="false" />
-					<p:button value="Cancelar" href="listarMarca.xhtml" />
-
+					<p:commandButton value="Aceptar" action="#{crearMarca.crear}"
+						ajax="false" icon="ui-icon-check" />
+					<p:button value="Cancelar" href="listarMarca.xhtml"
+						icon="ui-icon-cancel" />
 				</f:facet>
 			</p:panelGrid>
 
@@ -34,4 +39,3 @@
 
 	</ui:define>
 </ui:composition>
-
