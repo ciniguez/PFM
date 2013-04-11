@@ -1,4 +1,4 @@
-package pfm.beans.mediopago;
+package pfm.beans.medioPago;
 
 import java.io.Serializable;
 
@@ -10,15 +10,15 @@ import javax.faces.context.FacesContext;
 import pfm.dao.MedioPagoDAO;
 import pfm.entidades.MedioDePago;
 
-@ManagedBean(name = "altaMedioPago")
-public class AltaMedioPago implements Serializable {
+@ManagedBean(name = "bajaMedioPago")
+public class BajaMedioPago implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.medioPagoDAO}")
 	private MedioPagoDAO medioPagoDAO;
 	private MedioDePago medioPago;
 
-	public AltaMedioPago() {
+	public BajaMedioPago() {
 	}
 
 	public MedioPagoDAO getMedioPagoDAO() {
@@ -37,14 +37,14 @@ public class AltaMedioPago implements Serializable {
 		this.medioPago = medioPago;
 	}
 
-	public String alta() {
+	public String baja() {
 		try {
-			medioPago.setEliminado(false);
+			medioPago.setEliminado(true);
 			getMedioPagoDAO().update(medioPago);
-			FacesMessage msg = new FacesMessage("MedioPago dada de alta", String.valueOf(medioPago.getId()));
+			FacesMessage msg = new FacesMessage("MedioPago dada de baja", String.valueOf(medioPago.getId()));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error", "MedioPago no dada de alta");
+			FacesMessage msg = new FacesMessage("Error", "MedioPago no dada de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarMedioPago";
