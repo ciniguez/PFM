@@ -1,5 +1,7 @@
 package pfm.test;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 
 import pfm.entidades.Empresa;
 import pfm.jpa.JPADAOFactory;
@@ -29,15 +31,15 @@ public class TestJPA {
 		 * (Exception ex) { System.out.println(ex); }
 		 */
 
-		//Prueba de actualizacion de empresa
+		// Prueba de actualizacion de empresa
 		try {
-			Empresa em = JPADAOFactory.getFactory().getEmpresaDAO().read(1);
-			System.out.println(em.toString());
-			em.setIva(19.20);
-			System.out.println(em.toString());
-			JPADAOFactory.getFactory().getEmpresaDAO().update(em);
-			// EntityManager em =
-			// Persistence.createEntityManagerFactory("jpa").createEntityManager();
+			// Empresa em = JPADAOFactory.getFactory().getEmpresaDAO().read(1);
+			// System.out.println(em.toString());
+			// em.setIva(19.20);
+			// System.out.println(em.toString());
+			// JPADAOFactory.getFactory().getEmpresaDAO().update(em);
+			EntityManager em = Persistence.createEntityManagerFactory("jpa")
+					.createEntityManager();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}

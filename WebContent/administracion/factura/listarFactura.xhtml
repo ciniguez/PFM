@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">FACTURA</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:dataTable id="dataTable" var="fac" value="#{listarFactura.lista}"
+				paginator="true" rows="10" filteredValue="#{listarFactura.filtered}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				selection="#{listarFactura.selectedFacturas}" rowKey="#{fac.id}">
+
+				<f:facet name="header">
+            		Listado de Facturas
+        		</f:facet>
+
+				<p:column selectionMode="multiple" style="width:2%" />
+
+				<p:column filterBy="#{fac.id}">
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{fac.id}" />
+				</p:column>
+
+				<p:column filterBy="#{fac.cliente}">
+					<f:facet name="header">
+						<h:outputText value="Cliente" />
+					</f:facet>
+					<h:outputText value="#{fac.cliente}" />
+				</p:column>
+
+				<p:column filterBy="#{fac.fecha}">
+					<f:facet name="header">
+						<h:outputText value="Fecha" />
+					</f:facet>
+					<h:outputText value="#{fac.fecha}">
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Descuento" />
+					</f:facet>
+					<h:outputText value="#{fac.descuento}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Iva" />
+					</f:facet>
+					<h:outputText value="#{fac.iva}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Subtotal" />
+					</f:facet>
+					<h:outputText value="#{fac.subtotal}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Total" />
+					</f:facet>
+					<h:outputText value="#{fac.total}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Total" />
+					</f:facet>
+					<h:outputText value="#{fac.total}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Pagado" />
+					</f:facet>
+
+					<h:outputText value="Si" rendered="#{fac.pagado}" />
+					<h:outputText value="No" rendered="#{!fac.pagado}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Medio de Pago" />
+					</f:facet>
+					<h:outputText value="#{fac.medioDePago}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Eliminado" />
+					</f:facet>
+
+					<h:outputText value="Si" rendered="#{fac.eliminado}" />
+					<h:outputText value="No" rendered="#{!fac.eliminado}" />
+				</p:column>
+
+				<p:column style="width:6%">
+					<p:commandLink action="#{listarFactura.onModificar}"
+						icon="ui-icon-edit" ajax="false">
+						<f:param name="id" value="#{fac.id}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			<p:commandButton action="#{listarFactura.onCrear}"
+				value="Crear Factura" ajax="false" />
+			<p:commandButton actionListener="#{listarFactura.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarFactura.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

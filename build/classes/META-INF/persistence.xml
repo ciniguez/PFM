@@ -18,6 +18,7 @@
 		<class>pfm.entidades.Categoria</class>
 		<class>pfm.entidades.Factura</class>
 		<class>pfm.entidades.Descuento</class>
+		<class>pfm.entidades.EmpleadoAgencia</class>
 		<properties>
 			<property name="eclipselink.ddl-generation" value="none" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:8889/pfm" />

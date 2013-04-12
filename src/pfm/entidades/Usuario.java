@@ -41,6 +41,8 @@ public class Usuario implements Serializable {
 	private Set<Factura> facturaCliente;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
 	private Set<Factura> facturaEmpleado;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+	private Set<EmpleadoAgencia> empleadoAgencia;
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
@@ -166,9 +168,17 @@ public class Usuario implements Serializable {
 		this.facturaEmpleado = facturaEmpleado;
 	}
 
+	public Set<EmpleadoAgencia> getEmpleadoAgencia() {
+		return empleadoAgencia;
+	}
+
+	public void setEmpleadoAgencia(Set<EmpleadoAgencia> empleadoAgencia) {
+		this.empleadoAgencia = empleadoAgencia;
+	}
+
 	@Override
 	public String toString() {
-		return username;
+		return nombres + " " + apellidos;
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: Pedido
+ * Entity implementation class for Entity: Factura
  * 
  */
 @Entity
@@ -35,14 +35,14 @@ public class Factura implements Serializable {
 	@JoinColumn(nullable = false)
 	private Usuario cliente;
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = true)
 	private Usuario empleado;
 	@OneToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = true)
 	private MedioDePago medioDePago;
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Bodega bodega;
+	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "factura")
 	private Set<FacturaDetalle> facturaDetalle;
 
@@ -159,12 +159,12 @@ public class Factura implements Serializable {
 		this.medioDePago = medioDePago;
 	}
 
-	public Bodega getBodega() {
-		return bodega;
+	public Agencia getAgencia() {
+		return agencia;
 	}
 
-	public void setBodega(Bodega bodega) {
-		this.bodega = bodega;
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
 	}
 
 	@Override
@@ -173,15 +173,15 @@ public class Factura implements Serializable {
 				+ eliminado + ", subtotal=" + subtotal + ", iva=" + iva
 				+ ", descuento=" + descuento + ", total=" + total + ", pagado="
 				+ pagado + ", cliente=" + cliente + ", empleado=" + empleado
-				+ ", facturaDetalle=" + facturaDetalle + ", medioDePago="
-				+ medioDePago + ", bodega=" + bodega + "]";
+				+ ", medioDePago=" + medioDePago + ", agencia=" + agencia
+				+ ", facturaDetalle=" + facturaDetalle + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bodega == null) ? 0 : bodega.hashCode());
+		result = prime * result + ((agencia == null) ? 0 : agencia.hashCode());
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(descuento);
@@ -212,10 +212,10 @@ public class Factura implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Factura other = (Factura) obj;
-		if (bodega == null) {
-			if (other.bodega != null)
+		if (agencia == null) {
+			if (other.agencia != null)
 				return false;
-		} else if (!bodega.equals(other.bodega))
+		} else if (!agencia.equals(other.agencia))
 			return false;
 		if (cliente == null) {
 			if (other.cliente != null)

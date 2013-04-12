@@ -27,8 +27,6 @@ public class Bodega implements Serializable {
 	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodega")
 	private Set<BodegaDetalle> bodegaDetalle;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodega")
-	private Set<Factura> factura;
 
 	public Bodega() {
 
@@ -97,14 +95,6 @@ public class Bodega implements Serializable {
 
 	public void setBodegaDetalle(Set<BodegaDetalle> bodegaDetalle) {
 		this.bodegaDetalle = bodegaDetalle;
-	}
-
-	public Set<Factura> getFactura() {
-		return factura;
-	}
-
-	public void setFactura(Set<Factura> factura) {
-		this.factura = factura;
 	}
 
 	@Override
