@@ -11,6 +11,7 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Usuario
  * 
  */
+@NamedQuery(name = "getEmpleado", query = "SELECT u FROM Usuario u WHERE u.rol = :rol AND u.eliminado = :eliminado")
 @Entity
 public class Usuario implements Serializable {
 
@@ -39,8 +40,6 @@ public class Usuario implements Serializable {
 	private Rol rol;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
 	private Set<Factura> facturaCliente;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-	private Set<Factura> facturaEmpleado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
 	private Set<EmpleadoAgencia> empleadoAgencia;
 	private static final long serialVersionUID = 1L;
@@ -158,14 +157,6 @@ public class Usuario implements Serializable {
 
 	public void setFacturaCliente(Set<Factura> facturaCliente) {
 		this.facturaCliente = facturaCliente;
-	}
-
-	public Set<Factura> getFacturaEmpleado() {
-		return facturaEmpleado;
-	}
-
-	public void setFacturaEmpleado(Set<Factura> facturaEmpleado) {
-		this.facturaEmpleado = facturaEmpleado;
 	}
 
 	public Set<EmpleadoAgencia> getEmpleadoAgencia() {

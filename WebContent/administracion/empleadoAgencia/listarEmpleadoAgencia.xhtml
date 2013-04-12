@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">EMPLEADO POR AGENCIA</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:dataTable id="dataTable" var="emp"
+				value="#{listarEmpleadoAgencia.lista}" paginator="true" rows="10"
+				filteredValue="#{listarEmpleadoAgencia.filtered}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				editable="true"
+				selection="#{listarEmpleadoAgencia.selectedEmpleadoAgencia}"
+				rowKey="#{emp.id}">
+
+				<f:facet name="header">
+            		Listado de Empleados por Agencia
+        		</f:facet>
+
+				<p:ajax event="rowEdit"
+					listener="#{listarEmpleadoAgencia.onModificar}"
+					update=":form:messages" />
+				<p:ajax event="rowEditCancel"
+					listener="#{listarEmpleadoAgencia.onCancel}"
+					update=":form:messages" />
+
+				<p:column selectionMode="multiple" style="width:2%" />
+
+				<p:column filterBy="#{emp.id}">
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{emp.id}" />
+				</p:column>
+
+				<p:column filterBy="#{emp.agencia}">
+					<f:facet name="header">
+						<h:outputText value="Agencia" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{emp.agencia}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{listarEmpleadoAgencia.agencia}"
+								style="width:150px">
+								<f:selectItems value="#{listarEmpleadoAgencia.agencias}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{emp.empleado}">
+					<f:facet name="header">
+						<h:outputText value="Empleado" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{emp.empleado}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{listarEmpleadoAgencia.empleado}"
+								style="width:150px">
+								<f:selectItems value="#{listarEmpleadoAgencia.empleados}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Eliminado" />
+					</f:facet>
+					<h:outputText value="Si" rendered="#{emp.eliminado}" />
+					<h:outputText value="No" rendered="#{!emp.eliminado}" />
+				</p:column>
+
+				<p:column style="width:6%">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton action="#{listarEmpleadoAgencia.onCrear}"
+				value="Crear Empleado por Agencia" ajax="false" />
+			<p:commandButton actionListener="#{listarEmpleadoAgencia.onBaja}"
+				update=":form :form:messages" value="Dar de Baja" />
+			<p:commandButton actionListener="#{listarEmpleadoAgencia.onAlta}"
+				update=":form :form:messages" value="Dar de Alta" />
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

@@ -29,8 +29,6 @@ public class Producto implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
 	private Set<BodegaDetalle> bodegaDetalle;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
-	private Set<FacturaDetalle> facturaDetalle;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
 	private Set<DescuentoProducto> descuentoProducto;
 	private static final long serialVersionUID = 1L;
 
@@ -90,14 +88,6 @@ public class Producto implements Serializable {
 
 	public void setBodegaDetalle(Set<BodegaDetalle> bodegaDetalle) {
 		this.bodegaDetalle = bodegaDetalle;
-	}
-
-	public Set<FacturaDetalle> getFacturaDetalle() {
-		return facturaDetalle;
-	}
-
-	public void setFacturaDetalle(Set<FacturaDetalle> facturaDetalle) {
-		this.facturaDetalle = facturaDetalle;
 	}
 
 	@Override

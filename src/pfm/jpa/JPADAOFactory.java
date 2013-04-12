@@ -9,6 +9,7 @@ import pfm.dao.CategoriaDAO;
 import pfm.dao.DAOFactory;
 import pfm.dao.DescuentoDAO;
 import pfm.dao.DescuentoProductoDAO;
+import pfm.dao.EmpleadoAgenciaDAO;
 import pfm.dao.EmpresaDAO;
 import pfm.dao.FacturaDAO;
 import pfm.dao.FacturaDetalleDAO;
@@ -89,6 +90,11 @@ public class JPADAOFactory extends DAOFactory {
 	@Override
 	public UsuarioDAO getUsuarioDAO() {
 		return new JPAUsuarioDAO();
+	}
+
+	@Override
+	public EmpleadoAgenciaDAO getEmpleadoAgenciaDAO() {		
+		return new JPAEmpleadoAgenciaDAO();
 	}
 
 }

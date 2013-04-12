@@ -1,6 +1,8 @@
 package pfm.entidades;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.*;
 
 import org.eclipse.persistence.annotations.Index;
@@ -16,7 +18,7 @@ import org.eclipse.persistence.annotations.Indexes;
 		@Index(name = "FK_EMPLEADO_AGENCIA_AGENCIA_ID", columnNames = { "AGENCIA_ID" }),
 		@Index(name = "FK_EMPLEADO_AGENCIA_EMPLEADO_ID", columnNames = { "EMPLEADO_ID" }),
 		@Index(name = "UK_EMPLEADO_AGENCIA", columnNames = { "AGENCIA_ID",
-				"EMPLEADO_ID" }) })
+				"EMPLEADO_ID" }, unique = true) })
 public class EmpleadoAgencia implements Serializable {
 
 	@Id
@@ -30,6 +32,9 @@ public class EmpleadoAgencia implements Serializable {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Agencia agencia;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoAgencia")
+	private Set<Factura> factura;
+
 	private static final long serialVersionUID = 1L;
 
 	public EmpleadoAgencia() {
@@ -66,6 +71,14 @@ public class EmpleadoAgencia implements Serializable {
 
 	public void setAgencia(Agencia agencia) {
 		this.agencia = agencia;
+	}
+
+	public Set<Factura> getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Set<Factura> factura) {
+		this.factura = factura;
 	}
 
 	@Override

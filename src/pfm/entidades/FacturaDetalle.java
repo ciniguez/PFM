@@ -7,16 +7,16 @@ import org.eclipse.persistence.annotations.Index;
 import org.eclipse.persistence.annotations.Indexes;
 
 /**
- * Entity implementation class for Entity: PedidoDetalle
+ * Entity implementation class for Entity: FacturaDetalle
  * 
  */
 @Entity
 @Table(name = "FACTURA_DETALLE")
 @Indexes({
-		@Index(name = "FK_FACTURA_DETALLE_PRODUCTO_ID", columnNames = { "PRODUCTO_ID" }),
+		@Index(name = "FK_FACTURA_DETALLE_BODEGADETALLE_ID", columnNames = { "BODEGADETALLE_ID" }),
 		@Index(name = "FK_FACTURA_DETALLE_FACTURA_ID", columnNames = { "FACTURA_ID" }),
-		@Index(name = "UK_FACTURA_DETALLE", columnNames = { "PRODUCTO_ID",
-				"FACTURA_ID" }, unique = true) })
+		@Index(name = "UK_FACTURA_DETALLE", columnNames = { "FACTURA_ID",
+				"BODEGADETALLE_ID" }, unique = true) })
 public class FacturaDetalle implements Serializable {
 
 	@Id
@@ -38,10 +38,10 @@ public class FacturaDetalle implements Serializable {
 	private boolean eliminado;
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Producto producto;
+	private Factura factura;
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Factura factura;
+	private BodegaDetalle bodegaDetalle;
 	private static final long serialVersionUID = 1L;
 
 	public FacturaDetalle() {
@@ -124,14 +124,6 @@ public class FacturaDetalle implements Serializable {
 		this.eliminado = eliminado;
 	}
 
-	public Producto getProducto() {
-		return producto;
-	}
-
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
-
 	public Factura getFactura() {
 		return factura;
 	}
@@ -140,19 +132,29 @@ public class FacturaDetalle implements Serializable {
 		this.factura = factura;
 	}
 
+	public BodegaDetalle getBodegaDetalle() {
+		return bodegaDetalle;
+	}
+
+	public void setBodegaDetalle(BodegaDetalle bodegaDetalle) {
+		this.bodegaDetalle = bodegaDetalle;
+	}
+
 	@Override
 	public String toString() {
 		return "FacturaDetalle [id=" + id + ", cantidad=" + cantidad
 				+ ", precio=" + precio + ", subtotal=" + subtotal + ", iva="
 				+ iva + ", descuento=" + descuento + ", total=" + total
-				+ ", eliminado=" + eliminado + ", producto=" + producto
-				+ ", factura=" + factura + "]";
+				+ ", eliminado=" + eliminado + ", factura=" + factura
+				+ ", bodegaDetalle=" + bodegaDetalle + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((bodegaDetalle == null) ? 0 : bodegaDetalle.hashCode());
 		result = prime * result + cantidad;
 		long temp;
 		temp = Double.doubleToLongBits(descuento);
@@ -164,8 +166,6 @@ public class FacturaDetalle implements Serializable {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(precio);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result
-				+ ((producto == null) ? 0 : producto.hashCode());
 		temp = Double.doubleToLongBits(subtotal);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(total);
@@ -182,6 +182,11 @@ public class FacturaDetalle implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		FacturaDetalle other = (FacturaDetalle) obj;
+		if (bodegaDetalle == null) {
+			if (other.bodegaDetalle != null)
+				return false;
+		} else if (!bodegaDetalle.equals(other.bodegaDetalle))
+			return false;
 		if (cantidad != other.cantidad)
 			return false;
 		if (Double.doubleToLongBits(descuento) != Double
@@ -200,11 +205,6 @@ public class FacturaDetalle implements Serializable {
 			return false;
 		if (Double.doubleToLongBits(precio) != Double
 				.doubleToLongBits(other.precio))
-			return false;
-		if (producto == null) {
-			if (other.producto != null)
-				return false;
-		} else if (!producto.equals(other.producto))
 			return false;
 		if (Double.doubleToLongBits(subtotal) != Double
 				.doubleToLongBits(other.subtotal))

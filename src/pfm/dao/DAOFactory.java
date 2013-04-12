@@ -37,4 +37,6 @@ public abstract class DAOFactory {
 
 	public abstract UsuarioDAO getUsuarioDAO();
 
+	public abstract EmpleadoAgenciaDAO getEmpleadoAgenciaDAO();
+
 }

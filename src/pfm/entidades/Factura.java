@@ -35,14 +35,11 @@ public class Factura implements Serializable {
 	@JoinColumn(nullable = false)
 	private Usuario cliente;
 	@ManyToOne
-	@JoinColumn(nullable = true)
-	private Usuario empleado;
+	@JoinColumn
+	private EmpleadoAgencia empleadoAgencia;
 	@OneToOne
 	@JoinColumn(nullable = true)
 	private MedioDePago medioDePago;
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "factura")
 	private Set<FacturaDetalle> facturaDetalle;
 
@@ -135,12 +132,12 @@ public class Factura implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Usuario getEmpleado() {
-		return empleado;
+	public EmpleadoAgencia getEmpleadoAgencia() {
+		return empleadoAgencia;
 	}
 
-	public void setEmpleado(Usuario empleado) {
-		this.empleado = empleado;
+	public void setEmpleadoAgencia(EmpleadoAgencia empleadoAgencia) {
+		this.empleadoAgencia = empleadoAgencia;
 	}
 
 	public Set<FacturaDetalle> getFacturaDetalle() {
@@ -159,21 +156,13 @@ public class Factura implements Serializable {
 		this.medioDePago = medioDePago;
 	}
 
-	public Agencia getAgencia() {
-		return agencia;
-	}
-
-	public void setAgencia(Agencia agencia) {
-		this.agencia = agencia;
-	}
-
 	@Override
 	public String toString() {
 		return "Factura [id=" + id + ", fecha=" + fecha + ", eliminado="
 				+ eliminado + ", subtotal=" + subtotal + ", iva=" + iva
 				+ ", descuento=" + descuento + ", total=" + total + ", pagado="
-				+ pagado + ", cliente=" + cliente + ", empleado=" + empleado
-				+ ", medioDePago=" + medioDePago + ", agencia=" + agencia
+				+ pagado + ", cliente=" + cliente + ", empleadoAgencia="
+				+ empleadoAgencia + ", medioDePago=" + medioDePago
 				+ ", facturaDetalle=" + facturaDetalle + "]";
 	}
 
@@ -181,14 +170,13 @@ public class Factura implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((agencia == null) ? 0 : agencia.hashCode());
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(descuento);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result
-				+ ((empleado == null) ? 0 : empleado.hashCode());
+				+ ((empleadoAgencia == null) ? 0 : empleadoAgencia.hashCode());
 		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + id;
 		temp = Double.doubleToLongBits(iva);
@@ -212,11 +200,6 @@ public class Factura implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Factura other = (Factura) obj;
-		if (agencia == null) {
-			if (other.agencia != null)
-				return false;
-		} else if (!agencia.equals(other.agencia))
-			return false;
 		if (cliente == null) {
 			if (other.cliente != null)
 				return false;
@@ -227,10 +210,10 @@ public class Factura implements Serializable {
 			return false;
 		if (eliminado != other.eliminado)
 			return false;
-		if (empleado == null) {
-			if (other.empleado != null)
+		if (empleadoAgencia == null) {
+			if (other.empleadoAgencia != null)
 				return false;
-		} else if (!empleado.equals(other.empleado))
+		} else if (!empleadoAgencia.equals(other.empleadoAgencia))
 			return false;
 		if (fecha == null) {
 			if (other.fecha != null)

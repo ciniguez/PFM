@@ -1,6 +1,7 @@
 package pfm.entidades;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -36,6 +37,8 @@ public class BodegaDetalle implements Serializable {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Producto producto;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodegaDetalle")
+	private Set<FacturaDetalle> facturaDetalle;
 
 	private static final long serialVersionUID = 1L;
 
@@ -96,6 +99,14 @@ public class BodegaDetalle implements Serializable {
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+	public Set<FacturaDetalle> getFacturaDetalle() {
+		return facturaDetalle;
+	}
+
+	public void setFacturaDetalle(Set<FacturaDetalle> facturaDetalle) {
+		this.facturaDetalle = facturaDetalle;
 	}
 
 	@Override
