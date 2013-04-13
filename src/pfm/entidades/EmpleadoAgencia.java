@@ -12,6 +12,7 @@ import org.eclipse.persistence.annotations.Indexes;
  * Entity implementation class for Entity: EmpleadoAgencia
  * 
  */
+@NamedQuery(name = "getAgenciaByEmpleado", query = "SELECT a FROM EmpleadoAgencia a WHERE a.empleado = :empleado")
 @Entity
 @Table(name = "EMPLEADO_AGENCIA")
 @Indexes({

@@ -29,6 +29,8 @@ public class Agencia implements Serializable {
 	private Set<Bodega> bodega;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
 	private Set<EmpleadoAgencia> empleadoAgencia;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
+	private Set<Factura> factura;
 
 	public Agencia() {
 
@@ -105,6 +107,14 @@ public class Agencia implements Serializable {
 
 	public void setEmpleadoAgencia(Set<EmpleadoAgencia> empleadoAgencia) {
 		this.empleadoAgencia = empleadoAgencia;
+	}
+
+	public Set<Factura> getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Set<Factura> factura) {
+		this.factura = factura;
 	}
 
 	@Override

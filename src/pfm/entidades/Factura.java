@@ -10,6 +10,7 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Factura
  * 
  */
+@NamedQuery(name = "getFacturasByEmpleado", query = "SELECT f FROM Factura f WHERE f.empleadoAgencia = :empleadoAgencia")
 @Entity
 public class Factura implements Serializable {
 
@@ -40,6 +41,9 @@ public class Factura implements Serializable {
 	@OneToOne
 	@JoinColumn(nullable = true)
 	private MedioDePago medioDePago;
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "factura")
 	private Set<FacturaDetalle> facturaDetalle;
 
@@ -156,6 +160,14 @@ public class Factura implements Serializable {
 		this.medioDePago = medioDePago;
 	}
 
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
+
+	public Agencia getAgencia() {
+		return agencia;
+	}
+
 	@Override
 	public String toString() {
 		return "Factura [id=" + id + ", fecha=" + fecha + ", eliminado="
@@ -163,13 +175,15 @@ public class Factura implements Serializable {
 				+ ", descuento=" + descuento + ", total=" + total + ", pagado="
 				+ pagado + ", cliente=" + cliente + ", empleadoAgencia="
 				+ empleadoAgencia + ", medioDePago=" + medioDePago
-				+ ", facturaDetalle=" + facturaDetalle + "]";
+				+ ", agencia=" + agencia + ", facturaDetalle=" + facturaDetalle
+				+ "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((agencia == null) ? 0 : agencia.hashCode());
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(descuento);
@@ -200,6 +214,11 @@ public class Factura implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Factura other = (Factura) obj;
+		if (agencia == null) {
+			if (other.agencia != null)
+				return false;
+		} else if (!agencia.equals(other.agencia))
+			return false;
 		if (cliente == null) {
 			if (other.cliente != null)
 				return false;

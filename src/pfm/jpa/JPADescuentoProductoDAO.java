@@ -10,4 +10,5 @@ public class JPADescuentoProductoDAO extends
 	public JPADescuentoProductoDAO() {
 		super(DescuentoProducto.class);
 	}
+
 }
