@@ -39,21 +39,22 @@ public class ReporteMenu {
 	@ManagedProperty(value = "#{DAOFactory.categoriaDAO}")
 	private CategoriaDAO categoriaDAO;
 	private SelectItem[] empresas;
-	private SelectItem[]  agencias;
-	private SelectItem[]  categorias;
-	
-	private String[] pathReportes = new String[] { "/reportes/rptStockProductos.jasper", "/reportes/rptSQL.jasper", "/reportes/rptNoSQL.jasper" };
+	private SelectItem[] agencias;
+	private SelectItem[] categorias;
+
+	private String[] pathReportes = new String[] { "/reportes/rptStockProductos.jasper" };
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void init() throws Exception {	
+	public void init() throws Exception {
 		Map parameters = new HashMap();
 		parameters.put("parIdEmpresa", this.getIdEmpresa());
 		parameters.put("parIdAgencia", this.getIdAgencia());
 		parameters.put("parIdCategoria", this.getIdCategoria());
 		Connection connection = JPADAOFactory.getFactory().getAgenciaDAO().getConexion();
 		String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.pathReportes[0]);
-		jasperPrint = JasperFillManager.fillReport(reportPath, parameters,connection);
+		jasperPrint = JasperFillManager.fillReport(reportPath, parameters, connection);
 	}
+
 
 	public void generarPDF(ActionEvent actionEvent) {
 		try {
@@ -67,6 +68,8 @@ public class ReporteMenu {
 			System.out.println(ex.getMessage());
 		}
 	}
+
+
 
 	public int getIdEmpresa() {
 		return idEmpresa;
@@ -109,7 +112,7 @@ public class ReporteMenu {
 		int i = 0;
 
 		List<Empresa> listaEmpresas = new ArrayList<Empresa>();
-		listaEmpresas = empresaDAO.find(attributes, values, order, index,size);
+		listaEmpresas = empresaDAO.find(attributes, values, order, index, size);
 		this.empresas = new SelectItem[listaEmpresas.size()];
 		for (Empresa e : listaEmpresas) {
 			this.empresas[i] = new SelectItem(e.getId(), e.getRazonSocial());
@@ -131,7 +134,7 @@ public class ReporteMenu {
 		int i = 0;
 
 		List<Agencia> listaAgencias = new ArrayList<Agencia>();
-		listaAgencias = agenciaDAO.find(attributes, values, order, index,size);
+		listaAgencias = agenciaDAO.find(attributes, values, order, index, size);
 		this.agencias = new SelectItem[listaAgencias.size()];
 		for (Agencia e : listaAgencias) {
 			this.agencias[i] = new SelectItem(e.getId(), e.getNombre());
@@ -153,7 +156,7 @@ public class ReporteMenu {
 		int i = 0;
 
 		List<Categoria> listaCategorias = new ArrayList<Categoria>();
-		listaCategorias = categoriaDAO.find(attributes, values, order, index,size);
+		listaCategorias = categoriaDAO.find(attributes, values, order, index, size);
 		this.categorias = new SelectItem[listaCategorias.size()];
 		for (Categoria e : listaCategorias) {
 			this.categorias[i] = new SelectItem(e.getId(), e.getNombre());
@@ -181,6 +184,5 @@ public class ReporteMenu {
 	public void setCategoriaDAO(CategoriaDAO categoriaDAO) {
 		this.categoriaDAO = categoriaDAO;
 	}
-	
 
 }

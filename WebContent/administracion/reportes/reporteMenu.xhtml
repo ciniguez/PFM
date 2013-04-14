@@ -11,6 +11,9 @@
 
 		<h:form id="form">
 
+<h:panelGrid columns="2">
+
+<h:panelGroup>
 			<h:panelGrid columns="2">
 				<f:facet name="header">  
         			Stock de Productos
@@ -35,7 +38,9 @@
 				<h:commandButton id="btnReporteStock" value="PDF"
 					actionListener="#{reporte.generarPDF}" />
 			</h:panelGrid>
+</h:panelGroup>
 
+</h:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>
