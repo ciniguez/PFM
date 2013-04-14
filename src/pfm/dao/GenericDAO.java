@@ -16,5 +16,7 @@ public interface GenericDAO<T, ID> {
 
 	public List<T> find(String[] attributes, String[] values, String order,
 			int index, int size);
+	
+	public java.sql.Connection getConexion();
 
 }

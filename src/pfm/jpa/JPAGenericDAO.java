@@ -1,5 +1,6 @@
 package pfm.jpa;
 
+import java.sql.Connection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -21,8 +22,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 
 	public JPAGenericDAO(Class<T> persistentClass) {
 		this.persistentClass = persistentClass;
-		this.em = Persistence.createEntityManagerFactory("jpa")
-				.createEntityManager();
+		this.em = Persistence.createEntityManagerFactory("jpa").createEntityManager();
 	}
 
 	@Override
@@ -95,12 +95,10 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> find(String[] attributes, String[] values, String order,
-			int index, int size) {
+	public List<T> find(String[] attributes, String[] values, String order, int index, int size) {
 		// Se crea un criterio de consulta
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<T> criteriaQuery = criteriaBuilder
-				.createQuery(this.persistentClass);
+		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
 		// Se establece la clausula FROM
 		Root<T> root = criteriaQuery.from(this.persistentClass);
 		// Se establece la clausula SELECT
@@ -109,8 +107,7 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 									// combinados por AND
 		Predicate predicate = criteriaBuilder.conjunction();
 		for (int i = 0; i < attributes.length; i++) {
-			Predicate sig = criteriaBuilder.like(
-					root.get(attributes[i]).as(String.class), values[i]);
+			Predicate sig = criteriaBuilder.like(root.get(attributes[i]).as(String.class), values[i]);
 			// Predicate sig =
 			// criteriaBuilder.like(root.get(attributes[i]).as(String.class),
 			// values[i]);
@@ -135,6 +132,14 @@ public class JPAGenericDAO<T, ID> implements GenericDAO<T, ID> {
 			return query.getResultList();
 		}
 
+	}
+
+	@Override
+	public Connection getConexion() {
+		em.getTransaction().begin();
+		java.sql.Connection connection = em.unwrap(java.sql.Connection.class);
+		em.getTransaction().commit();
+		return connection;
 	}
 
 }
