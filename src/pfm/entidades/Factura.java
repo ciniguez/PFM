@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Factura
  * 
  */
-@NamedQuery(name = "getFacturasByEmpleado", query = "SELECT f FROM Factura f WHERE f.empleadoAgencia = :empleadoAgencia")
+@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia")
 @Entity
 public class Factura implements Serializable {
 
