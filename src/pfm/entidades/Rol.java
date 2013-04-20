@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity implementation class for Entity: UsuarioRol
  * 
  */
+@XmlRootElement
 @Entity
 public class Rol implements Serializable {
 

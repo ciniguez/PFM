@@ -6,12 +6,14 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity implementation class for Entity: Usuario
  * 
  */
 @NamedQuery(name = "getEmpleado", query = "SELECT u FROM Usuario u WHERE u.rol = :rol AND u.eliminado = :eliminado")
+@XmlRootElement
 @Entity
 public class Usuario implements Serializable {
 
