@@ -51,9 +51,10 @@
 
 				<h:outputLabel for="password" value="Clave:"
 					style="font-weight:bold" />
-				<p:inputText id="password" value="#{crearUsuario.usuario.password}"
-					required="true"
+				<h:inputSecret value="#{crearUsuario.usuario.password}"
+					rendered="true"
 					requiredMessage="Debe ingresar el PASSWORD de la Usuario" />
+
 
 				<h:outputLabel for="telefono" value="Telefono:"
 					style="font-weight:bold" />
@@ -67,8 +68,7 @@
 					required="true"
 					requiredMessage="Debe ingresar el USERNAME de la Usuario" />
 
-				<h:outputLabel for="rol_id" value="Rol:"
-					style="font-weight:bold" />
+				<h:outputLabel for="rol_id" value="Rol:" style="font-weight:bold" />
 				<p:selectOneMenu id="rol_id" value="#{crearUsuario.rol}"
 					style="width:210px">
 					<f:selectItems value="#{crearUsuario.roles}" />

@@ -6,12 +6,14 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity implementation class for Entity: Usuario
  * 
  */
 @NamedQuery(name = "getEmpleado", query = "SELECT u FROM Usuario u WHERE u.rol = :rol AND u.eliminado = :eliminado")
+@XmlRootElement
 @Entity
 public class Usuario implements Serializable {
 
@@ -150,15 +152,13 @@ public class Usuario implements Serializable {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-
 	public Set<Factura> getFacturaCliente() {
 		return facturaCliente;
 	}
-
+	
 	public void setFacturaCliente(Set<Factura> facturaCliente) {
 		this.facturaCliente = facturaCliente;
 	}
-
 	public Set<EmpleadoAgencia> getEmpleadoAgencia() {
 		return empleadoAgencia;
 	}
@@ -167,11 +167,12 @@ public class Usuario implements Serializable {
 		this.empleadoAgencia = empleadoAgencia;
 	}
 
+
 	@Override
 	public String toString() {
 		return nombres + " " + apellidos;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

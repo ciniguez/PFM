@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity implementation class for Entity: Factura
  * 
  */
-@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia")
+@XmlRootElement
+@NamedQuery(name = "getFacturasByEmpleado", query = "SELECT f FROM Factura f WHERE f.empleadoAgencia = :empleadoAgencia")
 @Entity
 public class Factura implements Serializable {
 
