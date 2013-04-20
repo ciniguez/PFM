@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.persistence.annotations.Index;
 import org.eclipse.persistence.annotations.Indexes;
@@ -12,6 +14,7 @@ import org.eclipse.persistence.annotations.Indexes;
  * Entity implementation class for Entity: EmpleadoAgencia
  * 
  */
+@XmlRootElement
 @NamedQuery(name = "getAgenciaByEmpleado", query = "SELECT a FROM EmpleadoAgencia a WHERE a.empleado = :empleado")
 @Entity
 @Table(name = "EMPLEADO_AGENCIA")
@@ -28,6 +31,7 @@ public class EmpleadoAgencia implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@ManyToOne
+	@XmlTransient
 	@JoinColumn(nullable = false)
 	private Usuario empleado;
 	@ManyToOne

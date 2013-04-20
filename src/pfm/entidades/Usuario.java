@@ -152,15 +152,13 @@ public class Usuario implements Serializable {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-
 	public Set<Factura> getFacturaCliente() {
 		return facturaCliente;
 	}
-
+	
 	public void setFacturaCliente(Set<Factura> facturaCliente) {
 		this.facturaCliente = facturaCliente;
 	}
-
 	public Set<EmpleadoAgencia> getEmpleadoAgencia() {
 		return empleadoAgencia;
 	}
@@ -169,11 +167,12 @@ public class Usuario implements Serializable {
 		this.empleadoAgencia = empleadoAgencia;
 	}
 
+
 	@Override
 	public String toString() {
 		return nombres + " " + apellidos;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

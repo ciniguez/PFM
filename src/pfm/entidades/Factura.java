@@ -5,11 +5,14 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity implementation class for Entity: Factura
  * 
  */
+@XmlRootElement
 @NamedQuery(name = "getFacturasByEmpleado", query = "SELECT f FROM Factura f WHERE f.empleadoAgencia = :empleadoAgencia")
 @Entity
 public class Factura implements Serializable {
@@ -33,9 +36,11 @@ public class Factura implements Serializable {
 	@Column(nullable = false)
 	private boolean pagado;
 	@ManyToOne
+	@XmlTransient
 	@JoinColumn(nullable = false)
 	private Usuario cliente;
 	@ManyToOne
+	@XmlTransient
 	@JoinColumn
 	private EmpleadoAgencia empleadoAgencia;
 	@OneToOne
