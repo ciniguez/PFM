@@ -12,8 +12,8 @@ import pfm.dao.UsuarioDAO;
 import pfm.entidades.EmpleadoAgencia;
 import pfm.entidades.Factura;
 
-@ManagedBean(name = "listarFactura")
-public class ListarFactura implements Serializable {
+@ManagedBean(name = "listarFacturaPendiente")
+public class ListarFacturaPendiente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.facturaDAO}")
@@ -26,7 +26,7 @@ public class ListarFactura implements Serializable {
 	private List<Factura> filtered;
 	private Factura[] selectedFacturas;
 
-	public ListarFactura() {
+	public ListarFacturaPendiente() {
 
 	}
 
@@ -55,11 +55,16 @@ public class ListarFactura implements Serializable {
 	}
 
 	public List<Factura> getLista() {
-		EmpleadoAgencia empleadoAgencia = new EmpleadoAgencia();
-		// AQUI DEBE IR EL ID DEL EMPLEADO Q HAYA INICIADO SESION
-		empleadoAgencia = empleadoAgenciaDAO.getAgenciaByEmpleado(empleadoDAO
-				.read(1));
-		setLista(facturaDAO.getFacturasByEmpleado(empleadoAgencia));
+		try {
+			EmpleadoAgencia empleadoAgencia = new EmpleadoAgencia();
+			// AQUI DEBE IR EL ID DEL EMPLEADO Q HAYA INICIADO SESION
+			empleadoAgencia = empleadoAgenciaDAO
+					.getAgenciaByEmpleado(empleadoDAO.read(3));
+			setLista(facturaDAO.getFacturasByAgencia(
+					empleadoAgencia.getAgencia(), false));
+		} catch (Exception e) {
+			System.out.println("ERROR <<ListarFactura>>: getLista()" + e);
+		}
 		return lista;
 	}
 

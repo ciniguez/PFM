@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import pfm.dao.FacturaDAO;
-import pfm.entidades.EmpleadoAgencia;
+import pfm.entidades.Agencia;
 import pfm.entidades.Factura;
 
 public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
@@ -16,9 +16,10 @@ public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
 	}
 
 	@Override
-	public List<Factura> getFacturasByEmpleado(EmpleadoAgencia empleadoAgencia) {
-		Query query = em.createNamedQuery("getFacturasByEmpleado");
-		query.setParameter("empleadoAgencia", empleadoAgencia);
+	public List<Factura> getFacturasByAgencia(Agencia agencia, boolean pagado) {
+		Query query = em.createNamedQuery("getFacturasByAgencia");
+		query.setParameter("agencia", agencia);
+		query.setParameter("pagado", pagado);
 		@SuppressWarnings("unchecked")
 		List<Factura> resultado = query.getResultList();
 		return resultado;

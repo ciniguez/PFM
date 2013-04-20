@@ -12,8 +12,9 @@ import javax.xml.bind.annotation.XmlTransient;
  * Entity implementation class for Entity: Factura
  * 
  */
+
+@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia")
 @XmlRootElement
-@NamedQuery(name = "getFacturasByEmpleado", query = "SELECT f FROM Factura f WHERE f.empleadoAgencia = :empleadoAgencia")
 @Entity
 public class Factura implements Serializable {
 
@@ -35,6 +36,8 @@ public class Factura implements Serializable {
 	private double total;
 	@Column(nullable = false)
 	private boolean pagado;
+	@Column(nullable = false)
+	private boolean pendiente;
 	@ManyToOne
 	@XmlTransient
 	@JoinColumn(nullable = false)
@@ -58,7 +61,8 @@ public class Factura implements Serializable {
 	}
 
 	public Factura(int id, Date fecha, boolean eliminado, double subtotal,
-			double iva, double descuento, double total, boolean pagado) {
+			double iva, double descuento, double total, boolean pagado,
+			boolean pendiente) {
 		this.id = id;
 		this.fecha = fecha;
 		this.eliminado = eliminado;
@@ -67,6 +71,7 @@ public class Factura implements Serializable {
 		this.descuento = descuento;
 		this.total = total;
 		this.pagado = pagado;
+		this.pendiente = pendiente;
 	}
 
 	public int getId() {
@@ -133,6 +138,14 @@ public class Factura implements Serializable {
 		this.pagado = pagado;
 	}
 
+	public void setPendiente(boolean pendiente) {
+		this.pendiente = pendiente;
+	}
+
+	public boolean isPendiente() {
+		return pendiente;
+	}
+
 	public Usuario getCliente() {
 		return cliente;
 	}
@@ -178,10 +191,10 @@ public class Factura implements Serializable {
 		return "Factura [id=" + id + ", fecha=" + fecha + ", eliminado="
 				+ eliminado + ", subtotal=" + subtotal + ", iva=" + iva
 				+ ", descuento=" + descuento + ", total=" + total + ", pagado="
-				+ pagado + ", cliente=" + cliente + ", empleadoAgencia="
-				+ empleadoAgencia + ", medioDePago=" + medioDePago
-				+ ", agencia=" + agencia + ", facturaDetalle=" + facturaDetalle
-				+ "]";
+				+ pagado + ", pendiente=" + pendiente + ", cliente=" + cliente
+				+ ", empleadoAgencia=" + empleadoAgencia + ", medioDePago="
+				+ medioDePago + ", agencia=" + agencia + ", facturaDetalle="
+				+ facturaDetalle + "]";
 	}
 
 	@Override
@@ -203,6 +216,7 @@ public class Factura implements Serializable {
 		result = prime * result
 				+ ((medioDePago == null) ? 0 : medioDePago.hashCode());
 		result = prime * result + (pagado ? 1231 : 1237);
+		result = prime * result + (pendiente ? 1231 : 1237);
 		temp = Double.doubleToLongBits(subtotal);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(total);
@@ -254,6 +268,8 @@ public class Factura implements Serializable {
 		} else if (!medioDePago.equals(other.medioDePago))
 			return false;
 		if (pagado != other.pagado)
+			return false;
+		if (pendiente != other.pendiente)
 			return false;
 		if (Double.doubleToLongBits(subtotal) != Double
 				.doubleToLongBits(other.subtotal))
