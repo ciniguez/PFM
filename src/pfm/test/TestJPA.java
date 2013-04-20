@@ -1,5 +1,8 @@
 package pfm.test;
 
+import pfm.entidades.Empresa;
+import pfm.jpa.JPADAOFactory;
+
 
 
 
@@ -10,7 +13,7 @@ public class TestJPA {
 	 */
 	public static void main(String[] args) {
 
-		/*
+		
 		try {
 			Empresa empresa = new Empresa();
 			empresa.setTelefono("");
@@ -22,6 +25,6 @@ public class TestJPA {
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-*/
+
 	}
 }
