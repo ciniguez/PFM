@@ -12,9 +12,9 @@
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="fac"
-				value="#{listarFacturaPendiente.lista}" paginator="true" rows="10"
-				filteredValue="#{listarFacturaPendiente.filtered}"
+			<p:dataTable id="dataTableFactura" var="fac"
+				value="#{listarFacturaPendiente.listaFacturas}" paginator="true"
+				rows="10" filteredValue="#{listarFacturaPendiente.filteredFacturas}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				selection="#{listarFacturaPendiente.selectedFacturas}"
 				rowKey="#{fac.id}">
@@ -109,9 +109,11 @@
 				</p:column>
 
 				<p:column style="width:6%">
-					<h:link value="Modificar" outcome="listarFacturaDetalle">
-						<f:param name="id" value="#{fac.id}" />
-					</h:link>
+					<p:commandButton id="selectButton" update=":form:display"
+						oncomplete="carDialog.show()" icon="ui-icon-search" title="Ver">
+						<f:setPropertyActionListener value="#{fac}"
+							target="#{listarFacturaPendiente.selectedFactura}" />
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 			<p:commandButton action="#{listarFacturaPendiente.onCrear}"
@@ -120,6 +122,146 @@
 				update=":form :form:messages" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarFacturaPendiente.onAlta}"
 				update=":form :form:messages" value="Dar de Alta" />
+
+			<p:dialog header="Factura Detalle" widgetVar="carDialog"
+				resizable="false" id="carDlg" showEffect="fade" hideEffect="explode"
+				modal="true">
+				<p:panelGrid id="display" columns="1" cellpadding="4"
+					style="margin:0 auto;">
+					<p:panelGrid id="grid" columns="6" cellpadding="5">
+						<f:facet name="header">          			
+        					Factura No: #{listarFacturaPendiente.selectedFactura.id}
+						</f:facet>
+
+						<h:outputLabel for="empresa" value="Empresa:"
+							style="font-weight:bold" />
+						<h:outputText id="empresa"
+							value="#{listarFacturaPendiente.selectedFactura.agencia.empresa.razonSocial}" />
+
+						<h:outputLabel for="agencia" value="Agencia:"
+							style="font-weight:bold" />
+						<h:outputText id="agencia"
+							value="#{listarFacturaPendiente.selectedFactura.agencia.nombre}" />
+
+						<h:outputLabel for="fecha" value="Fecha:" style="font-weight:bold" />
+						<h:outputText id="fecha"
+							value="#{listarFacturaPendiente.selectedFactura.fecha}">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText>
+
+						<h:outputLabel for="cliente" value="Cliente:"
+							style="font-weight:bold" />
+						<h:outputText id="cliente"
+							value="#{listarFacturaPendiente.selectedFactura.cliente}" />
+
+						<h:outputLabel for="direccion" value="Direccion:"
+							style="font-weight:bold" />
+						<h:outputText id="direccion"
+							value="#{listarFacturaPendiente.selectedFactura.cliente.direccion}" />
+
+						<h:outputLabel for="telefono" value="Telefono:"
+							style="font-weight:bold" />
+						<h:outputText id="telefono"
+							value="#{listarFacturaPendiente.selectedFactura.cliente.telefono}" />
+
+					</p:panelGrid>
+
+					<p:dataTable id="dataTableDetalle" var="det"
+						value="#{listarFacturaPendiente.listaFacturaDetalle}"
+						editable="true"
+						selection="#{listarFacturaPendiente.selectedFacturaDetalle}"
+						rowKey="#{det.id}">
+
+						<p:ajax event="rowEdit"
+							listener="#{listarFacturaPendiente.onModificar}"
+							update=":form:messages" />
+
+						<p:ajax event="rowEditCancel"
+							listener="#{listarFacturaPendiente.onCancel}"
+							update=":form:messages" />
+
+						<p:column selectionMode="multiple" style="width:2%" />
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Id" />
+							</f:facet>
+							<h:outputText value="#{det.bodegaDetalle.producto.id}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nombre" />
+							</f:facet>
+							<h:outputText value="#{det.bodegaDetalle.producto.nombre}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Precio" />
+							</f:facet>
+							<h:outputText value="#{det.precio}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Cantidad" />
+							</f:facet>
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{det.cantidad}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{det.cantidad}" style="width:100%"
+										label="Cantidad" required="true"
+										requiredMessage="Debe ingresar cantidad" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Descuento" />
+							</f:facet>
+							<h:outputText value="#{det.descuento}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Subtotal" />
+							</f:facet>
+							<h:outputText value="#{det.subtotal}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Iva" />
+							</f:facet>
+							<h:outputText value="#{det.iva}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Total" />
+							</f:facet>
+							<h:outputText value="#{det.total}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Eliminado" />
+							</f:facet>
+
+							<h:outputText value="Si" rendered="#{det.eliminado}" />
+							<h:outputText value="No" rendered="#{!det.eliminado}" />
+						</p:column>
+
+						<p:column style="width:6%">
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+			</p:dialog>
 		</h:form>
 
 

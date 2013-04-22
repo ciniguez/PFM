@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.BodegaDetalleDAO;
@@ -15,6 +16,7 @@ import pfm.dao.FacturaDetalleDAO;
 import pfm.entidades.FacturaDetalle;
 
 @ManagedBean(name = "modificarFacturaDetalle")
+@SessionScoped
 public class ModificarFacturaDetalle implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -1,6 +1,7 @@
 package pfm.jpa;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import pfm.dao.AgenciaDAO;
 import pfm.dao.BodegaDAO;
@@ -20,6 +21,7 @@ import pfm.dao.RolDAO;
 import pfm.dao.UsuarioDAO;
 
 @ManagedBean(name = "DAOFactory")
+@SessionScoped
 public class JPADAOFactory extends DAOFactory {
 
 	@Override
@@ -93,7 +95,7 @@ public class JPADAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public EmpleadoAgenciaDAO getEmpleadoAgenciaDAO() {		
+	public EmpleadoAgenciaDAO getEmpleadoAgenciaDAO() {
 		return new JPAEmpleadoAgenciaDAO();
 	}
 

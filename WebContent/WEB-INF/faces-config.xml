@@ -8,11 +8,4 @@
 <lifecycle> 
 	<phase-listener>pfm.beans.cicloVida.MyPhaseListener</phase-listener>
 </lifecycle>
-<navigation-rule> 
-    <from-view-id>/administracion/factura/listarFacturaPendiente.xhtml</from-view-id> 
-    	<navigation-case>
-			<from-outcome>listarFacturaDetalle</from-outcome>
-			<to-view-id>/administracion/factura/listarFacturaDetalle.xhtml</to-view-id> 
-		</navigation-case>		 
-</navigation-rule>  
 </faces-config>
