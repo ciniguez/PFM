@@ -1,6 +1,9 @@
 package pfm.beans.rest;
 
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Set;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,6 +14,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import pfm.entidades.BodegaDetalle;
+import pfm.entidades.Empresa;
+import pfm.entidades.Factura;
+import pfm.entidades.FacturaDetalle;
+import pfm.entidades.Producto;
+import pfm.jpa.JPADAOFactory;
 
 /**
  * Esta clase representa un SERVICIO WEB, que tiene como funcion exponer metodos
@@ -27,10 +37,29 @@ public class CompraResource {
 	 * @return Archivo JSON del Usuario, XML o Texto Plano (depende de que acepte el cliente).
 	 */
 	@GET
-	@Path("/{id}")
-	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
-	public void listarCarroComprasJSON(@PathParam("id") Integer id) {
-		//TODO: programar listarCarroComprasJSON
+	@Path("/{idusuario}")
+	@Produces({ MediaType.APPLICATION_XML })
+	@Consumes({ MediaType.APPLICATION_XML })
+	public Response listarProductosCuentaXML(@PathParam("id") int idUsuario) {
+		Set<FacturaDetalle> productos = null;
+		String[] attributes = { "eliminado", "clienteId", "pendiente" };
+		String[] values = { "0", String.valueOf(idUsuario), "1" };
+		String order = "id";
+		int index = -1;
+		int size = -1;
+		List<Factura> carrosCompras = JPADAOFactory.getFactory().getFacturaDAO().find(attributes, values, order, index, size);
+
+		if (carrosCompras.size() == 1) {
+			Factura carroCompras = carrosCompras.get(0);
+			productos = carroCompras.getFacturaDetalle();
+		}
+
+		if (productos != null) {
+			//TODO Investigar la devolucion del Response.status
+			return Response.ok(productos).build();
+		} else {
+			return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for UUID: " + idUsuario).build();
+		}
 	}
 
 	/**
@@ -42,20 +71,38 @@ public class CompraResource {
 	@POST
 	@Path("/add/{idbodegadetalle}/{idfactura}/{cantidad}")
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response addProductoXML(int idBodegaDetalle, int idFactura, int cantidad) throws URISyntaxException {
-		/*
-		 * FacturaDetalle detalle = new FacturaDetalle();
-		 * detalle.setBodegaDetalle
-		 * (JPADAOFactory.getFactory().getBodegaDetalleDAO
-		 * ().read(idBodegaDetalle)); detalle.setCantidad(cantidad);
-		 * detalle.setDescuento
-		 * (JPADAOFactory.getFactory().getDescuentoProductoDAO().)
-		 * 
-		 * if (JPADAOFactory.getFactory().getUsuarioDAO().create(user)) return
-		 * Response.status(204).entity("1").build(); else return
-		 * Response.status(204).entity("-1").build();
-		 */
-		return Response.status(204).entity("1").build();
+	@Produces({ MediaType.APPLICATION_XML})
+	public Response addProductoXML(int idBodegaDetalle,  int idFactura,int idUsuario, int cantidad) throws URISyntaxException {
+		Factura factura = JPADAOFactory.getFactory().getFacturaDAO().read(idFactura);
+		//Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
+		//List<Factura> facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByCliente(cliente);
+		BodegaDetalle bodegaDetalle = JPADAOFactory.getFactory().getBodegaDetalleDAO().read(idBodegaDetalle);
+		Producto producto = bodegaDetalle.getProducto();
+		Empresa empresa = bodegaDetalle.getBodega().getAgencia().getEmpresa();
+		int idDescuento = JPADAOFactory.getFactory().getDescuentoProductoDAO().getDescuentoId(producto, false);
+		double valorDescuento = JPADAOFactory.getFactory().getDescuentoDAO().getValorDescuentoByFecha(idDescuento, false);
+		double subtotal= (cantidad * bodegaDetalle.getPrecio())-valorDescuento;
+
+		
+		//Creación de la Factura Detalle
+		FacturaDetalle facturaDetalle = new FacturaDetalle();
+		facturaDetalle.setBodegaDetalle(bodegaDetalle);
+		facturaDetalle.setCantidad(cantidad);
+		facturaDetalle.setDescuento(valorDescuento);
+		facturaDetalle.setEliminado(false);
+		facturaDetalle.setFactura(factura);
+		facturaDetalle.setIva(empresa.getIva());
+		facturaDetalle.setPrecio(bodegaDetalle.getPrecio());
+		facturaDetalle.setSubtotal(subtotal);
+		facturaDetalle.setTotal(subtotal);
+		JPADAOFactory.getFactory().getFacturaDetalleDAO().create(facturaDetalle);
+		
+		//Disminuyo Stock.
+		bodegaDetalle.setCantidad(bodegaDetalle.getCantidad()-cantidad);
+		JPADAOFactory.getFactory().getBodegaDetalleDAO().update(bodegaDetalle);
+		
+		return Response.status(Response.Status.ACCEPTED).build();
+		
 	}
 
 	/**
@@ -68,7 +115,7 @@ public class CompraResource {
 	@Path("/enviar")
 	@Consumes(MediaType.APPLICATION_XML)
 	public void confirmarComprasXML() {
-		
+
 	}
 
 	/**
@@ -79,7 +126,7 @@ public class CompraResource {
 	@DELETE
 	@Path("/delete/{id}")
 	public Response eliminarProducto(@PathParam("id") Integer id) {
-		
+
 		return Response.status(204).entity("1").build();
 	}
 }
