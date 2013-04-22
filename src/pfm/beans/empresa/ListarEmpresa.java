@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
@@ -14,6 +15,7 @@ import pfm.dao.EmpresaDAO;
 import pfm.entidades.Empresa;
 
 @ManagedBean(name = "listarEmpresa")
+@SessionScoped
 public class ListarEmpresa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
