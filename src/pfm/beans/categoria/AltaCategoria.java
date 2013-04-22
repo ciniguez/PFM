@@ -5,12 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.CategoriaDAO;
 import pfm.entidades.Categoria;
 
 @ManagedBean(name = "altaCategoria")
+@SessionScoped
 public class AltaCategoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
