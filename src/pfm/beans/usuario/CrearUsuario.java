@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-
 import pfm.dao.RolDAO;
 import pfm.dao.UsuarioDAO;
 import pfm.entidades.Rol;
@@ -49,11 +48,12 @@ public class CrearUsuario implements Serializable {
 
 	public String crear() {
 		try {
+			usuario.setRol(rolDAO.read(Integer.parseInt(this.getRol())));
 			usuarioDAO.create(usuario);
-			FacesMessage msg = new FacesMessage("Usuario creada");
+			FacesMessage msg = new FacesMessage("Usuario creado");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage("Error", "Usuario no creada");
+			FacesMessage msg = new FacesMessage("Error", "Usuario no creado");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 
@@ -97,5 +97,6 @@ public class CrearUsuario implements Serializable {
 	public void setRolDAO(RolDAO rolDAO) {
 		this.rolDAO = rolDAO;
 	}
+
 
 }
