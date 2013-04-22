@@ -31,9 +31,6 @@
 
 
 
-
-
-
 				<p:column filterBy="#{item.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
@@ -41,6 +38,37 @@
 					<h:outputText value="#{item.id}" />
 				</p:column>
 
+				<p:column filterBy="#{item.username}">
+					<f:facet name="header">
+						<h:outputText value="Usuario de Acceso" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{item.username}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{item.username}" style="width:100%"
+								label="Nombre de Usuario" required="true"
+								requiredMessage="Debe ingresar la username de la usuario" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{item.nombres}">
+					<f:facet name="header">
+						<h:outputText value="Nombres" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{item.nombres}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{item.nombres}" style="width:100%"
+								label="Nombres" required="true"
+								requiredMessage="Debe ingresar la nombres de la usuario" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
 
 				<p:column filterBy="#{item.apellidos}">
@@ -61,24 +89,6 @@
 
 
 
-				<p:column filterBy="#{item.direccion}">
-					<f:facet name="header">
-						<h:outputText value="Direccion" />
-					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{item.direccion}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{item.direccion}" style="width:100%"
-								label="Direccion" required="true"
-								requiredMessage="Debe ingresar la direccion de la usuario" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-
-
 				<p:column filterBy="#{item.email}">
 					<f:facet name="header">
 						<h:outputText value="Email" />
@@ -88,16 +98,19 @@
 							<h:outputText value="#{item.email}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.email}" style="width:100%"
-								label="Email" required="true"
-								requiredMessage="Debe ingresar la email de la usuario" />
+							<p:inputText id="email" value="#{item.email}" label="Email"
+								required="true" requiredMessage="Debe ingresar el EMAIL"
+								validatorMessage="El correo ingresado no tiene formato.">
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</p:inputText>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
 
 
-				<p:column filterBy="#{item.fecha_nacimiento}">
+				<p:column filterBy="#{item.fechaNacimiento}">
 					<f:facet name="header">
 						<h:outputText value="Fecha Nacimiento" />
 					</f:facet>
@@ -106,45 +119,9 @@
 							<h:outputText value="#{item.fechaNacimiento}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.fechaNacimiento}" style="width:100%"
-								label="Fecha Nacimiento" required="true"
-								requiredMessage="Debe ingresar la fecha de nacimiento de la usuario" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-
-
-				<p:column filterBy="#{item.nombres}">
-					<f:facet name="header">
-						<h:outputText value="Nombres" />
-					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{item.nombres}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{item.nombres}" style="width:100%"
-								label="Nombres" required="true"
-								requiredMessage="Debe ingresar la nombres de la usuario" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-
-
-				<p:column filterBy="#{item.password}">
-					<f:facet name="header">
-						<h:outputText value="Clave" />
-					</f:facet>
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{item.password}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{item.password}" style="width:100%"
-								label="Clave" required="true"
-								requiredMessage="Debe ingresar la password de la usuario" />
+							<p:calendar id="cal" value="#{item.fechaNacimiento}"
+								navigator="true" display="inline" required="true"
+								requiredMessage="Debe ingresar la Fecha de Nacimiento" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -167,23 +144,22 @@
 					</p:cellEditor>
 				</p:column>
 
-
-
-				<p:column filterBy="#{item.username}">
+				<p:column filterBy="#{item.direccion}">
 					<f:facet name="header">
-						<h:outputText value="Nombre de Usuario" />
+						<h:outputText value="Direccion" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.username}" />
+							<h:outputText value="#{item.direccion}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.username}" style="width:100%"
-								label="Nombre de Usuario" required="true"
-								requiredMessage="Debe ingresar la username de la usuario" />
+							<p:inputText value="#{item.direccion}" style="width:100%"
+								label="Direccion" required="true"
+								requiredMessage="Debe ingresar la direccion de la usuario" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
+
 
 
 				<p:column filterBy="#{item.rol}">
@@ -201,9 +177,6 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-
-
 
 
 

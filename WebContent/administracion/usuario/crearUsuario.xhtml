@@ -14,65 +14,79 @@
 
 			<p:panelGrid id="grid" columns="2" cellpadding="5">
 				<f:facet name="header">  
-        			Crear de Usuario
+        			Creacion de Usuario
         			<p:messages />
 				</f:facet>
 
+				<h:outputLabel for="nombres" value="Nombres: *"
+					style="font-weight:bold" />
+				<p:inputText id="nombres" value="#{crearUsuario.usuario.nombres}"
+					required="true" requiredMessage="Debe ingresar los NOMBRES" />
 
-				<h:outputLabel for="apellidos" value="Apellidos:"
+				<h:outputLabel for="apellidos" value="Apellidos: *"
 					style="font-weight:bold" />
 				<p:inputText id="apellidos"
 					value="#{crearUsuario.usuario.apellidos}" required="true"
-					requiredMessage="Debe ingresar el APELLIDOS de la Usuario" />
+					requiredMessage="Debe ingresar el APELLIDOS" />
 
-				<h:outputLabel for="direccion" value="Direccion:"
-					style="font-weight:bold" />
-				<p:inputText id="direccion"
-					value="#{crearUsuario.usuario.direccion}" required="true"
-					requiredMessage="Debe ingresar el DIRECCION de la Usuario" />
+				<h:outputLabel for="email" value="Email: *" style="font-weight:bold" />
+				<h:panelGroup>
+					<p:inputText id="email" value="#{crearUsuario.usuario.email}"
+						required="true" requiredMessage="Debe ingresar el EMAIL"
+						validatorMessage="El correo ingresado no tiene formato.">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
-
-				<h:outputLabel for="email" value="Email:" style="font-weight:bold" />
-				<p:inputText id="email" value="#{crearUsuario.usuario.email}"
-					required="true"
-					requiredMessage="Debe ingresar el EMAIL de la Usuario" />
+					</p:inputText>
+					<p:watermark for="email" value="Correo Electronico *" />
+					<p:message for="email" />
+				</h:panelGroup>
 
 				<h:outputLabel for="fecha_nacimiento" value="Fecha Nacimiento:"
 					style="font-weight:bold" />
-				<p:inputText id="fecha_nacimiento"
-					value="#{crearUsuario.usuario.fechaNacimiento}" required="true"
-					requiredMessage="Debe ingresar el FECHA_NACIMIENTO de la Usuario" />
+				<p:calendar id="fecha_nacimiento"
+					value="#{crearUsuario.usuario.fechaNacimiento}" navigator="true"
+					display="inline" required="true"
+					requiredMessage="Debe ingresar la Fecha de Nacimiento" />
 
-				<h:outputLabel for="nombres" value="Nombres:"
+				<h:outputLabel for="telefono" value="Telefono: "
 					style="font-weight:bold" />
-				<p:inputText id="nombres" value="#{crearUsuario.usuario.nombres}"
-					required="true"
-					requiredMessage="Debe ingresar el NOMBRES de la Usuario" />
+				<p:inputText id="telefono" value="#{crearUsuario.usuario.telefono}"/>
 
-				<h:outputLabel for="password" value="Clave:"
-					style="font-weight:bold" />
-				<h:inputSecret value="#{crearUsuario.usuario.password}"
-					rendered="true"
-					requiredMessage="Debe ingresar el PASSWORD de la Usuario" />
-
-
-				<h:outputLabel for="telefono" value="Telefono:"
-					style="font-weight:bold" />
-				<p:inputText id="telefono" value="#{crearUsuario.usuario.telefono}"
-					required="true"
-					requiredMessage="Debe ingresar el TELEFONO de la Usuario" />
-
-				<h:outputLabel for="username" value="Nombre de Usuario:"
-					style="font-weight:bold" />
-				<p:inputText id="username" value="#{crearUsuario.usuario.username}"
-					required="true"
-					requiredMessage="Debe ingresar el USERNAME de la Usuario" />
-
-				<h:outputLabel for="rol_id" value="Rol:" style="font-weight:bold" />
+				<h:outputLabel for="rol_id" value="Rol: *" style="font-weight:bold" />
 				<p:selectOneMenu id="rol_id" value="#{crearUsuario.rol}"
 					style="width:210px">
 					<f:selectItems value="#{crearUsuario.roles}" />
 				</p:selectOneMenu>
+
+				<h:outputLabel for="direccion" value="Direccion:"
+					style="font-weight:bold" />
+				<p:inputText id="direccion"
+					value="#{crearUsuario.usuario.direccion}"/>
+
+				<h:outputLabel for="username" value="Nombre de Usuario: *"
+					style="font-weight:bold" />
+				<h:panelGroup>
+					<p:inputText id="username" value="#{crearUsuario.usuario.username}"
+						required="true" requiredMessage="Debe ingresar el NOMBRE DE USUARIO" />
+					<p:message for="username" />
+				</h:panelGroup>
+
+				<h:outputLabel for="password" value="Clave: *"
+					style="font-weight:bold" />
+				<h:panelGroup>
+					<p:password id="password" value="#{crearUsuario.usuario.password}" required="true"
+						rendered="true" requiredMessage="Debe ingresar el PASSWORD"
+						match="passwordRepeticion">
+						<f:validateLength minimum="4" maximum="8" />
+					</p:password>
+					<p:message for="password" />
+				</h:panelGroup>
+
+				<h:outputLabel for="passwordRepeticion" value="Repita Clave: *"
+					style="font-weight:bold" />
+				<p:password id="passwordRepeticion" rendered="true"
+					requiredMessage="Debe ingresar el PASSWORD" />
 
 
 				<f:facet name="footer">
@@ -82,6 +96,7 @@
 						icon="ui-icon-cancel" />
 				</f:facet>
 			</p:panelGrid>
+
 
 		</h:form>
 
