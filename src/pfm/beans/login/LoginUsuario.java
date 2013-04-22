@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+
 import pfm.dao.UsuarioDAO;
 import pfm.entidades.Usuario;
 import pfm.jpa.JPADAOFactory;
 
 @ManagedBean(name = "loginUsuario")
+@SessionScoped
 public class LoginUsuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
