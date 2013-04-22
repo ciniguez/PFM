@@ -10,13 +10,14 @@ import org.eclipse.persistence.annotations.Indexes;
  * Entity implementation class for Entity: DescuentoProducto
  * 
  */
+@NamedQuery(name = "getDescuentoId", query = "SELECT d FROM DescuentoProducto d WHERE d.producto = :producto AND d.eliminado = :eliminado")
 @Entity
 @Table(name = "DESCUENTO_PRODUCTO")
 @Indexes({
 		@Index(name = "FK_DESCUENTO_PRODUCTO_PRODUCTO_ID", columnNames = { "PRODUCTO_ID" }),
 		@Index(name = "FK_DESCUENTO_PRODUCTO_DESCUENTO_ID", columnNames = { "DESCUENTO_ID" }),
-		@Index(name = "UK_DESCUENTO_PRODUCTO", columnNames = {
-				"PRODUCTO_ID", "DESCUENTO_ID" }, unique = true) })
+		@Index(name = "UK_DESCUENTO_PRODUCTO", columnNames = { "PRODUCTO_ID",
+				"DESCUENTO_ID" }, unique = true) })
 public class DescuentoProducto implements Serializable {
 
 	@Id

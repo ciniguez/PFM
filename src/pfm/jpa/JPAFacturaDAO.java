@@ -16,13 +16,14 @@ public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
 	}
 
 	@Override
-	public List<Factura> getFacturasByAgencia(Agencia agencia, boolean pagado) {
+	public List<Factura> getFacturasByAgencia(Agencia agencia, boolean pagado,
+			boolean pendiente) {
 		Query query = em.createNamedQuery("getFacturasByAgencia");
 		query.setParameter("agencia", agencia);
 		query.setParameter("pagado", pagado);
+		query.setParameter("pendiente", pendiente);
 		@SuppressWarnings("unchecked")
 		List<Factura> resultado = query.getResultList();
 		return resultado;
 	}
-
 }

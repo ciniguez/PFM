@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * 
  */
 
-@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia")
+@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia AND f.pagado = :pagado AND f.pendiente = :pendiente")
 @XmlRootElement
 @Entity
 public class Factura implements Serializable {

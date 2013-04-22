@@ -56,14 +56,18 @@ public class ListarFacturaPendiente implements Serializable {
 
 	public List<Factura> getLista() {
 		try {
+			// obtiene la agencai del empleado
 			EmpleadoAgencia empleadoAgencia = new EmpleadoAgencia();
 			// AQUI DEBE IR EL ID DEL EMPLEADO Q HAYA INICIADO SESION
 			empleadoAgencia = empleadoAgenciaDAO
-					.getAgenciaByEmpleado(empleadoDAO.read(3));
+					.getAgenciaByEmpleado(empleadoDAO.read(2));
+			// setea la lista de facturas con la agencia obtenida del empleado
+			// anteriormente
 			setLista(facturaDAO.getFacturasByAgencia(
-					empleadoAgencia.getAgencia(), false));
+					empleadoAgencia.getAgencia(), false, true));
 		} catch (Exception e) {
-			System.out.println("ERROR <<ListarFactura>>: getLista()" + e);
+			System.out.println("ERROR <<ListarFacturaPendiente>>: getLista()"
+					+ e);
 		}
 		return lista;
 	}

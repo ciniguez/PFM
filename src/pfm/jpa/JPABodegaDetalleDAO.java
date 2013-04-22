@@ -27,4 +27,18 @@ public class JPABodegaDetalleDAO extends JPAGenericDAO<BodegaDetalle, Integer>
 		List<BodegaDetalle> resultado = query.getResultList();
 		return resultado;
 	}
+
+	@Override
+	public double getPrecioByBodegaDetalle(int id, boolean eliminado) {
+		try {
+			Query query = em.createNamedQuery("getPrecioByBodegaDetalle");
+			query.setParameter("id", id);
+			query.setParameter("eliminado", eliminado);
+			BodegaDetalle resultado = (BodegaDetalle) query.getSingleResult();
+			return resultado.getPrecio();
+		} catch (Exception e) {
+			System.out.println("ERROR: getPrecioByBodegaDetalle " + e);
+			return 0;
+		}
+	}
 }

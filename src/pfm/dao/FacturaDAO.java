@@ -7,5 +7,6 @@ import pfm.entidades.Factura;
 
 public interface FacturaDAO extends GenericDAO<Factura, Integer> {
 
-	public List<Factura> getFacturasByAgencia(Agencia agencia, boolean pagado);
+	public List<Factura> getFacturasByAgencia(Agencia agencia, boolean pagado,
+			boolean pendiente);
 }

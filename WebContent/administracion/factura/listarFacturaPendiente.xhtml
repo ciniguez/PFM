@@ -109,10 +109,9 @@
 				</p:column>
 
 				<p:column style="width:6%">
-					<p:commandLink action="#{listarFacturaPendiente.onModificar}"
-						ajax="false" value="Modificar">
+					<h:link value="Modificar" outcome="listarFacturaDetalle">
 						<f:param name="id" value="#{fac.id}" />
-					</p:commandLink>
+					</h:link>
 				</p:column>
 			</p:dataTable>
 			<p:commandButton action="#{listarFacturaPendiente.onCrear}"

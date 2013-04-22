@@ -10,6 +10,7 @@ import org.eclipse.persistence.annotations.Indexes;
  * Entity implementation class for Entity: FacturaDetalle
  * 
  */
+@NamedQuery(name = "getFacturaDetalleByFactura", query = "SELECT d FROM FacturaDetalle d WHERE d.factura = :factura")
 @Entity
 @Table(name = "FACTURA_DETALLE")
 @Indexes({

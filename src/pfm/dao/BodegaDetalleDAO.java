@@ -10,4 +10,6 @@ public interface BodegaDetalleDAO extends GenericDAO<BodegaDetalle, Integer> {
 
 	public List<BodegaDetalle> getBodegaDetalleByBodegaAndProducto(
 			Producto producto, Bodega bodega);
+
+	public double getPrecioByBodegaDetalle(int id, boolean eliminado);
 }

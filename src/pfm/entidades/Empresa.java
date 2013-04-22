@@ -9,6 +9,7 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Empresa
  * 
  */
+@NamedQuery(name = "getIvaByEmpresa", query = "SELECT e FROM Empresa e WHERE e.id = :id AND e.eliminado = :eliminado")
 @Entity
 public class Empresa implements Serializable {
 

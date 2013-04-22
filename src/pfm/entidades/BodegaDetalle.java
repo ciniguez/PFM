@@ -12,7 +12,9 @@ import org.eclipse.persistence.annotations.Indexes;
  * Entity implementation class for Entity: BodegaDetalle
  * 
  */
-@NamedQuery(name = "getBodegaDetalleByBodegaAndProducto", query = "SELECT d FROM BodegaDetalle d WHERE d.producto = :producto AND d.bodega = :bodega")
+@NamedQueries({
+		@NamedQuery(name = "getBodegaDetalleByBodegaAndProducto", query = "SELECT d FROM BodegaDetalle d WHERE d.producto = :producto AND d.bodega = :bodega"),
+		@NamedQuery(name = "getPrecioByBodegaDetalle", query = "SELECT d FROM BodegaDetalle d WHERE d.id = :id AND d.eliminado= :eliminado") })
 @Entity
 @Table(name = "BODEGA_DETALLE")
 @Indexes({

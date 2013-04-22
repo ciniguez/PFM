@@ -11,6 +11,7 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Descuento
  * 
  */
+@NamedQuery(name = "getValorDescuentoByFecha", query = "SELECT d FROM Descuento d WHERE d.id = :id AND d.eliminado = :eliminado AND :fechaActual BETWEEN d.fechaInicio AND d.fechaFin ")
 @Entity
 public class Descuento implements Serializable {
 
