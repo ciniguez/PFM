@@ -7,7 +7,8 @@ import pfm.entidades.FacturaDetalle;
 
 public interface FacturaDetalleDAO extends GenericDAO<FacturaDetalle, Integer> {
 
-	public List<FacturaDetalle> getFacturaDetalleByFactura(Factura factura);
+	public List<FacturaDetalle> getFacturaDetalleByFactura(Factura factura,
+			boolean eliminado);
 
 	public void setPrecioByBodegaDetalle(FacturaDetalle facturaDetalle,
 			double precio);

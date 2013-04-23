@@ -115,9 +115,12 @@
 							target="#{listarFacturaPendiente.selectedFactura}" />
 					</p:commandButton>
 				</p:column>
-			</p:dataTable>
-			<p:commandButton action="#{listarFacturaPendiente.onCrear}"
-				value="Generar Factura" ajax="false" />
+			</p:dataTable>			
+			<p:commandButton actionListener="#{listarFacturaPendiente.onGenerar}"
+				update=":form :form:messages" value="Generar Factura" />
+			<p:commandButton
+				actionListener="#{listarFacturaPendiente.onImprimir}"
+				update=":form :form:messages" value="Imprimir" />
 			<p:commandButton actionListener="#{listarFacturaPendiente.onBaja}"
 				update=":form :form:messages" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarFacturaPendiente.onAlta}"
@@ -128,7 +131,9 @@
 				modal="true">
 				<p:panelGrid id="display" columns="1" cellpadding="4"
 					style="margin:0 auto;">
-					<p:panelGrid id="grid" columns="6" cellpadding="5">
+
+					<p:panelGrid id="gridCabecera" columns="6" cellpadding="5"
+						style="width:100%;">
 						<f:facet name="header">          			
         					Factura No: #{listarFacturaPendiente.selectedFactura.id}
 						</f:facet>
@@ -167,20 +172,7 @@
 					</p:panelGrid>
 
 					<p:dataTable id="dataTableDetalle" var="det"
-						value="#{listarFacturaPendiente.listaFacturaDetalle}"
-						editable="true"
-						selection="#{listarFacturaPendiente.selectedFacturaDetalle}"
-						rowKey="#{det.id}">
-
-						<p:ajax event="rowEdit"
-							listener="#{listarFacturaPendiente.onModificar}"
-							update=":form:messages" />
-
-						<p:ajax event="rowEditCancel"
-							listener="#{listarFacturaPendiente.onCancel}"
-							update=":form:messages" />
-
-						<p:column selectionMode="multiple" style="width:2%" />
+						value="#{listarFacturaPendiente.listaFacturaDetalle}">
 
 						<p:column>
 							<f:facet name="header">
@@ -207,16 +199,7 @@
 							<f:facet name="header">
 								<h:outputText value="Cantidad" />
 							</f:facet>
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{det.cantidad}" />
-								</f:facet>
-								<f:facet name="input">
-									<p:inputText value="#{det.cantidad}" style="width:100%"
-										label="Cantidad" required="true"
-										requiredMessage="Debe ingresar cantidad" />
-								</f:facet>
-							</p:cellEditor>
+							<h:outputText value="#{det.cantidad}" />
 						</p:column>
 
 						<p:column>
@@ -247,19 +230,38 @@
 							<h:outputText value="#{det.total}" />
 						</p:column>
 
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="Eliminado" />
-							</f:facet>
-
-							<h:outputText value="Si" rendered="#{det.eliminado}" />
-							<h:outputText value="No" rendered="#{!det.eliminado}" />
-						</p:column>
-
 						<p:column style="width:6%">
 							<p:rowEditor />
 						</p:column>
 					</p:dataTable>
+
+					<p:panelGrid id="gridTotales" columns="2" cellpadding="5"
+						style="width:100%;">
+						<f:facet name="header">          			
+        					Totales
+						</f:facet>
+
+						<h:outputLabel for="descuentoTotal" value="Descuento:"
+							style="font-weight:bold" />
+						<h:outputText id="descuentoTotal"
+							value="#{listarFacturaPendiente.selectedFactura.descuento}" />
+
+						<h:outputLabel for="ivaTotal" value="Iva:"
+							style="font-weight:bold" />
+						<h:outputText id="ivaTotal"
+							value="#{listarFacturaPendiente.selectedFactura.iva}" />
+
+						<h:outputLabel for="subtotalTotal" value="Subtotal:"
+							style="font-weight:bold" />
+						<h:outputText id="subtotalTotal"
+							value="#{listarFacturaPendiente.selectedFactura.subtotal}" />
+
+						<h:outputLabel for="totalTotal" value="Total:"
+							style="font-weight:bold" />
+						<h:outputText id="totalTotal"
+							value="#{listarFacturaPendiente.selectedFactura.total}" />
+
+					</p:panelGrid>
 				</p:panelGrid>
 			</p:dialog>
 		</h:form>

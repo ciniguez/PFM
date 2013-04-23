@@ -9,8 +9,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.RowEditEvent;
-
 import pfm.dao.EmpleadoAgenciaDAO;
 import pfm.dao.FacturaDAO;
 import pfm.dao.FacturaDetalleDAO;
@@ -32,14 +30,18 @@ public class ListarFacturaPendiente implements Serializable {
 	private EmpleadoAgenciaDAO empleadoAgenciaDAO;
 	@ManagedProperty(value = "#{DAOFactory.facturaDetalleDAO}")
 	private FacturaDetalleDAO facturaDetalleDAO;
-	@ManagedProperty(value = "#{modificarFacturaDetalle}")
-	private ModificarFacturaDetalle modificarFacturaDetalleBEAN;
+	@ManagedProperty(value = "#{generarFactura}")
+	private GenerarFactura generarFacturaBEAN;
+	@ManagedProperty(value = "#{bajaFactura}")
+	private BajaFactura bajaFacturaBEAN;
+	@ManagedProperty(value = "#{altaFactura}")
+	private AltaFactura altaFacturaBEAN;
+	private EmpleadoAgencia empleadoAgencia;
 	private List<Factura> listaFacturas;
 	private List<Factura> filteredFacturas;
 	private Factura[] selectedFacturas;
 	private Factura selectedFactura;
 	private List<FacturaDetalle> listaFacturaDetalle;
-	private FacturaDetalle[] selectedFacturaDetalle;
 
 	public ListarFacturaPendiente() {
 
@@ -77,26 +79,49 @@ public class ListarFacturaPendiente implements Serializable {
 		this.facturaDetalleDAO = facturaDetalleDAO;
 	}
 
-	public ModificarFacturaDetalle getModificarFacturaDetalleBEAN() {
-		return modificarFacturaDetalleBEAN;
+	public GenerarFactura getGenerarFacturaBEAN() {
+		return generarFacturaBEAN;
 	}
 
-	public void setModificarFacturaDetalleBEAN(
-			ModificarFacturaDetalle modificarFacturaDetalleBEAN) {
-		this.modificarFacturaDetalleBEAN = modificarFacturaDetalleBEAN;
+	public void setGenerarFacturaBEAN(GenerarFactura generarFacturaBEAN) {
+		this.generarFacturaBEAN = generarFacturaBEAN;
+	}
+
+	public BajaFactura getBajaFacturaBEAN() {
+		return bajaFacturaBEAN;
+	}
+
+	public void setBajaFacturaBEAN(BajaFactura bajaFacturaBEAN) {
+		this.bajaFacturaBEAN = bajaFacturaBEAN;
+	}
+
+	public AltaFactura getAltaFacturaBEAN() {
+		return altaFacturaBEAN;
+	}
+
+	public void setAltaFacturaBEAN(AltaFactura altaFacturaBEAN) {
+		this.altaFacturaBEAN = altaFacturaBEAN;
+	}
+
+	public EmpleadoAgencia getEmpleadoAgencia() {
+		// AQUI DEBE IR EL ID DEL EMPLEADO Q HAYA INICIADO SESION
+		setEmpleadoAgencia(empleadoAgenciaDAO.getAgenciaByEmpleado(empleadoDAO
+				.read(2)));
+
+		return empleadoAgencia;
+	}
+
+	public void setEmpleadoAgencia(EmpleadoAgencia empleadoAgencia) {
+		this.empleadoAgencia = empleadoAgencia;
 	}
 
 	public List<Factura> getListaFacturas() {
 		try {
-			// obtiene la agencia del empleado
-			EmpleadoAgencia empleadoAgencia = new EmpleadoAgencia();
-			// AQUI DEBE IR EL ID DEL EMPLEADO Q HAYA INICIADO SESION
-			empleadoAgencia = empleadoAgenciaDAO
-					.getAgenciaByEmpleado(empleadoDAO.read(2));
+
 			// setea la lista de facturas con la agencia obtenida del empleado
 			// anteriormente
 			setListaFacturas(facturaDAO.getFacturasByAgencia(
-					empleadoAgencia.getAgencia(), false, true));
+					getEmpleadoAgencia().getAgencia(), true));
 		} catch (Exception e) {
 			System.out
 					.println("ERROR <<ListarFacturaPendiente>>: getListaFacturas()"
@@ -136,7 +161,7 @@ public class ListarFacturaPendiente implements Serializable {
 	public List<FacturaDetalle> getListaFacturaDetalle() {
 		try {
 			setListaFacturaDetalle(facturaDetalleDAO
-					.getFacturaDetalleByFactura(getSelectedFactura()));
+					.getFacturaDetalleByFactura(getSelectedFactura(), false));
 		} catch (Exception e) {
 			System.out.println("ERROR <<ModificarFactura>>: getLista()" + e);
 		}
@@ -147,29 +172,58 @@ public class ListarFacturaPendiente implements Serializable {
 		this.listaFacturaDetalle = listaFacturaDetalle;
 	}
 
-	public FacturaDetalle[] getSelectedFacturaDetalle() {
-		return selectedFacturaDetalle;
+	public String onGenerar() {
+		if (selectedFacturas.length > 0) {
+			for (Factura f : selectedFacturas) {
+				generarFacturaBEAN.setEmpleadoAgencia(getEmpleadoAgencia());
+				generarFacturaBEAN.setFactura(f);
+				generarFacturaBEAN.generar();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas facturas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarFacturaPendiente";
 	}
 
-	public void setSelectedFacturaDetalle(
-			FacturaDetalle[] selectedFacturaDetalle) {
-		this.selectedFacturaDetalle = selectedFacturaDetalle;
+	public String onImprimir() {
+		if (selectedFacturas.length > 0) {
+			// generar codigo para imprimir las facturas seleccionadas
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas facturas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarFacturaPendiente";
 	}
 
-	public void onModificar(RowEditEvent event) {
+	public String onBaja() {
 
-		modificarFacturaDetalleBEAN.setFacturaDetalle((FacturaDetalle) event
-				.getObject());
-		modificarFacturaDetalleBEAN.modificar();
-
+		if (selectedFacturas.length > 0) {
+			for (Factura f : selectedFacturas) {
+				bajaFacturaBEAN.setFactura(f);
+				bajaFacturaBEAN.baja();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas facturas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarFacturaPendiente";
 	}
 
-	public void onCancel(RowEditEvent event) {
-
-		FacesMessage msg = new FacesMessage("Producto cancelado",
-				String.valueOf(((FacturaDetalle) event.getObject())
-						.getBodegaDetalle().getProducto()));
-
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+	public String onAlta() {
+		if (selectedFacturas.length > 0) {
+			for (Factura f : selectedFacturas) {
+				altaFacturaBEAN.setFactura(f);
+				altaFacturaBEAN.alta();
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Error",
+					"Debe seleccionar uno o mas facturas");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "listarFacturaPendiente";
 	}
 }
