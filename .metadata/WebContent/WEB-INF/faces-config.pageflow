@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13667137608480" configfile="/PFM/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="error.xhtml" x="65" y="168" id="pf13667141793141" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13667141793142" path="error.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="243" y="180" id="pf13667141793153" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" outlinks="pf13667141793142 pf13667146748538 pf136672877813210" inlinks="pf136673314331612 pf136673334356513 pf136673339073915" path="/login/loginUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listarFacturaPendiente" x="36" y="300" id="pf13667146748539" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13667146748538" path="/administracion/factura/listarFacturaPendiente.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="menuAdmin.xhtml" x="217" y="36" id="pf136672877813311" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf136673314331612 pf136673468933417 pf136673468933418" inlinks="pf136672877813210" path="/administracion/menu/menuAdmin.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listarEmpresa" x="586" y="12" id="pf136673334356614" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" outlinks="pf136673334356513 pf13667420160730 pf13667420160731" inlinks="pf136673468933417 pf13667420160732 pf13667420160733" path="/administracion/empresa/listarEmpresa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listarAgencia" x="528" y="105" id="pf136673339073916" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf136673339073915 pf13667420160734 pf13667420160733" inlinks="pf136673468933418 pf13667420160730 pf13667420160735" path="/administracion/agencia/listarAgencia.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="listarBodega" x="744" y="105" id="pf13667420160736" outlinks="pf13667420160732 pf13667420160735" inlinks="pf13667420160731 pf13667420160734" path="/administracion/bodega/listarBodega.xhtml"/>
+  <links id="pf13667141793142" target="pf13667141793141" source="pf13667141793153" outcome="error"/>
+  <links id="pf13667146748538" target="pf13667146748539" source="pf13667141793153" outcome="empleado"/>
+  <links id="pf136672877813210" target="pf136672877813311" source="pf13667141793153" outcome="admin"/>
+  <links id="pf136673314331612" target="pf13667141793153" source="pf136672877813311" outcome="logout">
+    <bendPoints d1Width="69" d1Height="-9" d2Width="-52" d2Height="-153"/>
+    <bendPoints d1Width="133" d1Height="79" d2Width="12" d2Height="-65"/>
+  </links>
+  <links id="pf136673334356513" target="pf13667141793153" source="pf136673334356614" outcome="logout"/>
+  <links id="pf136673339073915" target="pf13667141793153" source="pf136673339073916" outcome="logout"/>
+  <links id="pf136673468933417" target="pf136673334356614" source="pf136672877813311" outcome="menu_listaEmpresa"/>
+  <links id="pf136673468933418" target="pf136673339073916" source="pf136672877813311" outcome="menu_listaAgencia"/>
+  <links id="pf13667420160730" target="pf136673339073916" source="pf136673334356614"/>
+  <links id="pf13667420160731" target="pf13667420160736" source="pf136673334356614" outcome="empresa_bodega"/>
+  <links id="pf13667420160734" target="pf13667420160736" source="pf136673339073916" outcome="agencia_bodega"/>
+  <links id="pf13667420160732" target="pf136673334356614" source="pf13667420160736" outcome="bodega_empresa"/>
+  <links id="pf13667420160735" target="pf136673339073916" source="pf13667420160736" outcome="bodega_agencia"/>
+  <links id="pf13667420160733" target="pf136673334356614" source="pf136673339073916"/>
+</pageflow:Pageflow>

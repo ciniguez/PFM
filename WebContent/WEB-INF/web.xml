@@ -22,7 +22,7 @@
 	<url-pattern>*.xhtml</url-pattern> 
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
 		<servlet-name>JerseyREST</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
@@ -31,9 +31,24 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>JerseyREST</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
+	
+		
+	  <filter>  
+     	<description>Requiere que el usuario este logeado antes de acceder a cualquier pagina</description>  
+     	<filter-name>ForzarLoginFilter</filter-name>
+     	<filter-class>pfm.beans.filters.ForzarLoginFilter</filter-class>   
+    </filter>
+    
+    <filter-mapping>     
+     <filter-name>ForzarLoginFilter</filter-name>        
+     <url-pattern>*.jsf</url-pattern>        
+     <dispatcher>REQUEST</dispatcher>        
+     <dispatcher>FORWARD</dispatcher>        
+    </filter-mapping>  
 	
 </web-app>

@@ -4,26 +4,33 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	template="../administracion/templates/plantilla.xhtml">
+	template="../administracion/templates/login.xhtml">
 	<ui:define name="title">LOGIN</ui:define>
 
 	<ui:define name="body">
 
 		<h:form prependId="false">
+
+			<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" globalOnly="true" />
 			<h:panelGrid columns="3">
-				<p:outputLabel value="Usuario" />
-				<p:inputText value="#{loginUsuario.nombre}" id="txtUsuario"></p:inputText>
-				<p:message for="txtUsuario"></p:message>
-				<p:outputLabel value="Clave" />
-				<p:inputMask value="#{loginUsuario.contrasenia}" id="txtClave"/>
-				<p:message for="txtClave"></p:message>
-				<h:panelGroup/>
-				<p:commandButton id="btnLogin" value="Login" action="#{loginUsuario.procesar}"></p:commandButton>
+
+				<p:outputLabel value="Usuario :" />
+				<p:inputText value="#{loginUsuario.nombre}" id="txtUsuario"
+					required="true" requiredMessage="Nombre requerido"/>
+				<p:message for="txtUsuario" />
+
+				<p:outputLabel value="Clave :" />
+				<p:password value="#{loginUsuario.contrasenia}" id="txtClave"
+					required="true" requiredMessage="Clave requerida" />
+				<p:message for="txtClave" />
+
+				<h:panelGroup />
+				<p:commandButton id="btnLogin" value="Ingresar"
+					action="#{loginUsuario.procesar}" ajax="false" icon="ui-icon-check" />
 			</h:panelGrid>
 
-
 		</h:form>
-
 
 	</ui:define>
 </ui:composition>

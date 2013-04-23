@@ -11,61 +11,64 @@
 </h:head>
 <h:body>
 	<f:view>
-		<p:menubar>
-			<p:submenu label="Gestion Empresa" icon="ui-icon-pencil">
-				<p:menuitem value="Empresa" url="../empresa/listarEmpresa.xhtml"
-					icon="ui-icon-contact" />
-				<p:menuitem value="Agencia" url="../agencia/listarAgencia.xhtml"
-					icon="ui-icon-contact" />
-				<p:menuitem value="Bodega" url="../bodega/listarBodega.xhtml"
-					icon="ui-icon-contact" />
-			</p:submenu>
-			<p:submenu label="Gestion Productos" icon="ui-icon-pencil">
-				<p:menuitem value="Marca" url="../marca/listarMarca.xhtml"
-					icon="ui-icon-contact" />
-				<p:menuitem value="Categoria"
-					url="../categoria/listarCategoria.xhtml" icon="ui-icon-contact" />
-				<p:menuitem value="Producto" url="../producto/listarProducto.xhtml"
-					icon="ui-icon-contact" />
-				<p:menuitem value="Productos por bodega"
-					url="../bodegaDetalle/listarBodegaDetalle.xhtml"
-					icon="ui-icon-contact" />
-			</p:submenu>
-			<p:submenu label="Gestion Descuentos" icon="ui-icon-pencil">
-				<p:menuitem value="Descuento"
-					url="../descuento/listarDescuento.xhtml" icon="ui-icon-contact" />
-				<p:menuitem value="Descuento por productos y bodega"
-					url="../descuentoProducto/listarDescuentoProducto.xhtml"
-					icon="ui-icon-contact" />
-			</p:submenu>
-			<p:submenu label="Gestion Facturas" icon="ui-icon-pencil">
-				<p:menuitem value="Medio de Pago"
-					url="../medioPago/listarMedioPago.xhtml" icon="ui-icon-contact" />
-				<p:menuitem value="Factura" url="../factura/listarFactura.xhtml"
-					icon="ui-icon-contact" />
-				<p:menuitem value="Factura Pendiente"
-					url="../factura/listarFacturaPendiente.xhtml"
-					icon="ui-icon-contact" />
-			</p:submenu>
-			<p:submenu label="Gestion Usuarios" icon="ui-icon-pencil">
-				<p:menuitem value="Rol" url="../rol/listarRol.xhtml"
-					icon="ui-icon-contact" />
-				<p:menuitem value="Usuario" url="../usuario/listarUsuario.xhtml"
-					icon="ui-icon-contact" />
-				<p:menuitem value="Empleado por Agencia"
-					url="../empleadoAgencia/listarEmpleadoAgencia.xhtml"
-					icon="ui-icon-contact" />
-			</p:submenu>
-			<p:submenu label="Gestion Reportes" icon="ui-icon-pencil">
-				<p:menuitem value="Menu Reportes" url="../reportes/reporteMenu.xhtml"
-					icon="ui-icon-contact" />
-			</p:submenu>
-		</p:menubar>
+		<h:form>
+			<p:menubar>
+				<p:submenu label="Gestion Empresa" icon="ui-icon-pencil">
+					<p:menuitem value="Empresa" action="#{menu.listarEmpresa}"	icon="ui-icon-contact" />
+					<p:menuitem value="Agencia" action="#{menu.listarAgencia}"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Bodega" url="../administracion/bodega/listarBodega.xhtml"
+						icon="ui-icon-contact" />
+				</p:submenu>
+				<p:submenu label="Gestion Productos" icon="ui-icon-pencil">
+					<p:menuitem value="Marca" url="../administracion/marca/listarMarca.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Categoria"
+						url="../administracion/categoria/listarCategoria.xhtml" icon="ui-icon-contact" />
+					<p:menuitem value="Producto" url="../administracion/producto/listarProducto.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Productos por bodega"
+						url="../administracion/bodegaDetalle/listarBodegaDetalle.xhtml"
+						icon="ui-icon-contact" />
+				</p:submenu>
+				<p:submenu label="Gestion Descuentos" icon="ui-icon-pencil">
+					<p:menuitem value="Descuento"
+						url="../administracion/descuento/listarDescuento.xhtml" icon="ui-icon-contact" />
+					<p:menuitem value="Descuento por productos y bodega"
+						url="../administracion/descuentoProducto/listarDescuentoProducto.xhtml"
+						icon="ui-icon-contact" />
+				</p:submenu>
+				<p:submenu label="Gestion Facturas" icon="ui-icon-pencil">
+					<p:menuitem value="Medio de Pago"
+						url="../administracion/medioPago/listarMedioPago.xhtml" icon="ui-icon-contact" />
+					<p:menuitem value="Factura" url="../factura/listarFactura.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Factura Pendiente"
+						url="../administracion/factura/listarFacturaPendiente.xhtml"
+						icon="ui-icon-contact" />
+				</p:submenu>
+				<p:submenu label="Gestion Usuarios" icon="ui-icon-pencil">
+					<p:menuitem value="Rol" url="../rol/listarRol.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Usuario" url="../administracion/usuario/listarUsuario.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Empleado por Agencia"
+						url="../administracion/empleadoAgencia/listarEmpleadoAgencia.xhtml"
+						icon="ui-icon-contact" />
+				</p:submenu>
+				<p:submenu label="Gestion Reportes" icon="ui-icon-pencil">
+					<p:menuitem value="Menu Reportes"
+						url="../administracion/reportes/reporteMenu.xhtml" icon="ui-icon-contact" />
+				</p:submenu>
+				<p:menuitem value="Salir" action="#{loginUsuario.logout}" />
+			</p:menubar>
+		</h:form>
 		<p:separator />
 		<h1>
 			<ui:insert name="title">JSF 2.0. Plantillas</ui:insert>
 		</h1>
 		<ui:insert name="body">Cuerpo</ui:insert>
+
 	</f:view>
 </h:body>
 </html>
