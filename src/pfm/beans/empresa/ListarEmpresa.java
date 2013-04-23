@@ -98,7 +98,7 @@ public class ListarEmpresa implements Serializable {
 	}
 
 	public String onCrear() {
-		return "crearEmpresa";
+		return "empresaCrear";
 	}
 
 	public void onModificar(RowEditEvent event) {

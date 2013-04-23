@@ -61,6 +61,7 @@ public class ForzarLoginFilter implements Filter {
 		Usuario managedUsuarioBean = null;
 		// Si existe un Usuario en Sesion, y tiene la propiedad isLogeado seteada en true.  
 		if (null != session && (null != (managedUsuarioBean = (Usuario) session.getAttribute("UsuarioBean")))) {
+			System.out.println("Ingresa porque existe sesion");
 			if (managedUsuarioBean.isLogeado()) {
 				esLogeado = true;
 			}
@@ -89,6 +90,7 @@ public class ForzarLoginFilter implements Filter {
 	}
 
 	private boolean isRedirect(HttpServletRequest request) {
+		System.out.println("redirección al LOGIN");
 		String requestURI = request.getRequestURI();
 		return (!requestURI.contains(LOGIN_JSP));
 	}

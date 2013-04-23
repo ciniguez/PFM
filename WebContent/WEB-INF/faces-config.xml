@@ -19,7 +19,7 @@
 		<from-view-id>/login/loginUsuario.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>empleado</from-outcome>
-			<to-view-id>/administracion/factura/listarFacturaPendiente.xhtml</to-view-id>
+			<to-view-id>/administracion/menu/menuEmpleado.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
@@ -31,92 +31,80 @@
 			<to-view-id>/administracion/menu/menuAdmin.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<navigation-rule>
-		<display-name>menuAdmin.xhtml</display-name>
-		<from-view-id>/administracion/menu/menuAdmin.xhtml</from-view-id>
-		<navigation-case>
+	
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
 			<from-outcome>logout</from-outcome>
 			<to-view-id>/login/loginUsuario.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>listarEmpresa</display-name>
-		<from-view-id>/administracion/empresa/listarEmpresa.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>logout</from-outcome>
-			<to-view-id>/login/loginUsuario.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>listarAgencia</display-name>
-		<from-view-id>/administracion/agencia/listarAgencia.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>logout</from-outcome>
-			<to-view-id>/login/loginUsuario.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>menuAdmin.xhtml</display-name>
-		<from-view-id>/administracion/menu/menuAdmin.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>menu_listaEmpresa</from-outcome>
-			<to-view-id>/administracion/empresa/listarEmpresa.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>menuAdmin.xhtml</display-name>
-		<from-view-id>/administracion/menu/menuAdmin.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>menu_listaAgencia</from-outcome>
-			<to-view-id>/administracion/agencia/listarAgencia.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>listarEmpresa</display-name>
-		<from-view-id>/administracion/empresa/listarEmpresa.xhtml</from-view-id>
-		<navigation-case>
-			<to-view-id>/administracion/agencia/listarAgencia.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>listarEmpresa</display-name>
-		<from-view-id>/administracion/empresa/listarEmpresa.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>empresa_bodega</from-outcome>
-			<to-view-id>/administracion/bodega/listarBodega.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>listarAgencia</display-name>
-		<from-view-id>/administracion/agencia/listarAgencia.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>agencia_bodega</from-outcome>
-			<to-view-id>/administracion/bodega/listarBodega.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>listarBodega</display-name>
-		<from-view-id>/administracion/bodega/listarBodega.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>bodega_empresa</from-outcome>
-			<to-view-id>/administracion/empresa/listarEmpresa.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>listarBodega</display-name>
-		<from-view-id>/administracion/bodega/listarBodega.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>bodega_agencia</from-outcome>
-			<to-view-id>/administracion/agencia/listarAgencia.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>listarAgencia</display-name>
-		<from-view-id>/administracion/agencia/listarAgencia.xhtml</from-view-id>
-		<navigation-case>
-			<to-view-id>/administracion/empresa/listarEmpresa.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
+		</navigation-case> 
+    <navigation-case> 
+      <from-outcome>empresa</from-outcome>
+      <to-view-id>/administracion/empresa/listarEmpresa.xhtml</to-view-id> 
+    </navigation-case>
+    <navigation-case> 
+      <from-outcome>agencia</from-outcome>
+      <to-view-id>/administracion/agencia/listarAgencia.xhtml</to-view-id> 
+    </navigation-case> 
+    <navigation-case> 
+      <from-outcome>bodega</from-outcome>
+      <to-view-id>/administracion/bodega/listarBodega.xhtml</to-view-id> 
+    </navigation-case> 
+    <navigation-case> 
+      <from-outcome>marca</from-outcome>
+      <to-view-id>/administracion/marca/listarMarca.xhtml</to-view-id> 
+    </navigation-case>
+    <navigation-case> 
+      <from-outcome>categoria</from-outcome>
+      <to-view-id>/administracion/categoria/listarCategoria.xhtml</to-view-id> 
+    </navigation-case> 
+    <navigation-case> 
+      <from-outcome>producto</from-outcome>
+      <to-view-id>/administracion/producto/listarProducto.xhtml</to-view-id> 
+    </navigation-case> 
+    <navigation-case> 
+      <from-outcome>bodegaDetalle</from-outcome>
+      <to-view-id>/administracion/bodegaDetalle/listarBodegaDetalle.xhtml</to-view-id> 
+    </navigation-case>
+        <navigation-case> 
+      <from-outcome>descuento</from-outcome>
+      <to-view-id>/administracion/descuento/listarDescuento.xhtml</to-view-id> 
+    </navigation-case> 
+    <navigation-case> 
+      <from-outcome>descuentoProducto</from-outcome>
+      <to-view-id>/administracion/descuentoProducto/listarDescuentoProducto.xhtml</to-view-id> 
+    </navigation-case> 
+    <navigation-case> 
+      <from-outcome>medioPago</from-outcome>
+      <to-view-id>/administracion/medioPago/listarMedioPago.xhtml</to-view-id> 
+    </navigation-case>
+    <navigation-case> 
+      <from-outcome>factura</from-outcome>
+      <to-view-id>/administracion/factura/listarFacturaPendiente.xhtml</to-view-id> 
+    </navigation-case>
+    <navigation-case> 
+      <from-outcome>facturaPendiente</from-outcome>
+      <to-view-id>/administracion/factura/listarFacturaPendiente.xhtml</to-view-id> 
+    </navigation-case>
+    <navigation-case> 
+      <from-outcome>rol</from-outcome>
+      <to-view-id>/administracion/rol/listarRol.xhtml</to-view-id> 
+    </navigation-case>
+    <navigation-case> 
+      <from-outcome>usuario</from-outcome>
+      <to-view-id>/administracion/usuario/listarUsuario.xhtml</to-view-id> 
+    </navigation-case>
+    <navigation-case> 
+      <from-outcome>empleadoAgencia</from-outcome>
+      <to-view-id>/administracion/empleadoAgencia/listarEmpleadoAgencia.xhtml</to-view-id> 
+    </navigation-case>
+    <navigation-case> 
+      <from-outcome>reportes</from-outcome>
+      <to-view-id>/administracion/reportes/reporteMenu.xhtml</to-view-id> 
+    </navigation-case>
+  </navigation-rule>
+  
 	
      
 <lifecycle> 
