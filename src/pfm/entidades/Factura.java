@@ -37,7 +37,7 @@ public class Factura implements Serializable {
 	private double total;
 	@Column(nullable = false)
 	private boolean pagado;
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private boolean pendiente;
 	@ManyToOne
 	@XmlTransient
