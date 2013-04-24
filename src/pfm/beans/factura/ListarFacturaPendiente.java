@@ -16,6 +16,7 @@ import pfm.dao.UsuarioDAO;
 import pfm.entidades.EmpleadoAgencia;
 import pfm.entidades.Factura;
 import pfm.entidades.FacturaDetalle;
+import pfm.entidades.Usuario;
 
 @ManagedBean(name = "listarFacturaPendiente")
 @SessionScoped
@@ -37,6 +38,7 @@ public class ListarFacturaPendiente implements Serializable {
 	@ManagedProperty(value = "#{altaFactura}")
 	private AltaFactura altaFacturaBEAN;
 	private EmpleadoAgencia empleadoAgencia;
+	private Usuario empleado;
 	private List<Factura> listaFacturas;
 	private List<Factura> filteredFacturas;
 	private Factura[] selectedFacturas;
@@ -104,9 +106,9 @@ public class ListarFacturaPendiente implements Serializable {
 	}
 
 	public EmpleadoAgencia getEmpleadoAgencia() {
-		// AQUI DEBE IR EL ID DEL EMPLEADO Q HAYA INICIADO SESION
+
 		setEmpleadoAgencia(empleadoAgenciaDAO.getAgenciaByEmpleado(empleadoDAO
-				.read(2)));
+				.read(getEmpleado().getId())));
 
 		return empleadoAgencia;
 	}
@@ -115,13 +117,31 @@ public class ListarFacturaPendiente implements Serializable {
 		this.empleadoAgencia = empleadoAgencia;
 	}
 
+	public Usuario getEmpleado() {
+		setEmpleado((Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("UsuarioBean"));
+		return empleado;
+	}
+
+	public void setEmpleado(Usuario empleado) {
+		this.empleado = empleado;
+	}
+
 	public List<Factura> getListaFacturas() {
 		try {
+			if (getEmpleado().getRol().getId() == 1) {
+				setListaFacturas(facturaDAO.getFacturasByAgencia(
+						getEmpleadoAgencia().getAgencia(), true));
+			} else if (getEmpleado().getRol().getId() == 3) {
+				String[] attributes = { "pendiente" };
+				String[] values = { "1" };
+				String order = "id";
+				int index = -1;
+				int size = -1;
+				setListaFacturas(facturaDAO.find(attributes, values, order,
+						index, size));
+			}
 
-			// setea la lista de facturas con la agencia obtenida del empleado
-			// anteriormente
-			setListaFacturas(facturaDAO.getFacturasByAgencia(
-					getEmpleadoAgencia().getAgencia(), true));
 		} catch (Exception e) {
 			System.out
 					.println("ERROR <<ListarFacturaPendiente>>: getListaFacturas()"
@@ -175,9 +195,15 @@ public class ListarFacturaPendiente implements Serializable {
 	public String onGenerar() {
 		if (selectedFacturas.length > 0) {
 			for (Factura f : selectedFacturas) {
-				generarFacturaBEAN.setEmpleadoAgencia(getEmpleadoAgencia());
-				generarFacturaBEAN.setFactura(f);
-				generarFacturaBEAN.generar();
+				if (getEmpleado().getRol().getId() == 1) {
+					generarFacturaBEAN.setEmpleadoAgencia(getEmpleadoAgencia());
+					generarFacturaBEAN.setFactura(f);
+					generarFacturaBEAN.generar();
+				} else if (getEmpleado().getRol().getId() == 3) {
+					FacesMessage msg = new FacesMessage("Error",
+							"No puede generar la factura, no tiene el rol de empleado");
+					FacesContext.getCurrentInstance().addMessage(null, msg);
+				}
 			}
 		} else {
 			FacesMessage msg = new FacesMessage("Error",
