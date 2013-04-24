@@ -14,38 +14,39 @@
 		<h:form>
 			<p:menubar>
 				
-				<p:submenu label="Gestion Empresa" icon="ui-icon-pencil">
+				<p:submenu label="Gestion Empresa" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">
 					<p:menuitem value="Empresa" action="#{menu.listarEmpresa}"	icon="ui-icon-contact" />
 					<p:menuitem value="Agencia" action="#{menu.listarAgencia}" 	icon="ui-icon-contact" />
 					<p:menuitem value="Bodega" action="#{menu.listarBodega}" icon="ui-icon-contact" />
 				</p:submenu>
 				
-				<p:submenu label="Gestion Productos" icon="ui-icon-pencil">
+				<p:submenu label="Gestion Productos" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">
 					<p:menuitem value="Marca" action="#{menu.listarMarca}" icon="ui-icon-contact" />
 					<p:menuitem value="Categoria" action="#{menu.listarCategoria}" icon="ui-icon-contact" />
 					<p:menuitem value="Producto" action="#{menu.listarProducto}" icon="ui-icon-contact" />
 					<p:menuitem value="Productos por bodega" action="#{menu.listarBodegaDetalle}" icon="ui-icon-contact" />
 				</p:submenu>
 				
-				<p:submenu label="Gestion Descuentos" icon="ui-icon-pencil">
+				<p:submenu label="Gestion Descuentos" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">
 					<p:menuitem value="Descuento" action="#{menu.listarDescuento}" icon="ui-icon-contact" />
 					<p:menuitem value="Descuento por productos y bodega" action="#{menu.listarDescuentoProducto}" icon="ui-icon-contact" />
 				</p:submenu>
 				
 				<p:submenu label="Gestion Facturas" icon="ui-icon-pencil">
-					<p:menuitem value="Medio de Pago" action="#{menu.listarMedioPago}" icon="ui-icon-contact" />
-					<p:menuitem value="Factura" action="#{menu.listarFactura}" icon="ui-icon-contact" />
+					<p:menuitem value="Medio de Pago" action="#{menu.listarMedioPago}" icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
 					<p:menuitem value="Factura Pendiente" action="#{menu.listarFacturaPendiente}" icon="ui-icon-contact" />
 				</p:submenu>
 				
-				<p:submenu label="Gestion Usuarios" icon="ui-icon-pencil">
+				<p:submenu label="Gestion Usuarios" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">
 					<p:menuitem value="Rol" action="#{menu.listarRol}" icon="ui-icon-contact" />
 					<p:menuitem value="Usuario" action="#{menu.listarUsuario}" icon="ui-icon-contact" />
 					<p:menuitem value="Empleado por Agencia" action="#{menu.listarEmpleadoAgencia}" icon="ui-icon-contact" />
 				</p:submenu>
 				
 				<p:submenu label="Gestion Reportes" icon="ui-icon-pencil">
-					<p:menuitem value="Menu Reportes" action="#{menu.listarReportes}" icon="ui-icon-contact" />
+					<p:menuitem value="Cierre de Caja" action="#{menu.listarReportes}" icon="ui-icon-contact" />
+					<p:menuitem value="Consolidado de Ventas" action="#{menu.listarReportes}" icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
+					<p:menuitem value="Stock de Productos" action="#{menu.listarReportes}" icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
 				</p:submenu>
 				
 				<p:menuitem value="Salir" action="#{loginUsuario.logout}" />
