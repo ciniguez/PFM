@@ -118,7 +118,7 @@
 			</p:dataTable>			
 			<p:commandButton actionListener="#{listarFacturaPendiente.onGenerar}"
 				update=":form :form:messages" value="Generar Factura" />
-			<p:commandButton
+			<h:commandButton id="btnImprimir"
 				actionListener="#{listarFacturaPendiente.onImprimir}"
 				update=":form :form:messages" value="Imprimir" />
 			<p:commandButton actionListener="#{listarFacturaPendiente.onBaja}"

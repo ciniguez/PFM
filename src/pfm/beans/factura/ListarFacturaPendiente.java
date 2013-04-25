@@ -2,18 +2,20 @@ package pfm.beans.factura;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
+import pfm.beans.reportes.ReporteMenu;
 import pfm.dao.EmpleadoAgenciaDAO;
 import pfm.dao.FacturaDAO;
 import pfm.dao.FacturaDetalleDAO;
 import pfm.dao.UsuarioDAO;
 import pfm.entidades.EmpleadoAgencia;
+import pfm.entidades.Empresa;
 import pfm.entidades.Factura;
 import pfm.entidades.FacturaDetalle;
 import pfm.entidades.Usuario;
@@ -33,6 +35,8 @@ public class ListarFacturaPendiente implements Serializable {
 	private FacturaDetalleDAO facturaDetalleDAO;
 	@ManagedProperty(value = "#{generarFactura}")
 	private GenerarFactura generarFacturaBEAN;
+	@ManagedProperty(value = "#{reporte}")
+	private ReporteMenu reporteMenuBEAN;
 	@ManagedProperty(value = "#{bajaFactura}")
 	private BajaFactura bajaFacturaBEAN;
 	@ManagedProperty(value = "#{altaFactura}")
@@ -213,15 +217,19 @@ public class ListarFacturaPendiente implements Serializable {
 		return "listarFacturaPendiente";
 	}
 
-	public String onImprimir() {
-		if (selectedFacturas.length > 0) {
-			// generar codigo para imprimir las facturas seleccionadas
+	
+	public void onImprimir(ActionEvent actionEvent) {
+		if (selectedFacturas.length > 0) {	
+			for (Factura f : selectedFacturas) {
+				reporteMenuBEAN.imprimirFactura(f);
+			}
+			
 		} else {
 			FacesMessage msg = new FacesMessage("Error",
 					"Debe seleccionar uno o mas facturas");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-		return "listarFacturaPendiente";
+		//return "listarFacturaPendiente";
 	}
 
 	public String onBaja() {
@@ -252,4 +260,13 @@ public class ListarFacturaPendiente implements Serializable {
 		}
 		return "listarFacturaPendiente";
 	}
+
+	public ReporteMenu getReporteMenuBEAN() {
+		return reporteMenuBEAN;
+	}
+
+	public void setReporteMenuBEAN(ReporteMenu reporteMenuBEAN) {
+		this.reporteMenuBEAN = reporteMenuBEAN;
+	}
+
 }
