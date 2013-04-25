@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity implementation class for Entity: Agencia
  * 
  */
+@XmlRootElement
 @Entity
 public class Agencia implements Serializable {
 
@@ -26,10 +29,13 @@ public class Agencia implements Serializable {
 	@JoinColumn(nullable = false)
 	private Empresa empresa;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
+	@XmlTransient
 	private Set<Bodega> bodega;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
+	@XmlTransient
 	private Set<EmpleadoAgencia> empleadoAgencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
+	@XmlTransient
 	private Set<Factura> factura;
 
 	public Agencia() {

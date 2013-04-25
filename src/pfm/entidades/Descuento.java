@@ -6,11 +6,14 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity implementation class for Entity: Descuento
  * 
  */
+@XmlRootElement
 @NamedQuery(name = "getValorDescuentoByFecha", query = "SELECT d FROM Descuento d WHERE d.id = :id AND d.eliminado = :eliminado AND :fechaActual BETWEEN d.fechaInicio AND d.fechaFin ")
 @Entity
 public class Descuento implements Serializable {
@@ -31,6 +34,7 @@ public class Descuento implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "descuento")
+	@XmlTransient
 	private Set<DescuentoProducto> descuentoProducto;
 	private static final long serialVersionUID = 1L;
 

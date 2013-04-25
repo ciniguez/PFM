@@ -7,13 +7,14 @@ import java.util.Set;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity implementation class for Entity: Usuario
  * 
  */
-@NamedQuery(name = "getEmpleado", query = "SELECT u FROM Usuario u WHERE u.rol = :rol AND u.eliminado = :eliminado")
 @XmlRootElement
+@NamedQuery(name = "getEmpleado", query = "SELECT u FROM Usuario u WHERE u.rol = :rol AND u.eliminado = :eliminado")
 @Entity
 public class Usuario implements Serializable {
 
@@ -41,8 +42,10 @@ public class Usuario implements Serializable {
 	@JoinColumn(nullable = false)
 	private Rol rol;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+	@XmlTransient
 	private Set<Factura> facturaCliente;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+	@XmlTransient
 	private Set<EmpleadoAgencia> empleadoAgencia;
 	private static final long serialVersionUID = 1L;
 

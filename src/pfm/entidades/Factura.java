@@ -12,10 +12,10 @@ import javax.xml.bind.annotation.XmlTransient;
  * Entity implementation class for Entity: Factura
  * 
  */
+@XmlRootElement
 @NamedQueries({
 		@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia AND f.pendiente = :pendiente"),
 		@NamedQuery(name = "getFacturasPendientesByCliente", query = "SELECT f FROM Factura f WHERE f.cliente = :cliente AND f.pagado = false AND f.pendiente = true") })
-@XmlRootElement
 @Entity
 public class Factura implements Serializable {
 
@@ -39,12 +39,10 @@ public class Factura implements Serializable {
 	private boolean pagado;
 	@Column(nullable = true)
 	private boolean pendiente;
-	@ManyToOne
-	@XmlTransient
+	@ManyToOne	
 	@JoinColumn(nullable = false)
 	private Usuario cliente;
-	@ManyToOne
-	@XmlTransient
+	@ManyToOne	
 	@JoinColumn
 	private EmpleadoAgencia empleadoAgencia;
 	@OneToOne
@@ -54,6 +52,7 @@ public class Factura implements Serializable {
 	@JoinColumn(nullable = false)
 	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "factura")
+	@XmlTransient
 	private Set<FacturaDetalle> facturaDetalle;
 
 	private static final long serialVersionUID = 1L;

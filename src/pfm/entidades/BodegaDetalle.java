@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.eclipse.persistence.annotations.Index;
 import org.eclipse.persistence.annotations.Indexes;
@@ -12,6 +14,7 @@ import org.eclipse.persistence.annotations.Indexes;
  * Entity implementation class for Entity: BodegaDetalle
  * 
  */
+@XmlRootElement
 @NamedQueries({
 		@NamedQuery(name = "getBodegaDetalleByBodegaAndProducto", query = "SELECT d FROM BodegaDetalle d WHERE d.producto = :producto AND d.bodega = :bodega"),
 		@NamedQuery(name = "getPrecioByBodegaDetalle", query = "SELECT d FROM BodegaDetalle d WHERE d.id = :id AND d.eliminado= :eliminado") })
@@ -40,6 +43,7 @@ public class BodegaDetalle implements Serializable {
 	@JoinColumn(nullable = false)
 	private Producto producto;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodegaDetalle")
+	@XmlTransient
 	private Set<FacturaDetalle> facturaDetalle;
 
 	private static final long serialVersionUID = 1L;

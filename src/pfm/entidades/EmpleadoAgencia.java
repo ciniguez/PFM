@@ -30,14 +30,14 @@ public class EmpleadoAgencia implements Serializable {
 	private int id;
 	@Column(nullable = false)
 	private boolean eliminado;
-	@ManyToOne
-	@XmlTransient
+	@ManyToOne	
 	@JoinColumn(nullable = false)
 	private Usuario empleado;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoAgencia")
+	@XmlTransient
 	private Set<Factura> factura;
 
 	private static final long serialVersionUID = 1L;

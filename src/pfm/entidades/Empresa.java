@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity implementation class for Entity: Empresa
  * 
  */
+@XmlRootElement
 @NamedQuery(name = "getIvaByEmpresa", query = "SELECT e FROM Empresa e WHERE e.id = :id AND e.eliminado = :eliminado")
 @Entity
 public class Empresa implements Serializable {
@@ -28,6 +31,7 @@ public class Empresa implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empresa")
+	@XmlTransient
 	private Set<Agencia> agencia;
 
 	public Empresa() {

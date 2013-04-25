@@ -5,11 +5,14 @@ import java.lang.String;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity implementation class for Entity: Producto
  * 
  */
+@XmlRootElement
 @Entity
 public class Producto implements Serializable {
 
@@ -27,8 +30,10 @@ public class Producto implements Serializable {
 	@JoinColumn(nullable = false)
 	private Categoria categoria;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+	@XmlTransient
 	private Set<BodegaDetalle> bodegaDetalle;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+	@XmlTransient
 	private Set<DescuentoProducto> descuentoProducto;
 	private static final long serialVersionUID = 1L;
 

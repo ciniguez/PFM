@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.lang.String;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity implementation class for Entity: MedioDePago
  * 
  */
+@XmlRootElement
 @Entity
 @Table(name = "MEDIO_PAGO")
 public class MedioDePago implements Serializable {
@@ -21,6 +24,7 @@ public class MedioDePago implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "medioDePago")
+	@XmlTransient
 	private Factura factura;
 	private static final long serialVersionUID = 1L;
 

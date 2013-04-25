@@ -2,6 +2,7 @@ package pfm.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.persistence.annotations.Index;
 import org.eclipse.persistence.annotations.Indexes;
@@ -10,6 +11,7 @@ import org.eclipse.persistence.annotations.Indexes;
  * Entity implementation class for Entity: DescuentoProducto
  * 
  */
+@XmlRootElement
 @NamedQuery(name = "getDescuentoId", query = "SELECT d FROM DescuentoProducto d WHERE d.producto = :producto AND d.eliminado = :eliminado")
 @Entity
 @Table(name = "DESCUENTO_PRODUCTO")
