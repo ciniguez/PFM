@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">FACTURAS PAGADAS</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:dataTable id="dataTableFactura" var="fac"
+				value="#{listarFacturaPagada.listaFacturasPagadas}" paginator="true"
+				rows="10" filteredValue="#{listarFacturaPagadas.filteredFacturas}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				rowKey="#{fac.id}">
+
+				<f:facet name="header">
+            		Listado de Facturas Pagadas
+        		</f:facet>
+
+				<p:column filterBy="#{fac.id}">
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{fac.id}" />
+				</p:column>
+
+				<p:column filterBy="#{fac.cliente}">
+					<f:facet name="header">
+						<h:outputText value="Cliente" />
+					</f:facet>
+					<h:outputText value="#{fac.cliente}" />
+				</p:column>
+
+				<p:column filterBy="#{fac.fecha}">
+					<f:facet name="header">
+						<h:outputText value="Fecha" />
+					</f:facet>
+					<h:outputText value="#{fac.fecha}">
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Total" />
+					</f:facet>
+					<h:outputText value="#{fac.total}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Medio de Pago" />
+					</f:facet>
+					<h:outputText value="#{fac.medioDePago}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Eliminado" />
+					</f:facet>
+					<h:outputText value="Si" rendered="#{fac.eliminado}" />
+					<h:outputText value="No" rendered="#{!fac.eliminado}" />
+				</p:column>
+
+				<p:column style="width:6%">
+					<p:commandButton id="selectButton" update=":form:display"
+						oncomplete="carDialog.show()" icon="ui-icon-search" title="Ver">
+						<f:setPropertyActionListener value="#{fac}"
+							target="#{listarFacturaPendiente.selectedFactura}" />
+					</p:commandButton>
+				</p:column>
+				
+				<p:column style="width:6%">
+					<h:commandLink value="Imprimir" actionListener="#{listarFacturaPagada.onImprimir}">
+					<f:setPropertyActionListener value="#{fac}"
+							target="#{listarFacturaPagada.selectedFactura}" />
+					</h:commandLink>
+				</p:column>
+
+			</p:dataTable>
+
+
+
+
+			<p:dialog header="Factura Detalle" widgetVar="carDialog"
+				resizable="false" id="carDlg" showEffect="fade" hideEffect="explode"
+				modal="true">
+				<p:panelGrid id="display" columns="1" cellpadding="4"
+					style="margin:0 auto;">
+
+					<p:panelGrid id="gridCabecera" columns="6" cellpadding="5"
+						style="width:100%;">
+						<f:facet name="header">          			
+        					Factura No: #{listarFacturaPendiente.selectedFactura.id}
+						</f:facet>
+
+						<h:outputLabel for="empresa" value="Empresa:"
+							style="font-weight:bold" />
+						<h:outputText id="empresa"
+							value="#{listarFacturaPendiente.selectedFactura.agencia.empresa.razonSocial}" />
+
+						<h:outputLabel for="agencia" value="Agencia:"
+							style="font-weight:bold" />
+						<h:outputText id="agencia"
+							value="#{listarFacturaPendiente.selectedFactura.agencia.nombre}" />
+
+						<h:outputLabel for="fecha" value="Fecha:" style="font-weight:bold" />
+						<h:outputText id="fecha"
+							value="#{listarFacturaPendiente.selectedFactura.fecha}">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText>
+
+						<h:outputLabel for="cliente" value="Cliente:"
+							style="font-weight:bold" />
+						<h:outputText id="cliente"
+							value="#{listarFacturaPendiente.selectedFactura.cliente}" />
+
+						<h:outputLabel for="direccion" value="Direccion:"
+							style="font-weight:bold" />
+						<h:outputText id="direccion"
+							value="#{listarFacturaPendiente.selectedFactura.cliente.direccion}" />
+
+						<h:outputLabel for="telefono" value="Telefono:"
+							style="font-weight:bold" />
+						<h:outputText id="telefono"
+							value="#{listarFacturaPendiente.selectedFactura.cliente.telefono}" />
+
+					</p:panelGrid>
+
+					<p:dataTable id="dataTableDetalle" var="det"
+						value="#{listarFacturaPagada.listaFacturaDetalle}">
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Id" />
+							</f:facet>
+							<h:outputText value="#{det.bodegaDetalle.producto.id}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nombre" />
+							</f:facet>
+							<h:outputText value="#{det.bodegaDetalle.producto.nombre}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Precio" />
+							</f:facet>
+							<h:outputText value="#{det.precio}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Cantidad" />
+							</f:facet>
+							<h:outputText value="#{det.cantidad}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Descuento" />
+							</f:facet>
+							<h:outputText value="#{det.descuento}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Subtotal" />
+							</f:facet>
+							<h:outputText value="#{det.subtotal}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Iva" />
+							</f:facet>
+							<h:outputText value="#{det.iva}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Total" />
+							</f:facet>
+							<h:outputText value="#{det.total}" />
+						</p:column>
+
+						<p:column style="width:6%">
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+
+					<p:panelGrid id="gridTotales" columns="2" cellpadding="5"
+						style="width:100%;">
+						<f:facet name="header">          			
+        					Totales
+						</f:facet>
+
+						<h:outputLabel for="descuentoTotal" value="Descuento:"
+							style="font-weight:bold" />
+						<h:outputText id="descuentoTotal"
+							value="#{listarFacturaPagada.selectedFactura.descuento}" />
+
+						<h:outputLabel for="ivaTotal" value="Iva:"
+							style="font-weight:bold" />
+						<h:outputText id="ivaTotal"
+							value="#{listarFacturaPagada.selectedFactura.iva}" />
+
+						<h:outputLabel for="subtotalTotal" value="Subtotal:"
+							style="font-weight:bold" />
+						<h:outputText id="subtotalTotal"
+							value="#{listarFacturaPagada.selectedFactura.subtotal}" />
+
+						<h:outputLabel for="totalTotal" value="Total:"
+							style="font-weight:bold" />
+						<h:outputText id="totalTotal"
+							value="#{listarFacturaPagada.selectedFactura.total}" />
+
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:dialog>
+
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
