@@ -15,7 +15,6 @@ import pfm.dao.FacturaDAO;
 import pfm.dao.FacturaDetalleDAO;
 import pfm.dao.UsuarioDAO;
 import pfm.entidades.EmpleadoAgencia;
-import pfm.entidades.Empresa;
 import pfm.entidades.Factura;
 import pfm.entidades.FacturaDetalle;
 import pfm.entidades.Usuario;
@@ -229,7 +228,6 @@ public class ListarFacturaPendiente implements Serializable {
 					"Debe seleccionar uno o mas facturas");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-		//return "listarFacturaPendiente";
 	}
 
 	public String onBaja() {

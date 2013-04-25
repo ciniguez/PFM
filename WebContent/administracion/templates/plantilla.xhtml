@@ -34,7 +34,8 @@
 				
 				<p:submenu label="Gestion Facturas" icon="ui-icon-pencil">
 					<p:menuitem value="Medio de Pago" action="#{menu.listarMedioPago}" icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
-					<p:menuitem value="Factura Pendiente" action="#{menu.listarFacturaPendiente}" icon="ui-icon-contact" />
+					<p:menuitem value="Facturas Pendiente" action="#{menu.listarFacturaPendiente}" icon="ui-icon-contact" />
+					<p:menuitem value="Facturas Pagadas" action="#{menu.listarFacturasPagadas}" icon="ui-icon-contact" />
 				</p:submenu>
 				
 				<p:submenu label="Gestion Usuarios" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">

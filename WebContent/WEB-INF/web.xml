@@ -46,6 +46,7 @@
     
     <filter-mapping>     
      <filter-name>ForzarLoginFilter</filter-name>        
+     <url-pattern>*.jsf</url-pattern> 
      <url-pattern>*.xhtml</url-pattern>        
      <dispatcher>REQUEST</dispatcher>        
      <dispatcher>FORWARD</dispatcher>        

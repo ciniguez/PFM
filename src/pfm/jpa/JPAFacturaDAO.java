@@ -57,4 +57,41 @@ public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
 		factura.setSubtotal(subtotal);
 		factura.setTotal(total);
 	}
+
+	@Override
+	public List<Factura> getFacturasPagadasByEmpleado(Usuario empleado) {
+		Query query = em.createNamedQuery("getFacturasPagadasByEmpleado");
+		query.setParameter("empleado", empleado);
+		@SuppressWarnings("unchecked")
+		List<Factura> resultado = query.getResultList();
+		return resultado;
+	}
+
+	@Override
+	public List<Factura> getFacturasPagadasByCliente(Usuario cliente) {
+		Query query = em.createNamedQuery("getFacturasPagadasByCliente");
+		query.setParameter("cliente", cliente);
+		@SuppressWarnings("unchecked")
+		List<Factura> resultado = query.getResultList();
+		return resultado;
+	}
+
+	@Override
+	public List<Factura> getFacturasPagadasByAgencia(Agencia agencia) {
+		Query query = em.createNamedQuery("getFacturasPagadasByAgencia");
+		query.setParameter("agencia", agencia);
+		@SuppressWarnings("unchecked")
+		List<Factura> resultado = query.getResultList();
+		return resultado;
+	}
+
+	@Override
+	public List<Factura> getFacturasPagadas() {
+		Query query = em.createNamedQuery("getFacturasPagadas");
+		@SuppressWarnings("unchecked")
+		List<Factura> resultado = query.getResultList();
+		return resultado;
+	}
+
+
 }

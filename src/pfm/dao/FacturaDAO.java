@@ -22,4 +22,9 @@ public interface FacturaDAO extends GenericDAO<Factura, Integer> {
 
 	public void setTotalesFactura(Factura factura,
 			List<FacturaDetalle> listaFacturaDetalle);
+	
+	public List<Factura> getFacturasPagadasByEmpleado(Usuario empleado);
+	public List<Factura> getFacturasPagadasByCliente(Usuario cliente);
+	public List<Factura> getFacturasPagadasByAgencia(Agencia agencia);
+	public List<Factura> getFacturasPagadas();
 }

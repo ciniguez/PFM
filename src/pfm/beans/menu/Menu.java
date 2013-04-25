@@ -33,8 +33,8 @@ public class Menu {
 	public String listarDescuentoProducto(){ return "descuentoProducto";}
 	
 	public String listarMedioPago(){ return "medioPago";}
-	public String listarFactura(){ return "factura";}
 	public String listarFacturaPendiente(){ return "facturaPendiente";}
+	public String listarFacturasPagadas(){return "facturaPagada";}
 	
 	public String listarRol(){ return "rol";}
 	public String listarUsuario(){ return "usuario";}
