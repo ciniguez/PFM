@@ -5,7 +5,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import pfm.beans.reportes.ReporteMenu;
 import pfm.dao.FacturaDAO;
@@ -96,8 +95,9 @@ public class ListarFacturaPagada {
 		this.empleadoAgencia = empleadoAgencia;
 	}
 	
-	public void onImprimir(ActionEvent event){
+	public String onImprimir(){
 		reporteMenuBEAN.imprimirFactura(getSelectedFactura());
+		return null;
 	
 	}
 
@@ -150,7 +150,6 @@ public class ListarFacturaPagada {
 
 
 	public void setSelectedFactura(Factura selectedFactura) {
-		System.out.println("ID FACTURA :" + selectedFactura.getId());
 		this.selectedFactura = selectedFactura;
 	}
 

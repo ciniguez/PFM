@@ -35,7 +35,7 @@ import pfm.entidades.Usuario;
 
 public class ForzarLoginFilter implements Filter {
 
-	private static final String LOGIN_JSP = "/login/loginUsuario.xhtml";
+	private static final String LOGIN_JSP = "/";
 	
 	public ForzarLoginFilter() {
 	}
@@ -62,6 +62,7 @@ public class ForzarLoginFilter implements Filter {
 		// Si existe un Usuario en Sesion, y tiene la propiedad isLogeado seteada en true.  
 		if (null != session && (null != (managedUsuarioBean = (Usuario) session.getAttribute("UsuarioBean")))) {
 			System.out.println("***********************Ingresa porque existe sesion");
+			System.out.println("Maximo intervalo inactivo:" +session.getMaxInactiveInterval());
 			if (managedUsuarioBean.isLogeado()) {
 				System.out.println("**************************El usuario esta Logeado");
 				esLogeado = true;

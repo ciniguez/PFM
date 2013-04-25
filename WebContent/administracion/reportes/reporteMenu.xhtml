@@ -35,8 +35,8 @@
 					<f:selectItems value="#{reporte.categorias}" />
 				</p:selectOneMenu>
 				<h:panelGroup/>
-				<h:commandButton id="btnReporteStock" value="PDF"
-					actionListener="#{reporte.generarPDF}" />
+				<p:commandButton value="Generar Reporte" actionListener="#{reporte.generarPDF}"   
+            ajax="false" /> 
 			</h:panelGrid>
 </h:panelGroup>
 

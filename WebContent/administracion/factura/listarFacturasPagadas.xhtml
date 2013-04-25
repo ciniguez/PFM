@@ -74,10 +74,11 @@
 							target="#{listarFacturaPendiente.selectedFactura}" />
 					</p:commandButton>
 				</p:column>
-				
+
 				<p:column style="width:6%">
-					<h:commandLink value="Imprimir" actionListener="#{listarFacturaPagada.onImprimir}">
-					<f:setPropertyActionListener value="#{fac}"
+					<h:commandLink id="nonAjax" value="Imprimir" action="#{listarFacturaPagada.onImprimir}"
+						style="margin-right:20px;">
+						<f:setPropertyActionListener value="#{fac}"
 							target="#{listarFacturaPagada.selectedFactura}" />
 					</h:commandLink>
 				</p:column>

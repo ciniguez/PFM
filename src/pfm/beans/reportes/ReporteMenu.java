@@ -58,7 +58,7 @@ public class ReporteMenu {
 		jasperPrint = JasperFillManager.fillReport(reportPath, parameters, connection);
 	}
 
-	public void generarPDF(ActionEvent actionEvent) {
+	public void generarPDF(ActionEvent event) {
 		try {
 			init();
 			HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -66,9 +66,14 @@ public class ReporteMenu {
 			ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
 			FacesContext.getCurrentInstance().responseComplete();
+			
+			
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
+		
+			
 		}
+		
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
