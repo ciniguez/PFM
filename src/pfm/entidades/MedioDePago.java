@@ -62,6 +62,14 @@ public class MedioDePago implements Serializable {
 		this.eliminado = eliminado;
 	}
 
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+
 	@Override
 	public String toString() {
 		return nombre;

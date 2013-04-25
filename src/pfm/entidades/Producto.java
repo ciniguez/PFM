@@ -95,6 +95,14 @@ public class Producto implements Serializable {
 		this.bodegaDetalle = bodegaDetalle;
 	}
 
+	public Set<DescuentoProducto> getDescuentoProducto() {
+		return descuentoProducto;
+	}
+
+	public void setDescuentoProducto(Set<DescuentoProducto> descuentoProducto) {
+		this.descuentoProducto = descuentoProducto;
+	}
+
 	@Override
 	public String toString() {
 		return nombre;
