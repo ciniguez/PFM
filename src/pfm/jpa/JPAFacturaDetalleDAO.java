@@ -38,18 +38,16 @@ public class JPAFacturaDetalleDAO extends
 	public void setTotalesFacturaDetalle(FacturaDetalle facturaDetalle,
 			double valorDescuento, double valorIva) {
 
-		double precioTotal = 0;
 		double descuento = 0;
 		double iva = 0;
 		double subtotal = 0;
 		double total = 0;
 
-		precioTotal = Math.round((facturaDetalle.getCantidad() * facturaDetalle
+		subtotal = Math.round((facturaDetalle.getCantidad() * facturaDetalle
 				.getPrecio()) * 100.0) / 100.0;
-		descuento = Math.round(((precioTotal * valorDescuento) / 100) * 100.0) / 100.0;
-		iva = Math.round(((precioTotal * valorIva) / 100) * 100.0) / 100.0;
-		subtotal = Math.round((precioTotal - descuento) * 100.0) / 100.0;
-		total = Math.round((precioTotal - descuento + iva) * 100.0) / 100.0;
+		descuento = Math.round(((subtotal * valorDescuento) / 100) * 100.0) / 100.0;
+		iva = Math.round(((subtotal * valorIva) / 100) * 100.0) / 100.0;
+		total = Math.round((subtotal - descuento + iva) * 100.0) / 100.0;
 		facturaDetalle.setDescuento(descuento);
 		facturaDetalle.setIva(iva);
 		facturaDetalle.setSubtotal(subtotal);
