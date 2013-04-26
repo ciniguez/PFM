@@ -52,11 +52,6 @@ public class Usuario implements Serializable {
 	public Usuario() {
 
 	}
-
-	public boolean isLogeado() {
-		return true;
-	}
-
 	public Usuario(int id, String nombres, String apellidos, Date fechaNacimiento, String direccion, String telefono, String email, String username,
 			String password, boolean eliminado) {
 		this.id = id;
