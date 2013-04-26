@@ -24,10 +24,6 @@ public class LoginUsuario implements Serializable {
 	private Usuario usuario = new Usuario();
 	private boolean isLogeado = false;
 	
-	public String aviso(){
-		return "estoy activo";
-	}
-	
 	//GETTERS AND SETTERS
 	public UsuarioDAO getUsuarioDAO() {
 		return usuarioDAO;
