@@ -53,6 +53,16 @@
 				<p:menuitem value="Salir" action="#{loginUsuario.logout}" />
 			
 			</p:menubar>
+			
+			
+			<p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval}" />
+      <p:dialog header="Sesión Caducada?" widgetVar="sessionTimeOutDialog" modal="true" fixedCenter="true" closable="false" width="400" visible="false">
+         <h:outputText value="Su sesión ha finalizado. Haga click sobre el botón para iniciar nuevamente." />
+         <input id="confirmBackToLogin" type="button" value="Iniciar sesión nuevamente"
+                    onclick="window.location='#{facesContext.externalContext.requestContextPath}/login/loginUsuario.jsf';" />
+      </p:dialog>
+            
+	
 		</h:form>
 		
 		<p:separator />
