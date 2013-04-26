@@ -6,7 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -15,15 +15,19 @@ import pfm.entidades.Usuario;
 import pfm.jpa.JPADAOFactory;
 
 @ManagedBean(name = "loginUsuario")
-@RequestScoped
+@SessionScoped
 public class LoginUsuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.usuarioDAO}")
 	private UsuarioDAO usuarioDAO;
-	private String nombre;
-	private String contrasenia;
-
+	private Usuario usuario = new Usuario();
+	private boolean isLogeado = false;
+	
+	public String aviso(){
+		return "estoy activo";
+	}
+	
 	//GETTERS AND SETTERS
 	public UsuarioDAO getUsuarioDAO() {
 		return usuarioDAO;
@@ -33,24 +37,8 @@ public class LoginUsuario implements Serializable {
 		this.usuarioDAO = usuarioDAO;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getContrasenia() {
-		return contrasenia;
-	}
-
-	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
-	}
-
 	public String logout() {
-		System.out.println("usuario salio");
+		this.setLogeado(false);
 		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
 		return "logout";
 	}
@@ -60,21 +48,23 @@ public class LoginUsuario implements Serializable {
 		String navegacion = null;
 
 		List<Usuario> usuarios = JPADAOFactory.getFactory().getUsuarioDAO()
-				.find(new String[] { "username", "password" }, new String[] { this.getNombre(), this.getContrasenia() }, null, 0, 0);
+				.find(new String[] { "username", "password" }, new String[] { this.getUsuario().getUsername(), this.getUsuario().getPassword() }, null, 0, 0);
 
 		if (usuarios.size() == 1) {
 
-			Usuario usuario = usuarios.get(0);
+			this.setUsuario(usuarios.get(0));
 
 			//Solo puede darse que ingrese un Administrador o un empleado, pero nunca un cliente.
 			//TODO: Poner el codigo de Cliente en Enumeracion.
-			switch (usuario.getRol().getId()) {
+			switch (this.getUsuario().getRol().getId()) {
 			case 3:
-				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("UsuarioBean", usuario);
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("UsuarioBean", this.getUsuario());
+				this.setLogeado(true);
 				navegacion = "admin";
 				break;
 			case 1:
-				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("UsuarioBean", usuario);
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("UsuarioBean", this.getUsuario());
+				this.setLogeado(true);
 				navegacion = "empleado";
 				break;
 			default:
@@ -88,6 +78,22 @@ public class LoginUsuario implements Serializable {
 		}
 		return navegacion;
 
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public boolean isLogeado() {
+		return isLogeado;
+	}
+
+	public void setLogeado(boolean isLogeado) {
+		this.isLogeado = isLogeado;
 	}
 
 }
