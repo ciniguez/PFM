@@ -115,12 +115,16 @@
 							target="#{listarFacturaPendiente.selectedFactura}" />
 					</p:commandButton>
 				</p:column>
+				<p:column style="width:6%">
+					<h:commandLink id="nonAjax" value="Imprimir" action="#{listarFacturaPendiente.onImprimir}"
+						style="margin-right:20px;">
+						<f:setPropertyActionListener value="#{fac}"
+							target="#{listarFacturaPendiente.selectedFactura}" />
+					</h:commandLink>
+				</p:column>
 			</p:dataTable>			
 			<p:commandButton actionListener="#{listarFacturaPendiente.onGenerar}"
 				update=":form :form:messages" value="Generar Factura" />
-			<h:commandButton id="btnImprimir"
-				actionListener="#{listarFacturaPendiente.onImprimir}"
-				update=":form :form:messages" value="Imprimir" />
 			<p:commandButton actionListener="#{listarFacturaPendiente.onBaja}"
 				update=":form :form:messages" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarFacturaPendiente.onAlta}"
