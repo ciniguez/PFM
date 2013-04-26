@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 
+import pfm.beans.login.LoginUsuario;
 import pfm.entidades.Usuario;
 
 /**
@@ -35,7 +36,8 @@ import pfm.entidades.Usuario;
 
 public class ForzarLoginFilter implements Filter {
 
-	private static final String LOGIN_JSP = "/";
+	private static final String LOGIN_JSP = "/login/loginUsuario.jsf";
+	
 	
 	public ForzarLoginFilter() {
 	}
@@ -58,13 +60,14 @@ public class ForzarLoginFilter implements Filter {
 	private static boolean checkLoginState(ServletRequest request, ServletResponse response) throws IOException, ServletException {
 		boolean esLogeado = false;
 		HttpSession session = ((HttpServletRequest) request).getSession(false);
-		Usuario managedUsuarioBean = null;
+		//Usuario managedUsuarioBean = null;
+		
 		// Si existe un Usuario en Sesion, y tiene la propiedad isLogeado seteada en true.  
-		if (null != session && (null != (managedUsuarioBean = (Usuario) session.getAttribute("UsuarioBean")))) {
-			System.out.println("***********************Ingresa porque existe sesion");
-			System.out.println("Maximo intervalo inactivo:" +session.getMaxInactiveInterval());
-			if (managedUsuarioBean.isLogeado()) {
-				System.out.println("**************************El usuario esta Logeado");
+		if (null != session && (null != ((Usuario) session.getAttribute("UsuarioBean")))) {
+			HttpServletRequest req = (HttpServletRequest) request;
+			LoginUsuario loginBean = (LoginUsuario) req.getSession().getAttribute("loginUsuario");
+			
+			if (loginBean.isLogeado()) {
 				esLogeado = true;
 			}
 		}
@@ -75,8 +78,9 @@ public class ForzarLoginFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		boolean isLoggedIn = checkLoginState(request, response);
+		
 		if (isRedirect((HttpServletRequest) request) && !isLoggedIn) {
-			System.out.println("********************redirección al LOGIN");
+			
 			String loginURI = LOGIN_JSP;
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(loginURI);
 			// Force the login
