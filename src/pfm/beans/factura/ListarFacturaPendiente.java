@@ -7,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import pfm.beans.reportes.ReporteMenu;
 import pfm.dao.EmpleadoAgenciaDAO;
@@ -110,8 +109,7 @@ public class ListarFacturaPendiente implements Serializable {
 
 	public EmpleadoAgencia getEmpleadoAgencia() {
 
-		setEmpleadoAgencia(empleadoAgenciaDAO.getAgenciaByEmpleado(empleadoDAO
-				.read(getEmpleado().getId())));
+		setEmpleadoAgencia(empleadoAgenciaDAO.getAgenciaByEmpleado(empleadoDAO.read(getEmpleado().getId())));
 
 		return empleadoAgencia;
 	}
@@ -121,8 +119,7 @@ public class ListarFacturaPendiente implements Serializable {
 	}
 
 	public Usuario getEmpleado() {
-		setEmpleado((Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("UsuarioBean"));
+		setEmpleado((Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("UsuarioBean"));
 		return empleado;
 	}
 
@@ -133,22 +130,18 @@ public class ListarFacturaPendiente implements Serializable {
 	public List<Factura> getListaFacturas() {
 		try {
 			if (getEmpleado().getRol().getId() == 1) {
-				setListaFacturas(facturaDAO.getFacturasByAgencia(
-						getEmpleadoAgencia().getAgencia(), true));
+				setListaFacturas(facturaDAO.getFacturasByAgencia(getEmpleadoAgencia().getAgencia(), true));
 			} else if (getEmpleado().getRol().getId() == 3) {
 				String[] attributes = { "pendiente" };
 				String[] values = { "1" };
 				String order = "id";
 				int index = -1;
 				int size = -1;
-				setListaFacturas(facturaDAO.find(attributes, values, order,
-						index, size));
+				setListaFacturas(facturaDAO.find(attributes, values, order, index, size));
 			}
 
 		} catch (Exception e) {
-			System.out
-					.println("ERROR <<ListarFacturaPendiente>>: getListaFacturas()"
-							+ e);
+			System.out.println("ERROR <<ListarFacturaPendiente>>: getListaFacturas()" + e);
 		}
 		return listaFacturas;
 	}
@@ -183,8 +176,7 @@ public class ListarFacturaPendiente implements Serializable {
 
 	public List<FacturaDetalle> getListaFacturaDetalle() {
 		try {
-			setListaFacturaDetalle(facturaDetalleDAO
-					.getFacturaDetalleByFactura(getSelectedFactura(), false));
+			setListaFacturaDetalle(facturaDetalleDAO.getFacturaDetalleByFactura(getSelectedFactura(), false));
 		} catch (Exception e) {
 			System.out.println("ERROR <<ModificarFactura>>: getLista()" + e);
 		}
@@ -203,31 +195,20 @@ public class ListarFacturaPendiente implements Serializable {
 					generarFacturaBEAN.setFactura(f);
 					generarFacturaBEAN.generar();
 				} else if (getEmpleado().getRol().getId() == 3) {
-					FacesMessage msg = new FacesMessage("Error",
-							"No puede generar la factura, no tiene el rol de empleado");
+					FacesMessage msg = new FacesMessage("Error", "No puede generar la factura, no tiene el rol de empleado");
 					FacesContext.getCurrentInstance().addMessage(null, msg);
 				}
 			}
 		} else {
-			FacesMessage msg = new FacesMessage("Error",
-					"Debe seleccionar uno o mas facturas");
+			FacesMessage msg = new FacesMessage("Error", "Debe seleccionar uno o mas facturas");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarFacturaPendiente";
 	}
 
-	
-	public void onImprimir(ActionEvent actionEvent) {
-		if (selectedFacturas.length > 0) {	
-			for (Factura f : selectedFacturas) {
-				reporteMenuBEAN.imprimirFactura(f);
-			}
-			
-		} else {
-			FacesMessage msg = new FacesMessage("Error",
-					"Debe seleccionar uno o mas facturas");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
+	public String onImprimir() {
+		reporteMenuBEAN.imprimirFactura(this.getSelectedFactura());
+		return null;
 	}
 
 	public String onBaja() {
@@ -238,8 +219,7 @@ public class ListarFacturaPendiente implements Serializable {
 				bajaFacturaBEAN.baja();
 			}
 		} else {
-			FacesMessage msg = new FacesMessage("Error",
-					"Debe seleccionar uno o mas facturas");
+			FacesMessage msg = new FacesMessage("Error", "Debe seleccionar uno o mas facturas");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarFacturaPendiente";
@@ -252,8 +232,7 @@ public class ListarFacturaPendiente implements Serializable {
 				altaFacturaBEAN.alta();
 			}
 		} else {
-			FacesMessage msg = new FacesMessage("Error",
-					"Debe seleccionar uno o mas facturas");
+			FacesMessage msg = new FacesMessage("Error", "Debe seleccionar uno o mas facturas");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarFacturaPendiente";
