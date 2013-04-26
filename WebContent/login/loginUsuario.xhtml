@@ -16,12 +16,12 @@
 			<h:panelGrid columns="3">
 
 				<p:outputLabel value="Usuario :" />
-				<p:inputText value="#{loginUsuario.nombre}" id="txtUsuario"
+				<p:inputText value="#{loginUsuario.usuario.username}" id="txtUsuario"
 					required="true" requiredMessage="Nombre requerido"/>
 				<p:message for="txtUsuario" />
 
 				<p:outputLabel value="Clave :" />
-				<p:password value="#{loginUsuario.contrasenia}" id="txtClave"
+				<p:password value="#{loginUsuario.usuario.password}" id="txtClave"
 					required="true" requiredMessage="Clave requerida" />
 				<p:message for="txtClave" />
 
