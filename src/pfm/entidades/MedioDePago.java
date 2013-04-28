@@ -24,7 +24,6 @@ public class MedioDePago implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "medioDePago")
-	@XmlTransient
 	private Factura factura;
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +61,7 @@ public class MedioDePago implements Serializable {
 		this.eliminado = eliminado;
 	}
 
+	@XmlTransient
 	public Factura getFactura() {
 		return factura;
 	}

@@ -43,7 +43,6 @@ public class BodegaDetalle implements Serializable {
 	@JoinColumn(nullable = false)
 	private Producto producto;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodegaDetalle")
-	@XmlTransient
 	private Set<FacturaDetalle> facturaDetalle;
 
 	private static final long serialVersionUID = 1L;
@@ -107,6 +106,7 @@ public class BodegaDetalle implements Serializable {
 		this.producto = producto;
 	}
 
+	@XmlTransient
 	public Set<FacturaDetalle> getFacturaDetalle() {
 		return facturaDetalle;
 	}

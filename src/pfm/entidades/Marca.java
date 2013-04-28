@@ -24,7 +24,6 @@ public class Marca implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "marca")
-	@XmlTransient
 	private Set<Producto> producto;
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +61,7 @@ public class Marca implements Serializable {
 		this.eliminado = eliminado;
 	}
 
+	@XmlTransient
 	public Set<Producto> getProducto() {
 		return producto;
 	}

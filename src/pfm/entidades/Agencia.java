@@ -29,13 +29,10 @@ public class Agencia implements Serializable {
 	@JoinColumn(nullable = false)
 	private Empresa empresa;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
-	@XmlTransient
 	private Set<Bodega> bodega;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
-	@XmlTransient
 	private Set<EmpleadoAgencia> empleadoAgencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agencia")
-	@XmlTransient
 	private Set<Factura> factura;
 
 	public Agencia() {
@@ -99,6 +96,7 @@ public class Agencia implements Serializable {
 		this.empresa = empresa;
 	}
 
+	@XmlTransient
 	public Set<Bodega> getBodega() {
 		return bodega;
 	}
@@ -107,6 +105,7 @@ public class Agencia implements Serializable {
 		this.bodega = bodega;
 	}
 
+	@XmlTransient
 	public Set<EmpleadoAgencia> getEmpleadoAgencia() {
 		return empleadoAgencia;
 	}
@@ -115,6 +114,7 @@ public class Agencia implements Serializable {
 		this.empleadoAgencia = empleadoAgencia;
 	}
 
+	@XmlTransient
 	public Set<Factura> getFactura() {
 		return factura;
 	}

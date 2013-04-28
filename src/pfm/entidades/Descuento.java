@@ -34,7 +34,6 @@ public class Descuento implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "descuento")
-	@XmlTransient
 	private Set<DescuentoProducto> descuentoProducto;
 	private static final long serialVersionUID = 1L;
 
@@ -100,6 +99,7 @@ public class Descuento implements Serializable {
 		this.eliminado = eliminado;
 	}
 
+	@XmlTransient
 	public Set<DescuentoProducto> getDescuentoProducto() {
 		return descuentoProducto;
 	}

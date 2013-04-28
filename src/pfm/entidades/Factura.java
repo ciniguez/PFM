@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
 		@NamedQuery(name = "getFacturasPagadasByCliente", query = "SELECT f FROM Factura f WHERE f.cliente =:cliente AND f.pagado = true"),
 		@NamedQuery(name = "getFacturasPagadasByEmpleado", query = "SELECT f FROM Factura f JOIN f.empleadoAgencia e WHERE e.empleado =:empleado AND f.pagado = true"),
 		@NamedQuery(name = "getFacturasPagadasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia =:agencia AND f.pagado = true"),
-		@NamedQuery(name = "getFacturasPagadas", query = "SELECT f FROM Factura f WHERE f.pagado = true")})
+		@NamedQuery(name = "getFacturasPagadas", query = "SELECT f FROM Factura f WHERE f.pagado = true") })
 @Entity
 public class Factura implements Serializable {
 
@@ -43,10 +43,10 @@ public class Factura implements Serializable {
 	private boolean pagado;
 	@Column(nullable = true)
 	private boolean pendiente;
-	@ManyToOne	
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Usuario cliente;
-	@ManyToOne	
+	@ManyToOne
 	@JoinColumn
 	private EmpleadoAgencia empleadoAgencia;
 	@OneToOne
@@ -56,7 +56,6 @@ public class Factura implements Serializable {
 	@JoinColumn(nullable = false)
 	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "factura")
-	@XmlTransient
 	private Set<FacturaDetalle> facturaDetalle;
 
 	private static final long serialVersionUID = 1L;
@@ -166,6 +165,7 @@ public class Factura implements Serializable {
 		this.empleadoAgencia = empleadoAgencia;
 	}
 
+	@XmlTransient
 	public Set<FacturaDetalle> getFacturaDetalle() {
 		return facturaDetalle;
 	}

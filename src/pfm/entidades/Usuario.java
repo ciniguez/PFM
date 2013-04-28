@@ -42,18 +42,18 @@ public class Usuario implements Serializable {
 	@JoinColumn(nullable = false)
 	private Rol rol;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-	@XmlTransient
 	private Set<Factura> facturaCliente;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-	@XmlTransient
 	private Set<EmpleadoAgencia> empleadoAgencia;
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
 
 	}
-	public Usuario(int id, String nombres, String apellidos, Date fechaNacimiento, String direccion, String telefono, String email, String username,
-			String password, boolean eliminado) {
+
+	public Usuario(int id, String nombres, String apellidos,
+			Date fechaNacimiento, String direccion, String telefono,
+			String email, String username, String password, boolean eliminado) {
 		this.id = id;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
@@ -154,6 +154,7 @@ public class Usuario implements Serializable {
 		this.rol = rol;
 	}
 
+	@XmlTransient
 	public Set<Factura> getFacturaCliente() {
 		return facturaCliente;
 	}
@@ -162,6 +163,7 @@ public class Usuario implements Serializable {
 		this.facturaCliente = facturaCliente;
 	}
 
+	@XmlTransient
 	public Set<EmpleadoAgencia> getEmpleadoAgencia() {
 		return empleadoAgencia;
 	}
@@ -179,17 +181,23 @@ public class Usuario implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((apellidos == null) ? 0 : apellidos.hashCode());
-		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
+		result = prime * result
+				+ ((apellidos == null) ? 0 : apellidos.hashCode());
+		result = prime * result
+				+ ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + (eliminado ? 1231 : 1237);
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
+		result = prime * result
+				+ ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nombres == null) ? 0 : nombres.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((rol == null) ? 0 : rol.hashCode());
-		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result
+				+ ((telefono == null) ? 0 : telefono.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 

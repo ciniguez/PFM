@@ -31,7 +31,6 @@ public class Empresa implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empresa")
-	@XmlTransient
 	private Set<Agencia> agencia;
 
 	public Empresa() {
@@ -106,6 +105,7 @@ public class Empresa implements Serializable {
 		this.eliminado = eliminado;
 	}
 
+	@XmlTransient
 	public Set<Agencia> getAgencia() {
 		return agencia;
 	}

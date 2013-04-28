@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 /**
  * Entity implementation class for Entity: UsuarioRol
@@ -25,7 +24,6 @@ public class Rol implements Serializable {
 	@Column(nullable = false)
 	private boolean eliminado;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
-	@XmlTransient
 	private Set<Usuario> usuario;
 	private static final long serialVersionUID = 1L;
 
@@ -62,7 +60,8 @@ public class Rol implements Serializable {
 	public void setEliminado(boolean eliminado) {
 		this.eliminado = eliminado;
 	}
-	@XmlInverseReference(mappedBy="rol")
+
+	@XmlTransient
 	public Set<Usuario> getUsuario() {
 		return usuario;
 	}

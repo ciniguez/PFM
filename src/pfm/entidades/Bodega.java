@@ -29,7 +29,6 @@ public class Bodega implements Serializable {
 	@JoinColumn(nullable = false)
 	private Agencia agencia;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bodega")
-	@XmlTransient
 	private Set<BodegaDetalle> bodegaDetalle;
 
 	public Bodega() {
@@ -93,6 +92,7 @@ public class Bodega implements Serializable {
 		this.agencia = agencia;
 	}
 
+	@XmlTransient
 	public Set<BodegaDetalle> getBodegaDetalle() {
 		return bodegaDetalle;
 	}

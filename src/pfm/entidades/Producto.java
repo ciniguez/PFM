@@ -30,10 +30,8 @@ public class Producto implements Serializable {
 	@JoinColumn(nullable = false)
 	private Categoria categoria;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
-	@XmlTransient
 	private Set<BodegaDetalle> bodegaDetalle;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
-	@XmlTransient
 	private Set<DescuentoProducto> descuentoProducto;
 	private static final long serialVersionUID = 1L;
 
@@ -87,6 +85,7 @@ public class Producto implements Serializable {
 		this.categoria = categoria;
 	}
 
+	@XmlTransient
 	public Set<BodegaDetalle> getBodegaDetalle() {
 		return bodegaDetalle;
 	}
@@ -95,6 +94,7 @@ public class Producto implements Serializable {
 		this.bodegaDetalle = bodegaDetalle;
 	}
 
+	@XmlTransient
 	public Set<DescuentoProducto> getDescuentoProducto() {
 		return descuentoProducto;
 	}
