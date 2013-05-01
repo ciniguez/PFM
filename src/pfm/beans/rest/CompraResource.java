@@ -46,7 +46,10 @@ public class CompraResource {
 
 			for (FacturaDetalle facturaDetalle : factura.getFacturaDetalle()) {
 				ItemProducto itemProducto = new ItemProducto(facturaDetalle.getBodegaDetalle().getId(), facturaDetalle.getBodegaDetalle().getProducto()
-						.getNombre(), facturaDetalle.getSubtotal(), facturaDetalle.getCantidad(), facturaDetalle.getPrecio());
+						.getNombre(), facturaDetalle.getSubtotal(), 
+						facturaDetalle.getCantidad(), 
+						facturaDetalle.getPrecio(),
+						facturaDetalle.getId());
 				listaProductos.add(itemProducto);
 			}
 			return listaProductos;

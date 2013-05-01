@@ -13,6 +13,7 @@ public class ItemProducto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int idBodegaDetalle;
+	private int idFacturaDetalle;
 	private String nombreProducto;
 	private double subtotal;
 	private int cantidad;
@@ -22,12 +23,13 @@ public class ItemProducto implements Serializable {
 		
 	}
 	
-	public ItemProducto(int idBodegaDetalle, String nombreProducto, double subtotal, int cantidad, double precio) {
+	public ItemProducto(int idBodegaDetalle, String nombreProducto, double subtotal, int cantidad, double precio, int idFacturaDetalle) {
 		this.idBodegaDetalle = idBodegaDetalle;
 		this.nombreProducto = nombreProducto;
 		this.subtotal = subtotal;
 		this.cantidad = cantidad;
 		this.precio = precio;
+		this.idFacturaDetalle = idFacturaDetalle;
 	}
 	
 	public int getIdBodegaDetalle() {
@@ -59,6 +61,14 @@ public class ItemProducto implements Serializable {
 	}
 	public void setPrecio(double precio) {
 		this.precio = precio;
+	}
+
+	public int getIdFacturaDetalle() {
+		return idFacturaDetalle;
+	}
+
+	public void setIdFacturaDetalle(int idFacturaDetalle) {
+		this.idFacturaDetalle = idFacturaDetalle;
 	}
 
 }
