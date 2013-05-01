@@ -39,14 +39,16 @@ public class CompraResource {
 	@Consumes({ "application/json" })
 	public List<ItemProducto> getCarroCompraActual(@PathParam("idFactura") int idFactura) {
 		List<ItemProducto> listaProductos = new ArrayList<ItemProducto>();
-		if (idFactura == -1) {
+		if (idFactura == 0) {
 			return listaProductos;
 		}
 		Factura factura = JPADAOFactory.getFactory().getFacturaDAO().read(idFactura);
+		
 		if (factura != null) {
 			listaProductos = new ArrayList<ItemProducto>();
+			List<FacturaDetalle> detalles = JPADAOFactory.getFactory().getFacturaDetalleDAO().getFacturaDetalleByFactura(factura,false);
 
-			for (FacturaDetalle facturaDetalle : factura.getFacturaDetalle()) {
+			for (FacturaDetalle facturaDetalle : detalles) {
 				ItemProducto itemProducto = new ItemProducto(facturaDetalle.getBodegaDetalle().getId(), facturaDetalle.getBodegaDetalle().getProducto()
 						.getNombre(), facturaDetalle.getSubtotal(), 
 						facturaDetalle.getCantidad(), 
