@@ -49,11 +49,17 @@ public class CompraResource {
 			List<FacturaDetalle> detalles = JPADAOFactory.getFactory().getFacturaDetalleDAO().getFacturaDetalleByFactura(factura,false);
 
 			for (FacturaDetalle facturaDetalle : detalles) {
-				ItemProducto itemProducto = new ItemProducto(facturaDetalle.getBodegaDetalle().getId(), facturaDetalle.getBodegaDetalle().getProducto()
-						.getNombre(), facturaDetalle.getSubtotal(), 
-						facturaDetalle.getCantidad(), 
-						facturaDetalle.getPrecio(),
-						facturaDetalle.getId());
+				ItemProducto itemProducto = new ItemProducto();
+				itemProducto.setCantidad(facturaDetalle.getCantidad());
+				itemProducto.setDescuento(facturaDetalle.getDescuento());
+				itemProducto.setDescuentoTotal(factura.getDescuento());
+				itemProducto.setIdBodegaDetalle(facturaDetalle.getBodegaDetalle().getId());
+				itemProducto.setIdFacturaDetalle(facturaDetalle.getId());
+				itemProducto.setNombreProducto(facturaDetalle.getBodegaDetalle().getProducto().getNombre());
+				itemProducto.setPrecio(facturaDetalle.getPrecio());
+				itemProducto.setSubtotal(facturaDetalle.getSubtotal());
+				itemProducto.setTotalFactura(factura.getTotal());
+				
 				listaProductos.add(itemProducto);
 			}
 			return listaProductos;
