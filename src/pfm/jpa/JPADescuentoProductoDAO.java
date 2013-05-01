@@ -25,7 +25,7 @@ public class JPADescuentoProductoDAO extends
 			return resultado.getDescuento().getId();
 
 		} catch (Exception e) {
-			System.out.println("ERROR: getDescuentoId " + e);
+			//System.out.println("ERROR: getDescuentoId " + e);
 			return 0;
 		}
 	}

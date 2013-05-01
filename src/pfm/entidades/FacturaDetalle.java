@@ -12,7 +12,9 @@ import org.eclipse.persistence.annotations.Indexes;
  * 
  */
 @XmlRootElement
-@NamedQuery(name = "getFacturaDetalleByFactura", query = "SELECT d FROM FacturaDetalle d WHERE d.factura = :factura AND d.eliminado = :eliminado")
+@NamedQueries({
+		@NamedQuery(name = "getFacturaDetalleByFactura", query = "SELECT d FROM FacturaDetalle d WHERE d.factura = :factura AND d.eliminado = :eliminado"),
+		@NamedQuery(name = "getFacturaDetalleByBodDetAndFac", query = "SELECT d FROM FacturaDetalle d WHERE d.factura = :factura AND d.bodegaDetalle = :bodegaDetalle") })
 @Entity
 @Table(name = "FACTURA_DETALLE")
 @Indexes({

@@ -73,7 +73,8 @@ public class CompraResource {
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces({ MediaType.APPLICATION_XML})
 	public Response addProductoXML(int idBodegaDetalle,  int idFactura,int idUsuario, int cantidad) throws URISyntaxException {
-		Factura factura = JPADAOFactory.getFactory().getFacturaDAO().read(idFactura);
+		
+		/*Factura factura = JPADAOFactory.getFactory().getFacturaDAO().read(idFactura);
 		//Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
 		//List<Factura> facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByCliente(cliente);
 		BodegaDetalle bodegaDetalle = JPADAOFactory.getFactory().getBodegaDetalleDAO().read(idBodegaDetalle);
@@ -84,7 +85,7 @@ public class CompraResource {
 		double subtotal= (cantidad * bodegaDetalle.getPrecio())-valorDescuento;
 
 		
-		//Creación de la Factura Detalle
+		//Creacion de la Factura Detalle
 		FacturaDetalle facturaDetalle = new FacturaDetalle();
 		facturaDetalle.setBodegaDetalle(bodegaDetalle);
 		facturaDetalle.setCantidad(cantidad);
@@ -100,7 +101,7 @@ public class CompraResource {
 		//Disminuyo Stock.
 		bodegaDetalle.setCantidad(bodegaDetalle.getCantidad()-cantidad);
 		JPADAOFactory.getFactory().getBodegaDetalleDAO().update(bodegaDetalle);
-		
+		*/
 		return Response.status(Response.Status.ACCEPTED).build();
 		
 	}

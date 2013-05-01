@@ -35,8 +35,8 @@ public class TestRest {
 			Producto producto = bodegaDetalle.getProducto();
 			Empresa empresa = bodegaDetalle.getBodega().getAgencia().getEmpresa();
 			int idDescuento = JPADAOFactory.getFactory().getDescuentoProductoDAO().getDescuentoId(producto, false);
-			double valorDescuento = JPADAOFactory.getFactory().getDescuentoDAO().getValorDescuentoByFecha(idDescuento, false);
-			double subtotal = (cantidad * bodegaDetalle.getPrecio()) - valorDescuento;
+			//double valorDescuento = JPADAOFactory.getFactory().getDescuentoDAO().getValorDescuentoByFecha(idDescuento, false);
+			//double subtotal = (cantidad * bodegaDetalle.getPrecio()) - valorDescuento;
 
 			//Compruebo que la cantidad pedida no exceda del stock
 			if (cantidad > bodegaDetalle.getCantidad()) {
@@ -48,7 +48,7 @@ public class TestRest {
 				factura = new Factura();
 				factura.setAgencia(bodegaDetalle.getBodega().getAgencia());
 				factura.setCliente(cliente);
-				factura.setDescuento(factura.getDescuento() + valorDescuento);
+				//factura.setDescuento(factura.getDescuento() + valorDescuento);
 				//TODO: poner en una enumeracion el valor Eliminado
 				factura.setEliminado(false);
 				factura.setEmpleadoAgencia(null);
@@ -57,24 +57,24 @@ public class TestRest {
 				factura.setMedioDePago(null);
 				factura.setPagado(false);
 				factura.setPendiente(true);
-				factura.setSubtotal(subtotal);
-				factura.setTotal(factura.getSubtotal() + subtotal);
+				//factura.setSubtotal(subtotal);
+				//factura.setTotal(factura.getSubtotal() + subtotal);
 				JPADAOFactory.getFactory().getFacturaDAO().create(factura);
 			} else {
 				factura = facturas.get(0);
 			}
 
-			//Creación de la Factura Detalle
+			//Creacin de la Factura Detalle
 			FacturaDetalle facturaDetalle = new FacturaDetalle();
 			facturaDetalle.setBodegaDetalle(bodegaDetalle);
 			facturaDetalle.setCantidad(cantidad);
-			facturaDetalle.setDescuento(valorDescuento);
+			//facturaDetalle.setDescuento(valorDescuento);
 			facturaDetalle.setEliminado(false);
 			facturaDetalle.setFactura(factura);
 			facturaDetalle.setIva(empresa.getIva());
 			facturaDetalle.setPrecio(bodegaDetalle.getPrecio());
-			facturaDetalle.setSubtotal(subtotal);
-			facturaDetalle.setTotal(subtotal);
+			//facturaDetalle.setSubtotal(subtotal);
+			//facturaDetalle.setTotal(subtotal);
 			JPADAOFactory.getFactory().getFacturaDetalleDAO().create(facturaDetalle);
 
 			//Disminuyo Stock.
@@ -131,7 +131,7 @@ public class TestRest {
 			System.out.println("5.- Listar Carro Compras ");
 			System.out.println("6.- Eliminar Producto");
 			System.out.println("7.- Salir ");
-			System.out.println("Teclea la opción ");
+			System.out.println("Teclea la opcin ");
 
 			n = in.nextInt();
 
