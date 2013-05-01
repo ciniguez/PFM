@@ -15,7 +15,7 @@ public class JPADescuentoDAO extends JPAGenericDAO<Descuento, Integer>
 	}
 
 	@Override
-	public double getValorDescuentoByFecha(int id, boolean eliminado) {
+	public Descuento getValorDescuentoByFecha(int id, boolean eliminado) {
 		try {
 			Date fecha = new Date();
 			Query query = em.createNamedQuery("getValorDescuentoByFecha");
@@ -23,10 +23,10 @@ public class JPADescuentoDAO extends JPAGenericDAO<Descuento, Integer>
 			query.setParameter("eliminado", eliminado);
 			query.setParameter("fechaActual", fecha);
 			Descuento resultado = (Descuento) query.getSingleResult();
-			return resultado.getValor();
+			return resultado;
 		} catch (Exception e) {
-			System.out.println("ERROR: getValorDescuentoByFecha " + e);
-			return 0;
+			//System.out.println("ERROR: getValorDescuentoByFecha " + e);
+			return null;
 		}
 
 	}

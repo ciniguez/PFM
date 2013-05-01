@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import pfm.dao.FacturaDetalleDAO;
+import pfm.entidades.BodegaDetalle;
 import pfm.entidades.Factura;
 import pfm.entidades.FacturaDetalle;
 
@@ -23,6 +24,18 @@ public class JPAFacturaDetalleDAO extends
 		query.setParameter("eliminado", eliminado);
 		@SuppressWarnings("unchecked")
 		List<FacturaDetalle> resultado = query.getResultList();
+		return resultado;
+
+	}
+
+	@Override
+	public FacturaDetalle getFacturaDetalleByBodDetAndFac(Factura factura,
+			BodegaDetalle bodegaDetalle) {
+		Query query = em.createNamedQuery("getFacturaDetalleByBodDetAndFac");
+		query.setParameter("factura", factura);
+		query.setParameter("bodegaDetalle", bodegaDetalle);
+
+		FacturaDetalle resultado = (FacturaDetalle) query.getSingleResult();
 		return resultado;
 
 	}
