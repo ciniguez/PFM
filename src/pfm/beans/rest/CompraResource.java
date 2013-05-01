@@ -1,25 +1,20 @@
 package pfm.beans.rest;
 
-import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import pfm.entidades.BodegaDetalle;
-import pfm.entidades.Empresa;
+import pfm.entidades.Agencia;
 import pfm.entidades.Factura;
 import pfm.entidades.FacturaDetalle;
-import pfm.entidades.Producto;
+import pfm.entidades.Usuario;
+import pfm.entidadesRest.CarroCompras;
+import pfm.entidadesRest.ItemProducto;
 import pfm.jpa.JPADAOFactory;
 
 /**
@@ -37,72 +32,27 @@ public class CompraResource {
 	 * @return Archivo JSON del Usuario, XML o Texto Plano (depende de que acepte el cliente).
 	 */
 	@GET
-	@Path("/{idusuario}")
-	@Produces({ MediaType.APPLICATION_XML })
-	@Consumes({ MediaType.APPLICATION_XML })
-	public Response listarProductosCuentaXML(@PathParam("id") int idUsuario) {
-		Set<FacturaDetalle> productos = null;
-		String[] attributes = { "eliminado", "clienteId", "pendiente" };
-		String[] values = { "0", String.valueOf(idUsuario), "1" };
-		String order = "id";
-		int index = -1;
-		int size = -1;
-		List<Factura> carrosCompras = JPADAOFactory.getFactory().getFacturaDAO().find(attributes, values, order, index, size);
-
-		if (carrosCompras.size() == 1) {
-			Factura carroCompras = carrosCompras.get(0);
-			productos = carroCompras.getFacturaDetalle();
+	@Path("/carro/{idFactura}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ "application/json" })
+	public List<ItemProducto> getCarroCompraActual(@PathParam("idFactura") int idFactura) {
+		List<ItemProducto> listaProductos = new ArrayList<ItemProducto>();
+		if (idFactura == -1) {
+			return listaProductos;
 		}
-
-		if (productos != null) {
-			//TODO Investigar la devolucion del Response.status
-			return Response.ok(productos).build();
-		} else {
-			return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for UUID: " + idUsuario).build();
-		}
-	}
-
-	/**
-	 * Agregar Producto a Carro de Compras
-	 * @param idBodegaDetalle
-	 * @return
-	 * @throws URISyntaxException
-	 */
-	@POST
-	@Path("/add/{idbodegadetalle}/{idfactura}/{cantidad}")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces({ MediaType.APPLICATION_XML})
-	public Response addProductoXML(int idBodegaDetalle,  int idFactura,int idUsuario, int cantidad) throws URISyntaxException {
 		Factura factura = JPADAOFactory.getFactory().getFacturaDAO().read(idFactura);
-		//Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
-		//List<Factura> facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByCliente(cliente);
-		BodegaDetalle bodegaDetalle = JPADAOFactory.getFactory().getBodegaDetalleDAO().read(idBodegaDetalle);
-		Producto producto = bodegaDetalle.getProducto();
-		Empresa empresa = bodegaDetalle.getBodega().getAgencia().getEmpresa();
-		int idDescuento = JPADAOFactory.getFactory().getDescuentoProductoDAO().getDescuentoId(producto, false);
-		double valorDescuento = JPADAOFactory.getFactory().getDescuentoDAO().getValorDescuentoByFecha(idDescuento, false);
-		double subtotal= (cantidad * bodegaDetalle.getPrecio())-valorDescuento;
+		if (factura != null) {
+			listaProductos = new ArrayList<ItemProducto>();
 
-		
-		//Creación de la Factura Detalle
-		FacturaDetalle facturaDetalle = new FacturaDetalle();
-		facturaDetalle.setBodegaDetalle(bodegaDetalle);
-		facturaDetalle.setCantidad(cantidad);
-		facturaDetalle.setDescuento(valorDescuento);
-		facturaDetalle.setEliminado(false);
-		facturaDetalle.setFactura(factura);
-		facturaDetalle.setIva(empresa.getIva());
-		facturaDetalle.setPrecio(bodegaDetalle.getPrecio());
-		facturaDetalle.setSubtotal(subtotal);
-		facturaDetalle.setTotal(subtotal);
-		JPADAOFactory.getFactory().getFacturaDetalleDAO().create(facturaDetalle);
-		
-		//Disminuyo Stock.
-		bodegaDetalle.setCantidad(bodegaDetalle.getCantidad()-cantidad);
-		JPADAOFactory.getFactory().getBodegaDetalleDAO().update(bodegaDetalle);
-		
-		return Response.status(Response.Status.ACCEPTED).build();
-		
+			for (FacturaDetalle facturaDetalle : factura.getFacturaDetalle()) {
+				ItemProducto itemProducto = new ItemProducto(facturaDetalle.getBodegaDetalle().getId(), facturaDetalle.getBodegaDetalle().getProducto()
+						.getNombre(), facturaDetalle.getSubtotal(), facturaDetalle.getCantidad(), facturaDetalle.getPrecio());
+				listaProductos.add(itemProducto);
+			}
+			return listaProductos;
+		}
+		return listaProductos;
+
 	}
 
 	/**
@@ -112,21 +62,35 @@ public class CompraResource {
 	 * @return String Mensaje de Servidor
 	 */
 	@PUT
-	@Path("/enviar")
+	@Path("/cofirmar")
 	@Consumes(MediaType.APPLICATION_XML)
 	public void confirmarComprasXML() {
 
 	}
 
-	/**
-	 * Eliminar un Usuario dado su ID. Retorna mensaje de Servidor
-	 * @param id Identificador del Usurio que se requiere eliminar.
-	 * @return String Mensaje de Servidor.
-	 */
-	@DELETE
-	@Path("/delete/{id}")
-	public Response eliminarProducto(@PathParam("id") Integer id) {
-
-		return Response.status(204).entity("1").build();
+	@GET
+	@Path("/carros/{idUsuario}/{idAgencia}")
+	@Consumes({ "application/json" })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<CarroCompras> getCarrosCompra(@PathParam("idUsuario") int idUsuario, @PathParam("idAgencia") int idAgencia) {
+		List<CarroCompras> listaCarros = new ArrayList<CarroCompras>();
+		java.text.SimpleDateFormat sdf=new java.text.SimpleDateFormat("dd/MM/yyyy");
+		
+		
+		Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
+		Agencia agencia = JPADAOFactory.getFactory().getAgenciaDAO().read(idAgencia);
+		List<Factura> facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByClienteAndAgencia(cliente, agencia);
+		if (facturas != null) {
+			for (Factura factura : facturas) {
+				CarroCompras carro = new CarroCompras();
+				carro.setFechaCreacion(sdf.format(factura.getFecha()));
+				carro.setIdFactura(factura.getId());
+				carro.setNombreAgencia(factura.getAgencia().getNombre());
+				carro.setTotal(factura.getTotal());
+				listaCarros.add(carro);
+			}
+		}
+		return listaCarros;
 	}
+
 }

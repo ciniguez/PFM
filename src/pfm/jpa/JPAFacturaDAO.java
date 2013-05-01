@@ -37,6 +37,16 @@ public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
 	}
 
 	@Override
+	public List<Factura> getFacturasPendientesByClienteAndAgencia(Usuario cliente, Agencia agencia) {
+		Query query = em.createNamedQuery("getFacturasPendientesByClienteAndAgencia");
+		query.setParameter("cliente", cliente);
+		query.setParameter("agencia", agencia);
+		@SuppressWarnings("unchecked")
+		List<Factura> resultado = query.getResultList();
+		return resultado;
+	}
+
+	@Override
 	public void setTotalesFactura(Factura factura,
 			List<FacturaDetalle> listaFacturaDetalle) {
 
@@ -93,5 +103,6 @@ public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
 		return resultado;
 	}
 
+	
 
 }
