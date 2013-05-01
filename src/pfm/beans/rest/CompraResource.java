@@ -1,5 +1,7 @@
 package pfm.beans.rest;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -77,14 +79,14 @@ public class CompraResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<CarroCompras> getCarrosCompra(@PathParam("idUsuario") int idUsuario, @PathParam("idAgencia") int idAgencia) {
 		List<CarroCompras> listaCarros = new ArrayList<CarroCompras>();
-
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
 		Agencia agencia = JPADAOFactory.getFactory().getAgenciaDAO().read(idAgencia);
 		List<Factura> facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByClienteAndAgencia(cliente, agencia);
 		if (facturas != null) {
 			for (Factura factura : facturas) {
 				CarroCompras carro = new CarroCompras();
-				carro.setFechaCreacion(factura.getFecha().toString());
+				carro.setFechaCreacion(df.format(factura.getFecha()));
 				carro.setIdFactura(factura.getId());
 				carro.setNombreAgencia(factura.getAgencia().getNombre());
 				carro.setTotal(factura.getTotal());
