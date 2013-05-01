@@ -74,16 +74,14 @@ public class CompraResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<CarroCompras> getCarrosCompra(@PathParam("idUsuario") int idUsuario, @PathParam("idAgencia") int idAgencia) {
 		List<CarroCompras> listaCarros = new ArrayList<CarroCompras>();
-		java.text.SimpleDateFormat sdf=new java.text.SimpleDateFormat("dd/MM/yyyy");
-		
-		
+
 		Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
 		Agencia agencia = JPADAOFactory.getFactory().getAgenciaDAO().read(idAgencia);
 		List<Factura> facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByClienteAndAgencia(cliente, agencia);
 		if (facturas != null) {
 			for (Factura factura : facturas) {
 				CarroCompras carro = new CarroCompras();
-				carro.setFechaCreacion(sdf.format(factura.getFecha()));
+				carro.setFechaCreacion(factura.getFecha().toString());
 				carro.setIdFactura(factura.getId());
 				carro.setNombreAgencia(factura.getAgencia().getNombre());
 				carro.setTotal(factura.getTotal());
