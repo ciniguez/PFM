@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import pfm.entidades.Agencia;
 import pfm.entidades.BodegaDetalle;
 import pfm.entidades.Empresa;
 import pfm.entidades.Factura;
@@ -14,54 +15,82 @@ import pfm.jpa.JPADAOFactory;
 
 public class TestRest {
 
-	public static Set<FacturaDetalle> listarProductosCuentaXML(int idUsuario) {
-		Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
-		List<Factura> facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByCliente(cliente);
-
-		if (facturas.size() == 1) {
-			System.out.println("Existe un carro de compras on id: " + facturas.get(0).getId());
-			return facturas.get(0).getFacturaDetalle();
-		} else {
-			return null;
+	public static Usuario login(String username, String clave) {
+		Usuario usuario = null;
+		String[] attributes = { "eliminado", "username" };
+		String[] values = { "0", username, clave };
+		String order = "id";
+		int index = -1;
+		int size = -1;
+		List<Usuario> usuarios = JPADAOFactory.getFactory().getUsuarioDAO().find(attributes, values, order, index, size);
+		if (usuarios.size() == 1) {
+			if (usuarios.get(0).getRol().getId() == 2)
+				usuario = usuarios.get(0);
 		}
+		return usuario;
+
 	}
 
-	public static void addProductoXML(int idBodegaDetalle, int idUsuario, int cantidad) {
+	public static Set<FacturaDetalle> listarProductosCarro(int idFactura) {
+		Set<FacturaDetalle> detalles = null;
+		Factura factura = JPADAOFactory.getFactory().getFacturaDAO().read(idFactura);
+
+		//Obtengo los detalles (productos) de la factura
+		if (factura != null) {
+			System.out.println("Este es el listado de Productos (" + factura.getFacturaDetalle().size() + ")");
+			detalles = factura.getFacturaDetalle();
+		} else
+			System.out.println("No existe Factura ni productos");
+		return detalles;
+	}
+
+	public static List<Factura> listarCarrosCompra(int idUsuario, int idAgencia) {
+		Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
+		Agencia agencia = JPADAOFactory.getFactory().getAgenciaDAO().read(idAgencia);
+		List<Factura> facturas = null;
+
+		facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByClienteAndAgencia(cliente, agencia);
+		
+		return facturas;
+
+	}
+
+	public static int addProducto(int idBodegaDetalle, int idUsuario, int cantidad, int idFactura) {
+
+		Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
+		BodegaDetalle bodegaDetalle = JPADAOFactory.getFactory().getBodegaDetalleDAO().read(idBodegaDetalle);
+		Producto producto = bodegaDetalle.getProducto();
+		Empresa empresa = bodegaDetalle.getBodega().getAgencia().getEmpresa();
+		int idDescuento = 1;//JPADAOFactory.getFactory().getDescuentoProductoDAO().getDescuentoId(producto, false);
+		double valorDescuento = 1;// JPADAOFactory.getFactory().getDescuentoDAO().getValorDescuentoByFecha(idDescuento, false);
+		double subtotal = (cantidad * bodegaDetalle.getPrecio()) - valorDescuento;
+
 		try {
 			Factura factura;
-			Usuario cliente = JPADAOFactory.getFactory().getUsuarioDAO().read(idUsuario);
-			List<Factura> facturas = JPADAOFactory.getFactory().getFacturaDAO().getFacturasPendientesByCliente(cliente);
-			BodegaDetalle bodegaDetalle = JPADAOFactory.getFactory().getBodegaDetalleDAO().read(idBodegaDetalle);
-			Producto producto = bodegaDetalle.getProducto();
-			Empresa empresa = bodegaDetalle.getBodega().getAgencia().getEmpresa();
-			int idDescuento = JPADAOFactory.getFactory().getDescuentoProductoDAO().getDescuentoId(producto, false);
-			double valorDescuento = JPADAOFactory.getFactory().getDescuentoDAO().getValorDescuentoByFecha(idDescuento, false);
-			double subtotal = (cantidad * bodegaDetalle.getPrecio()) - valorDescuento;
+			if (idFactura != -1) {
+				factura = JPADAOFactory.getFactory().getFacturaDAO().read(idFactura);
+			} else {
+				factura = new Factura();
+			}
+
+			factura.setAgencia(bodegaDetalle.getBodega().getAgencia());
+			factura.setCliente(cliente);
+			factura.setDescuento(factura.getDescuento() + valorDescuento);
+			//TODO: poner en una enumeracion el valor Eliminado
+			factura.setEliminado(false);
+			factura.setEmpleadoAgencia(null);
+			factura.setFecha(new Date());
+			factura.setIva(empresa.getIva());
+			factura.setMedioDePago(null);
+			factura.setPagado(false);
+			factura.setPendiente(true);
+			factura.setSubtotal(subtotal);
+			factura.setTotal(factura.getSubtotal() + subtotal);
+			JPADAOFactory.getFactory().getFacturaDAO().create(factura);
 
 			//Compruebo que la cantidad pedida no exceda del stock
 			if (cantidad > bodegaDetalle.getCantidad()) {
 				throw new Exception("La cantidad solicitada excede del stock actual");
-			}
-
-			//Si no existe una factura que emula como carro de compras, creamos una.
-			if (facturas.size() == 0) {
-				factura = new Factura();
-				factura.setAgencia(bodegaDetalle.getBodega().getAgencia());
-				factura.setCliente(cliente);
-				factura.setDescuento(factura.getDescuento() + valorDescuento);
-				//TODO: poner en una enumeracion el valor Eliminado
-				factura.setEliminado(false);
-				factura.setEmpleadoAgencia(null);
-				factura.setFecha(new Date());
-				factura.setIva(empresa.getIva());
-				factura.setMedioDePago(null);
-				factura.setPagado(false);
-				factura.setPendiente(true);
-				factura.setSubtotal(subtotal);
-				factura.setTotal(factura.getSubtotal() + subtotal);
-				JPADAOFactory.getFactory().getFacturaDAO().create(factura);
-			} else {
-				factura = facturas.get(0);
 			}
 
 			//Creación de la Factura Detalle
@@ -77,11 +106,17 @@ public class TestRest {
 			facturaDetalle.setTotal(subtotal);
 			JPADAOFactory.getFactory().getFacturaDetalleDAO().create(facturaDetalle);
 
-			//Disminuyo Stock.
-			bodegaDetalle.setCantidad(bodegaDetalle.getCantidad() - cantidad);
-			JPADAOFactory.getFactory().getBodegaDetalleDAO().update(bodegaDetalle);
+			return factura.getId();
+			/*
+			 * //Disminuyo Stock.
+			 * bodegaDetalle.setCantidad(bodegaDetalle.getCantidad() -
+			 * cantidad);
+			 * JPADAOFactory.getFactory().getBodegaDetalleDAO().update
+			 * (bodegaDetalle);
+			 */
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
+			return -1;
 		}
 
 	}
@@ -121,62 +156,86 @@ public class TestRest {
 	 */
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
+		Usuario usuario = null;
+		Agencia agencia = JPADAOFactory.getFactory().getAgenciaDAO().read(1);
+		int idFactura = -1;
 		int n = 0;
 
-		while (n != 7) {
+		while (n != 9) {
 			System.out.println("1.- Registrarse ");
 			System.out.println("2.- Login ");
 			System.out.println("3.- Comprar Producto ");
 			System.out.println("4.- Enviar a Caja ");
-			System.out.println("5.- Listar Carro Compras ");
+			System.out.println("5.- Listar Carros Compras ");
 			System.out.println("6.- Eliminar Producto");
-			System.out.println("7.- Salir ");
+			System.out.println("7.- Carro de Compras Actual");
+			System.out.println("8.- Seleccionar Carro");
+			System.out.println("9.- Salir ");
 			System.out.println("Teclea la opción ");
 
 			n = in.nextInt();
 
 			switch (n) {
+			case 2:
+				System.out.println("username:");
+				String username = in.next();
+				System.out.println("pass:");
+				String clave = in.next();
+				usuario = login(username, clave);
+				if (usuario != null)
+					System.out.println("USUARIO LOGEADO: " + usuario.toString());
+				else
+					System.out.println("USUARIO NOLOGEADO");
+
+				break;
 			case 3:
 				System.out.println("Ingresa id Producto (BodegaDetalle)");
 				int idBodegaDetalle = in.nextInt();
-				System.out.println("Ingresa id Usuario");
-				int idUsuario = in.nextInt();
+				int idUsuario = usuario.getId();
 				System.out.println("Ingresa Cantidad");
 				int cantidad = in.nextInt();
-				addProductoXML(idBodegaDetalle, idUsuario, cantidad);
+				idFactura = addProducto(idBodegaDetalle, idUsuario, cantidad, idFactura);
 				break;
 			case 4:
-				System.out.println("Ingresa id Factura");
-				int idFactura = in.nextInt();
 				confirmarPedido(idFactura);
 				break;
 			case 5:
-				System.out.println("Ingresa id de Usuario");
-				idUsuario = in.nextInt();
-				Set<FacturaDetalle> productos = listarProductosCuentaXML(idUsuario);
+				idUsuario = usuario.getId();
+				List<Factura> carros = listarCarrosCompra(idUsuario, agencia.getId());
+				for (Factura factura : carros) {
+					System.out.println("Los Carros de Compra son :" + factura.toString());
+				}
+
+				break;
+			case 6:
+				System.out.println("Ingresa id del Producto");
+				idBodegaDetalle = in.nextInt();
+				deleteProductoXML(idBodegaDetalle, idFactura);
+				break;
+			case 7:
+				Set<FacturaDetalle>productos = listarProductosCarro(idFactura);
 				int contador = 0;
 				if (productos != null) {
+					System.out.println("ID \tPRODUCTO\t CANTIDAD");
 					for (FacturaDetalle facturaDetalle : productos) {
 						if (!facturaDetalle.getEliminado()) {
 							contador++;
 							System.out.println(facturaDetalle.getId() + "\t" + facturaDetalle.getBodegaDetalle().getProducto().getNombre() + "\t"
 									+ facturaDetalle.getCantidad());
 						}
-						if(contador==0){
+						if (contador == 0) {
 							System.out.println("No existen Productos");
 						}
-
 					}
 				} else {
 					System.out.println("No existen productos");
 				}
 				break;
-			case 6:
-				System.out.println("Ingresa id del Producto");
-				idBodegaDetalle = in.nextInt();
-				System.out.println("Ingresa id de Factura");
+			case 8:
+				System.out.println("Selecciona Carro");
 				idFactura = in.nextInt();
-				deleteProductoXML(idBodegaDetalle, idFactura);
+				System.out.println("Carro Seleccionado");
+				listarProductosCarro(idFactura);
 				break;
 
 			default:
