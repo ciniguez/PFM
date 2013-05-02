@@ -86,7 +86,7 @@ public class FacturaDetalleResource {
 			factura.setFecha(new Date());
 			factura.setMedioDePago(null);
 			factura.setPagado(false);
-			// nuevaFactura.setPendiente(null);
+			factura.setPendiente(true);
 			factura.setSubtotal(0);
 			factura.setDescuento(0);
 			factura.setIva(0);

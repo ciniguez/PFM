@@ -10,8 +10,9 @@ public interface FacturaDetalleDAO extends GenericDAO<FacturaDetalle, Integer> {
 
 	public List<FacturaDetalle> getFacturaDetalleByFactura(Factura factura,
 			boolean eliminado);
-	
-	public FacturaDetalle getFacturaDetalleByBodDetAndFac(Factura factura,BodegaDetalle bodegaDetalle);
+
+	public FacturaDetalle getFacturaDetalleByBodDetAndFac(Factura factura,
+			BodegaDetalle bodegaDetalle);
 
 	public void setPrecioByBodegaDetalle(FacturaDetalle facturaDetalle,
 			double precio);

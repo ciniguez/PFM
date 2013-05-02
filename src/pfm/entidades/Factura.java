@@ -14,7 +14,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @XmlRootElement
 @NamedQueries({
-		@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia AND f.pendiente = :pendiente"),
+		@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia AND f.pendiente = :pendiente AND f.empleadoAgencia IS NULL"),
+		@NamedQuery(name = "getFacturasByAdmin", query = "SELECT f FROM Factura f WHERE f.pendiente = :pendiente AND f.empleadoAgencia IS NULL"),
 		@NamedQuery(name = "getFacturasPendientesByCliente", query = "SELECT f FROM Factura f WHERE f.cliente = :cliente AND f.pagado = false AND f.pendiente = true"),
 		@NamedQuery(name = "getFacturasPendientesByClienteAndAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia AND f.cliente = :cliente AND f.pagado = false AND f.pendiente = true"),
 		@NamedQuery(name = "getFacturasPagadasByCliente", query = "SELECT f FROM Factura f WHERE f.cliente =:cliente AND f.pagado = true"),
@@ -42,7 +43,7 @@ public class Factura implements Serializable {
 	private double total;
 	@Column(nullable = false)
 	private boolean pagado;
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private boolean pendiente;
 	@ManyToOne
 	@JoinColumn(nullable = false)

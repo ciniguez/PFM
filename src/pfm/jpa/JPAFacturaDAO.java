@@ -28,6 +28,16 @@ public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
 	}
 
 	@Override
+	public List<Factura> getFacturasByAdmin(boolean pendiente) {
+		Query query = em.createNamedQuery("getFacturasByAdmin");
+		query.setParameter("pendiente", pendiente);
+		@SuppressWarnings("unchecked")
+		List<Factura> resultado = query.getResultList();
+		return resultado;
+
+	}
+
+	@Override
 	public List<Factura> getFacturasPendientesByCliente(Usuario cliente) {
 		Query query = em.createNamedQuery("getFacturasPendientesByCliente");
 		query.setParameter("cliente", cliente);
@@ -37,8 +47,10 @@ public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
 	}
 
 	@Override
-	public List<Factura> getFacturasPendientesByClienteAndAgencia(Usuario cliente, Agencia agencia) {
-		Query query = em.createNamedQuery("getFacturasPendientesByClienteAndAgencia");
+	public List<Factura> getFacturasPendientesByClienteAndAgencia(
+			Usuario cliente, Agencia agencia) {
+		Query query = em
+				.createNamedQuery("getFacturasPendientesByClienteAndAgencia");
 		query.setParameter("cliente", cliente);
 		query.setParameter("agencia", agencia);
 		@SuppressWarnings("unchecked")
@@ -102,7 +114,5 @@ public class JPAFacturaDAO extends JPAGenericDAO<Factura, Integer> implements
 		List<Factura> resultado = query.getResultList();
 		return resultado;
 	}
-
-	
 
 }

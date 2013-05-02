@@ -55,7 +55,7 @@ public class GenerarFactura implements Serializable {
 			if (factura.getEliminado() == false) {
 				if (factura.isPagado()) {
 					factura.setEmpleadoAgencia(empleadoAgencia);
-					factura.setPendiente(false);
+					//factura.setPendiente(false);
 					getFacturaDAO().update(factura);
 					FacesMessage msg = new FacesMessage("Factura generada",
 							String.valueOf(factura.getId()));
