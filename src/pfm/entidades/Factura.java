@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlTransient;
 		@NamedQuery(name = "getFacturasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia AND f.pendiente = :pendiente AND f.empleadoAgencia IS NULL"),
 		@NamedQuery(name = "getFacturasByAdmin", query = "SELECT f FROM Factura f WHERE f.pendiente = :pendiente AND f.empleadoAgencia IS NULL"),
 		@NamedQuery(name = "getFacturasPendientesByCliente", query = "SELECT f FROM Factura f WHERE f.cliente = :cliente AND f.pagado = false AND f.pendiente = true"),
-		@NamedQuery(name = "getFacturasPendientesByClienteAndAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia AND f.cliente = :cliente AND f.pagado = false AND f.pendiente = true"),
+		@NamedQuery(name = "getFacturasPendientesByClienteAndAgencia", query = "SELECT f FROM Factura f WHERE f.agencia = :agencia AND f.cliente = :cliente AND f.pagado = false AND f.pendiente = true AND f.eliminado = false"),
 		@NamedQuery(name = "getFacturasPagadasByCliente", query = "SELECT f FROM Factura f WHERE f.cliente =:cliente AND f.pagado = true"),
 		@NamedQuery(name = "getFacturasPagadasByEmpleado", query = "SELECT f FROM Factura f JOIN f.empleadoAgencia e WHERE e.empleado =:empleado AND f.pagado = true"),
 		@NamedQuery(name = "getFacturasPagadasByAgencia", query = "SELECT f FROM Factura f WHERE f.agencia =:agencia AND f.pagado = true"),

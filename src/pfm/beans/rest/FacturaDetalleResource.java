@@ -28,7 +28,8 @@ public class FacturaDetalleResource {
 	@GET
 	@Path("/getFacturaDetalleById/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFacturaDetalleById(@PathParam("id") int id) {
+	public Response getFacturaDetalleById(@PathParam("id") int id)
+			throws URISyntaxException {
 		FacturaDetalle facturaDetalle = new FacturaDetalle();
 		facturaDetalle = JPADAOFactory.getFactory().getFacturaDetalleDAO()
 				.read(id);
@@ -45,7 +46,8 @@ public class FacturaDetalleResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response existeProductoByFacturaDetalle(
 			@PathParam("idFactura") int idFactura,
-			@PathParam("idBodegaDetalle") int idBodegaDetalle) {
+			@PathParam("idBodegaDetalle") int idBodegaDetalle)
+			throws URISyntaxException {
 		Factura factura = new Factura();
 		factura = JPADAOFactory.getFactory().getFacturaDAO().read(idFactura);
 		BodegaDetalle bodegaDetalle = new BodegaDetalle();
