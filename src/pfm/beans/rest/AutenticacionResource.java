@@ -26,18 +26,20 @@ import pfm.jpa.JPADAOFactory;
 @Path("/autenticacion/")
 public class AutenticacionResource {
 
-	// TODO: Hacer las consultas con inyeccion de dependencias
-	/*
-	 * @ManagedProperty(value = "#{DAOFactory.usuarioDAO}") private UsuarioDAO
-	 * usuarioDAO;
+	/**
+	 * Metodo para crear un nuevo cliente en el sistemas desde la aplicacion
+	 * movil
 	 * 
-	 * @ManagedProperty(value = "#{DAOFactory.rolDAO}") private RolDAO rolDAO;
+	 * @param user
+	 *            El usuario que se va a crear
+	 * @return 1
+	 * @throws URISyntaxException
 	 */
 	@POST
 	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createUsuarioXML(Usuario user) throws URISyntaxException {
-		// TODO: quitar el rol quemado a 2
+		// rol 2 = cliente
 		user.setRol(JPADAOFactory.getFactory().getRolDAO().read(2));
 		JPADAOFactory.getFactory().getUsuarioDAO().create(user);
 		return Response.status(204).entity("1").build();
@@ -50,7 +52,7 @@ public class AutenticacionResource {
 	 *            Nombre del Usuario para acceso al sistema
 	 * @param clave
 	 *            Clave de acceso al sistema
-	 * @return
+	 * @return entidad usuario
 	 * @throws URISyntaxException
 	 */
 	@GET
@@ -69,17 +71,18 @@ public class AutenticacionResource {
 				.find(attributes, values, order, index, size);
 		if (usuarios.size() == 1) {
 			usuario = usuarios.get(0);
-		}
-
-		// TODO No poner el id de Rol quemado en 2 sino ponerlo en sesion total
-		// del sistema.
-		if (usuario != null && usuario.getRol().getId() == 2) {
-			// TODO Investigar la devolucion del Response.status
-			return Response.ok(usuario).build();
+			if (usuario.getRol().getId() == 2) {
+				return Response.ok(usuario).build();
+			} else {
+				return Response.status(Response.Status.NOT_FOUND)
+						.entity("Entity not found for UUID: " + username)
+						.build();
+			}
 		} else {
 			return Response.status(Response.Status.NOT_FOUND)
 					.entity("Entity not found for UUID: " + username).build();
 		}
+
 	}
 
 }
