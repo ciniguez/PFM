@@ -9,10 +9,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import pfm.entidades.Agencia;
+import pfm.entidades.BodegaDetalle;
 import pfm.entidades.Descuento;
 import pfm.entidades.Factura;
 import pfm.entidades.FacturaDetalle;
@@ -31,6 +33,13 @@ import pfm.jpa.JPADAOFactory;
 @Path("/factura/")
 public class FacturaResource {
 
+	/**
+	 * Obtiene el listado de carros de compra por usuario y agencia
+	 * 
+	 * @param idUsuario
+	 * @param idAgencia
+	 * @return List<Factura>
+	 */
 	@GET
 	@Path("/carrosCompra/{idUsuario}/{idAgencia}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -171,10 +180,41 @@ public class FacturaResource {
 		factura.setPagado(true);
 		factura.setMedioDePago(medioDePago);
 		factura.setPendiente(false);
-		// actualiza la factura
-		JPADAOFactory.getFactory().getFacturaDAO().update(factura);
 
-		return Response.ok(factura).build();
+		// revisa el stock disponible
+		List<FacturaDetalle> listaFacturaDetalle = JPADAOFactory.getFactory()
+				.getFacturaDetalleDAO()
+				.getFacturaDetalleByFactura(factura, false);
+
+		List<FacturaDetalle> listaFacturaDetalleErroneos = new ArrayList<FacturaDetalle>();
+		BodegaDetalle bodegaDetalle = new BodegaDetalle();
+		for (FacturaDetalle f : listaFacturaDetalle) {
+			bodegaDetalle = JPADAOFactory.getFactory().getBodegaDetalleDAO()
+					.read(f.getBodegaDetalle().getId());
+			if (f.getCantidad() > bodegaDetalle.getCantidad()) {
+				listaFacturaDetalleErroneos.add(f);
+			}
+		}
+
+		if (listaFacturaDetalleErroneos.size() == 0) {
+			for (FacturaDetalle f : listaFacturaDetalle) {
+				// actualiza el stock
+				bodegaDetalle = JPADAOFactory.getFactory()
+						.getBodegaDetalleDAO()
+						.read(f.getBodegaDetalle().getId());
+				bodegaDetalle.setCantidad(bodegaDetalle.getCantidad()
+						- f.getCantidad());
+				JPADAOFactory.getFactory().getBodegaDetalleDAO()
+						.update(bodegaDetalle);
+			}
+			// actualiza la factura
+			JPADAOFactory.getFactory().getFacturaDAO().update(factura);
+			return Response.ok(factura).build();
+		} else {
+			GenericEntity<List<FacturaDetalle>> entity = new GenericEntity<List<FacturaDetalle>>(
+					listaFacturaDetalleErroneos) {
+			};
+			return Response.ok(entity).build();
+		}
 	}
-
 }

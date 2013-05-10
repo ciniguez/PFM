@@ -21,6 +21,13 @@ import pfm.jpa.JPADAOFactory;
  */
 @Path("/descuento/")
 public class DescuentoResource {
+	/**
+	 * Obtiene el descuento por medio del producto
+	 * 
+	 * @param idProducto
+	 * @return Response(Descuento)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/getDescuentoByProducto/{idProducto}")
 	@Produces(MediaType.APPLICATION_JSON)

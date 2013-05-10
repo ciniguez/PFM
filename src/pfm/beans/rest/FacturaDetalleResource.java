@@ -52,6 +52,13 @@ public class FacturaDetalleResource {
 
 	}
 
+	/**
+	 * Obtiene la facturaDetalle por medio del id
+	 * 
+	 * @param id
+	 * @return Response(FacturaDetalle)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/getFacturaDetalleById/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -68,6 +75,15 @@ public class FacturaDetalleResource {
 					.entity("Entity not found for UUID: " + id).build();
 	}
 
+	/**
+	 * Verifica si el producto ya exite en otra FacturaDetalle de la misma
+	 * Factura
+	 * 
+	 * @param idFactura
+	 * @param idBodegaDetalle
+	 * @return Response(FacturaDetaklle)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/existeProductoByFacturaDetalle/{idFactura}/{idBodegaDetalle}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -92,6 +108,19 @@ public class FacturaDetalleResource {
 					.entity("Entity not found for UUID: " + idFactura).build();
 	}
 
+	/**
+	 * Agrega un nuevo producto a la FacturaDetalle, y si no tiene Factura
+	 * genera una nueva
+	 * 
+	 * @param idFactura
+	 * @param idAgencia
+	 * @param idCliente
+	 * @param idBodegaDetalle
+	 * @param idDescuento
+	 * @param cantidad
+	 * @return Response(Factura)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/create/{idFactura}/{idAgencia}/{idCliente}/{idBodegaDetalle}/{idDescuento}/{cantidad}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -181,6 +210,16 @@ public class FacturaDetalleResource {
 					.entity("Entity not found for UUID: " + idFactura).build();
 	}
 
+	/**
+	 * Actualiza la cantidad y totales en FacturaDetalle y los totales en
+	 * Factura
+	 * 
+	 * @param idFacturaDetalle
+	 * @param idDescuento
+	 * @param cantidad
+	 * @return Response(Factura)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/update/{idFacturaDetalle}/{idDescuento}/{cantidad}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -239,6 +278,13 @@ public class FacturaDetalleResource {
 
 	}
 
+	/**
+	 * Elimina fisicamente la FacturaDetalle
+	 * 
+	 * @param idFacturaDetalle
+	 * @return Response(Factura)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/delete/{idFacturaDetalle}")
 	@Produces(MediaType.APPLICATION_JSON)

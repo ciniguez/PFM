@@ -22,6 +22,13 @@ import pfm.jpa.JPADAOFactory;
 @Path("/bodegaDetalle/")
 public class BodegaDetalleResource {
 
+	/**
+	 * Obtiene la bodegaDetalle por medio del id
+	 * 
+	 * @param id
+	 * @return Response(bodegaDetalle)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/getBodegaDetalleById/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
