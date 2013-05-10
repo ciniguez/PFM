@@ -24,7 +24,7 @@ public class MedioDePagoResource {
 	/**
 	 * Listado de los medios de pago, para el momento de confirmar la compra
 	 * 
-	 * @return
+	 * @return Response(MedioPago)
 	 * @throws URISyntaxException
 	 */
 	@GET

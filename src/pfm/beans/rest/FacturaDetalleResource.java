@@ -1,6 +1,7 @@
 package pfm.beans.rest;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,39 @@ import pfm.jpa.JPADAOFactory;
 @Path("/facturaDetalle/")
 public class FacturaDetalleResource {
 
+	/**
+	 * Obtener el listado de productos en el Carro de Compras
+	 * 
+	 * @param id
+	 *            Identificador de la factura.
+	 * @return listado de objetos JSON de facturaDetalle
+	 */
+	@GET
+	@Path("/carroCompraActual/{idFactura}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<FacturaDetalle> getCarroCompraActual(
+			@PathParam("idFactura") int idFactura) {
+
+		Factura factura = JPADAOFactory.getFactory().getFacturaDAO()
+				.read(idFactura);
+		List<FacturaDetalle> listaFacturaDetalle = new ArrayList<FacturaDetalle>();
+		if (factura != null) {
+			listaFacturaDetalle = JPADAOFactory.getFactory()
+					.getFacturaDetalleDAO()
+					.getFacturaDetalleByFactura(factura, false);
+		}
+
+		return listaFacturaDetalle;
+
+	}
+
+	/**
+	 * Obtiene la facturaDetalle por medio del id
+	 * 
+	 * @param id
+	 * @return Response(FacturaDetalle)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/getFacturaDetalleById/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -41,6 +75,15 @@ public class FacturaDetalleResource {
 					.entity("Entity not found for UUID: " + id).build();
 	}
 
+	/**
+	 * Verifica si el producto ya exite en otra FacturaDetalle de la misma
+	 * Factura
+	 * 
+	 * @param idFactura
+	 * @param idBodegaDetalle
+	 * @return Response(FacturaDetaklle)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/existeProductoByFacturaDetalle/{idFactura}/{idBodegaDetalle}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -65,6 +108,19 @@ public class FacturaDetalleResource {
 					.entity("Entity not found for UUID: " + idFactura).build();
 	}
 
+	/**
+	 * Agrega un nuevo producto a la FacturaDetalle, y si no tiene Factura
+	 * genera una nueva
+	 * 
+	 * @param idFactura
+	 * @param idAgencia
+	 * @param idCliente
+	 * @param idBodegaDetalle
+	 * @param idDescuento
+	 * @param cantidad
+	 * @return Response(Factura)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/create/{idFactura}/{idAgencia}/{idCliente}/{idBodegaDetalle}/{idDescuento}/{cantidad}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -154,6 +210,16 @@ public class FacturaDetalleResource {
 					.entity("Entity not found for UUID: " + idFactura).build();
 	}
 
+	/**
+	 * Actualiza la cantidad y totales en FacturaDetalle y los totales en
+	 * Factura
+	 * 
+	 * @param idFacturaDetalle
+	 * @param idDescuento
+	 * @param cantidad
+	 * @return Response(Factura)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/update/{idFacturaDetalle}/{idDescuento}/{cantidad}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -212,6 +278,13 @@ public class FacturaDetalleResource {
 
 	}
 
+	/**
+	 * Elimina fisicamente la FacturaDetalle
+	 * 
+	 * @param idFacturaDetalle
+	 * @return Response(Factura)
+	 * @throws URISyntaxException
+	 */
 	@GET
 	@Path("/delete/{idFacturaDetalle}")
 	@Produces(MediaType.APPLICATION_JSON)
