@@ -9,10 +9,10 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formDescuento">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="des"
+			<p:dataTable id="dataTableDescuento" var="des"
 				value="#{listarDescuento.lista}" paginator="true" rows="10"
 				filteredValue="#{listarDescuento.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
@@ -24,9 +24,9 @@
         		</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{listarDescuento.onModificar}"
-					update=":form:messages" />
+					update=":formDescuento:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarDescuento.onCancel}"
-					update=":form:messages" />
+					update=":formDescuento:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
@@ -125,9 +125,9 @@
 			<p:commandButton action="#{listarDescuento.onCrear}"
 				value="Crear Descuento" ajax="false" />
 			<p:commandButton actionListener="#{listarDescuento.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formDescuento" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarDescuento.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formDescuento" value="Dar de Alta" />
 		</h:form>
 
 

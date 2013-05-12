@@ -9,24 +9,24 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formCategoria">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item"
+			<p:dataTable id="dataTableCategoria" var="cat"
 				value="#{listarCategoria.lista}" paginator="true" rows="10"
 				filteredValue="#{listarCategoria.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true" selection="#{listarCategoria.selectedCategorias}"
-				rowKey="#{item.id}">
+				rowKey="#{cat.id}">
 
 				<f:facet name="header">
             		Listado de Categorias
         		</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{listarCategoria.onModificar}"
-					update=":form:messages" />
+					update=":formCategoria:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarCategoria.onCancel}"
-					update=":form:messages" />
+					update=":formCategoria:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
@@ -35,25 +35,25 @@
 
 
 
-				<p:column filterBy="#{item.id}">
+				<p:column filterBy="#{cat.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{item.id}" />
+					<h:outputText value="#{cat.id}" />
 				</p:column>
 
 
 
-				<p:column filterBy="#{item.nombre}">
+				<p:column filterBy="#{cat.nombre}">
 					<f:facet name="header">
 						<h:outputText value="Categoria" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.nombre}" />
+							<h:outputText value="#{cat.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.nombre}" style="width:100%"
+							<p:inputText value="#{cat.nombre}" style="width:100%"
 								label="Nombre" required="true"
 								requiredMessage="Debe ingresar la nombre de la categoria" />
 						</f:facet>
@@ -70,8 +70,8 @@
 						<h:outputText value="Eliminado" />
 					</f:facet>
 
-					<h:outputText value="Si" rendered="#{item.eliminado}" />
-					<h:outputText value="No" rendered="#{!item.eliminado}" />
+					<h:outputText value="Si" rendered="#{cat.eliminado}" />
+					<h:outputText value="No" rendered="#{!cat.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
@@ -81,9 +81,9 @@
 			<p:commandButton action="#{listarCategoria.onCrear}"
 				value="Crear Categoria" ajax="false" />
 			<p:commandButton actionListener="#{listarCategoria.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formCategoria" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarCategoria.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formCategoria" value="Dar de Alta" />
 		</h:form>
 
 

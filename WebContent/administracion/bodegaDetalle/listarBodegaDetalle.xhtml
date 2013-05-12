@@ -9,47 +9,49 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formBodegaDetalle">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="bod"
+			<p:dataTable id="dataTableBodegaDetalle" var="bodDet"
 				value="#{listarBodegaDetalle.lista}" paginator="true" rows="10"
 				filteredValue="#{listarBodegaDetalle.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true"
 				selection="#{listarBodegaDetalle.selectedBodegaDetalle}"
-				rowKey="#{bod.id}">
+				rowKey="#{bodDet.id}">
 
 				<f:facet name="header">
             		Listado de Productos por Bodega
         		</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{listarBodegaDetalle.onModificar}"
-					update=":form:messages" />
+				<p:ajax event="rowEdit"
+					listener="#{listarBodegaDetalle.onModificar}"
+					update=":formBodegaDetalle:messages" />
 				<p:ajax event="rowEditCancel"
-					listener="#{listarBodegaDetalle.onCancel}" update=":form:messages" />
+					listener="#{listarBodegaDetalle.onCancel}"
+					update=":formBodegaDetalle:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
-				<p:column filterBy="#{bod.id}">
+				<p:column filterBy="#{bodDet.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{bod.id}" />
+					<h:outputText value="#{bodDet.id}" />
 				</p:column>
 
-				<p:column filterBy="#{bod.bodega}">
+				<p:column filterBy="#{bodDet.bodega}">
 					<f:facet name="header">
 						<h:outputText value="Bodega" />
 					</f:facet>
-					<h:outputText value="#{bod.bodega}" />
+					<h:outputText value="#{bodDet.bodega}" />
 				</p:column>
 
-				<p:column filterBy="#{bod.producto}">
+				<p:column filterBy="#{bodDet.producto}">
 					<f:facet name="header">
 						<h:outputText value="Producto" />
 					</f:facet>
-					<h:outputText value="#{bod.producto}" />
+					<h:outputText value="#{bodDet.producto}" />
 				</p:column>
 
 				<p:column>
@@ -58,10 +60,10 @@
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{bod.cantidad}" />
+							<h:outputText value="#{bodDet.cantidad}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{bod.cantidad}" style="width:100%"
+							<p:inputText value="#{bodDet.cantidad}" style="width:100%"
 								label="Cantidad" required="true"
 								requiredMessage="Debe ingresar una cantidad"
 								validatorMessage="Debe ingresar un valor numerico entero">
@@ -77,10 +79,10 @@
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{bod.precio}" />
+							<h:outputText value="#{bodDet.precio}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{bod.precio}" style="width:100%"
+							<p:inputText value="#{bodDet.precio}" style="width:100%"
 								label="Precio" required="true"
 								requiredMessage="Debe ingresar un precio"
 								converterMessage="Debe ingresar un valor decimal">
@@ -94,8 +96,8 @@
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<h:outputText value="Si" rendered="#{bod.eliminado}" />
-					<h:outputText value="No" rendered="#{!bod.eliminado}" />
+					<h:outputText value="Si" rendered="#{bodDet.eliminado}" />
+					<h:outputText value="No" rendered="#{!bodDet.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
@@ -105,9 +107,9 @@
 			<p:commandButton action="#{listarBodegaDetalle.onCrear}"
 				value="Crear Producto por Bodega" ajax="false" />
 			<p:commandButton actionListener="#{listarBodegaDetalle.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formBodegaDetalle" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarBodegaDetalle.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formBodegaDetalle" value="Dar de Alta" />
 		</h:form>
 
 

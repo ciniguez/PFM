@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<faces-config
-    xmlns="http://java.sun.com/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
-    version="2.0">
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
+
 	<navigation-rule>
 		<from-view-id>/login/loginUsuario.xhtml</from-view-id>
 		<navigation-case>
@@ -12,7 +12,7 @@
 			<to-view-id>error.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<from-view-id>/login/loginUsuario.xhtml</from-view-id>
 		<navigation-case>
@@ -20,7 +20,7 @@
 			<to-view-id>/administracion/menu/menuEmpleado.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>admin</display-name>
 		<from-view-id>/login/loginUsuario.xhtml</from-view-id>
@@ -29,83 +29,19 @@
 			<to-view-id>/administracion/menu/menuAdmin.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
-  
-  <navigation-rule>
-    <from-view-id>*</from-view-id>
-    <navigation-case>
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
 			<from-outcome>logout</from-outcome>
 			<to-view-id>/login/loginUsuario.xhtml</to-view-id>
-		</navigation-case> 
-    <navigation-case> 
-      <from-outcome>empresa</from-outcome>
-      <to-view-id>/administracion/empresa/listarEmpresa.xhtml</to-view-id> 
-    </navigation-case>
-    <navigation-case> 
-      <from-outcome>agencia</from-outcome>
-      <to-view-id>/administracion/agencia/listarAgencia.xhtml</to-view-id> 
-    </navigation-case> 
-    <navigation-case> 
-      <from-outcome>bodega</from-outcome>
-      <to-view-id>/administracion/bodega/listarBodega.xhtml</to-view-id> 
-    </navigation-case> 
-    <navigation-case> 
-      <from-outcome>marca</from-outcome>
-      <to-view-id>/administracion/marca/listarMarca.xhtml</to-view-id> 
-    </navigation-case>
-    <navigation-case> 
-      <from-outcome>categoria</from-outcome>
-      <to-view-id>/administracion/categoria/listarCategoria.xhtml</to-view-id> 
-    </navigation-case> 
-    <navigation-case> 
-      <from-outcome>producto</from-outcome>
-      <to-view-id>/administracion/producto/listarProducto.xhtml</to-view-id> 
-    </navigation-case> 
-    <navigation-case> 
-      <from-outcome>bodegaDetalle</from-outcome>
-      <to-view-id>/administracion/bodegaDetalle/listarBodegaDetalle.xhtml</to-view-id> 
-    </navigation-case>
-        <navigation-case> 
-      <from-outcome>descuento</from-outcome>
-      <to-view-id>/administracion/descuento/listarDescuento.xhtml</to-view-id> 
-    </navigation-case> 
-    <navigation-case> 
-      <from-outcome>descuentoProducto</from-outcome>
-      <to-view-id>/administracion/descuentoProducto/listarDescuentoProducto.xhtml</to-view-id> 
-    </navigation-case> 
-    <navigation-case> 
-      <from-outcome>medioPago</from-outcome>
-      <to-view-id>/administracion/medioPago/listarMedioPago.xhtml</to-view-id> 
-    </navigation-case>
-    <navigation-case> 
-    <from-outcome>facturaPagada</from-outcome>
-      <to-view-id>/administracion/factura/listarFacturasPagadas.xhtml</to-view-id> 
-    </navigation-case>
-    <navigation-case> 
-      <from-outcome>facturaPendiente</from-outcome>
-      <to-view-id>/administracion/factura/listarFacturaPendiente.xhtml</to-view-id> 
-    </navigation-case>
-    <navigation-case> 
-      <from-outcome>rol</from-outcome>
-      <to-view-id>/administracion/rol/listarRol.xhtml</to-view-id> 
-    </navigation-case>
-    <navigation-case> 
-      <from-outcome>usuario</from-outcome>
-      <to-view-id>/administracion/usuario/listarUsuario.xhtml</to-view-id> 
-    </navigation-case>
-    <navigation-case> 
-      <from-outcome>empleadoAgencia</from-outcome>
-      <to-view-id>/administracion/empleadoAgencia/listarEmpleadoAgencia.xhtml</to-view-id> 
-    </navigation-case>
-    <navigation-case> 
-      <from-outcome>reportes</from-outcome>
-      <to-view-id>/administracion/reportes/reporteMenu.xhtml</to-view-id> 
-    </navigation-case>
-  </navigation-rule>
-  
-	
-     
-<lifecycle> 
-	<phase-listener>pfm.beans.cicloVida.MyPhaseListener</phase-listener>
-</lifecycle>
+		</navigation-case>
+	</navigation-rule>
+
+
+
+	<lifecycle>
+		<phase-listener>pfm.beans.cicloVida.MyPhaseListener</phase-listener>
+	</lifecycle>
 </faces-config>

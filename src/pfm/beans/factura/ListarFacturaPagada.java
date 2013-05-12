@@ -1,5 +1,6 @@
 package pfm.beans.factura;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -17,8 +18,9 @@ import pfm.entidades.Usuario;
 
 @ManagedBean(name = "listarFacturaPagada")
 @SessionScoped
-public class ListarFacturaPagada {
+public class ListarFacturaPagada implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private List<Factura> listaFacturasPagadas;
 	private List<FacturaDetalle> listaFacturaDetalle;
 	private Usuario empleado;
@@ -33,19 +35,18 @@ public class ListarFacturaPagada {
 	@ManagedProperty(value = "#{reporte}")
 	private ReporteMenu reporteMenuBEAN;
 	private Factura selectedFactura;
-	
-	public ListarFacturaPagada(){
-		this.empleado = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("UsuarioBean");
+
+	public ListarFacturaPagada() {
+		this.empleado = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("UsuarioBean");
 	}
-
-
 
 	public List<FacturaDetalle> getListaFacturaDetalle() {
 		try {
 			setListaFacturaDetalle(facturaDetalleDAO
 					.getFacturaDetalleByFactura(getSelectedFactura(), false));
 		} catch (Exception e) {
-			System.out.println("ERROR <<ListarFactura>>: getLista()" + e);
+			System.out.println("ERROR <<ListarFacturaPagada>>: getLista()" + e);
 		}
 		return listaFacturaDetalle;
 	}
@@ -78,7 +79,6 @@ public class ListarFacturaPagada {
 		this.empleadoDAO = empleadoDAO;
 	}
 
-
 	public FacturaDetalleDAO getFacturaDetalleDAO() {
 		return facturaDetalleDAO;
 	}
@@ -94,25 +94,28 @@ public class ListarFacturaPagada {
 	public void setEmpleadoAgencia(EmpleadoAgencia empleadoAgencia) {
 		this.empleadoAgencia = empleadoAgencia;
 	}
-	
-	public String onImprimir(){
+
+	public String onImprimir() {
 		reporteMenuBEAN.imprimirFactura(getSelectedFactura());
 		return null;
-	
+
 	}
 
 	public List<Factura> getListaFacturasPagadas() {
 		try {
-			//TODO: poner en enumeracion los roles
+			// TODO: poner en enumeracion los roles
 			if (getEmpleado().getRol().getId() == 1) {
-				setListaFacturasPagadas(facturaDAO.getFacturasPagadasByEmpleado(this.getEmpleado()));
-				//TODO: poner en enumeracion los roles
+				setListaFacturasPagadas(facturaDAO
+						.getFacturasPagadasByEmpleado(this.getEmpleado()));
+				// TODO: poner en enumeracion los roles
 			} else if (getEmpleado().getRol().getId() == 3) {
 				setListaFacturasPagadas(facturaDAO.getFacturasPagadas());
 			}
 
 		} catch (Exception e) {
-			System.out.println("ERROR <<ListarFacturaPagadas>>: getListaFacturas()" + e);
+			System.out
+					.println("ERROR <<ListarFacturaPagadas>>: getListaFacturas()"
+							+ e);
 		}
 		return this.listaFacturasPagadas;
 	}
@@ -129,25 +132,17 @@ public class ListarFacturaPagada {
 		this.filteredFacturas = filteredFacturas;
 	}
 
-
-
 	public ReporteMenu getReporteMenuBEAN() {
 		return reporteMenuBEAN;
 	}
-
-
 
 	public void setReporteMenuBEAN(ReporteMenu reporteMenuBEAN) {
 		this.reporteMenuBEAN = reporteMenuBEAN;
 	}
 
-
-
 	public Factura getSelectedFactura() {
 		return selectedFactura;
 	}
-
-
 
 	public void setSelectedFactura(Factura selectedFactura) {
 		this.selectedFactura = selectedFactura;

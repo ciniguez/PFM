@@ -9,16 +9,16 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formDescuentoProducto">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="des"
+			<p:dataTable id="dataTableDescuentoProducto" var="desPro"
 				value="#{listarDescuentoProducto.lista}" paginator="true" rows="10"
 				filteredValue="#{listarDescuentoProducto.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true"
 				selection="#{listarDescuentoProducto.selectedDescuentoProducto}"
-				rowKey="#{des.id}">
+				rowKey="#{desPro.id}">
 
 				<f:facet name="header">
             		Listado de Descuentos por Producto
@@ -26,27 +26,27 @@
 
 				<p:ajax event="rowEdit"
 					listener="#{listarDescuentoProducto.onModificar}"
-					update=":form:messages" />
+					update=":formDescuentoProducto:messages" />
 				<p:ajax event="rowEditCancel"
 					listener="#{listarDescuentoProducto.onCancel}"
-					update=":form:messages" />
+					update=":formDescuentoProducto:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
-				<p:column filterBy="#{des.id}">
+				<p:column filterBy="#{desPro.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{des.id}" />
+					<h:outputText value="#{desPro.id}" />
 				</p:column>
 
-				<p:column filterBy="#{des.descuento}">
+				<p:column filterBy="#{desPro.descuento}">
 					<f:facet name="header">
 						<h:outputText value="Descuento" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{des.descuento}" />
+							<h:outputText value="#{desPro.descuento}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:selectOneMenu value="#{listarDescuentoProducto.descuento}"
@@ -57,13 +57,13 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column filterBy="#{des.producto}">
+				<p:column filterBy="#{desPro.producto}">
 					<f:facet name="header">
 						<h:outputText value="Producto" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{des.producto}" />
+							<h:outputText value="#{desPro.producto}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:selectOneMenu value="#{listarDescuentoProducto.producto}"
@@ -78,8 +78,8 @@
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<h:outputText value="Si" rendered="#{des.eliminado}" />
-					<h:outputText value="No" rendered="#{!des.eliminado}" />
+					<h:outputText value="Si" rendered="#{desPro.eliminado}" />
+					<h:outputText value="No" rendered="#{!desPro.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
@@ -89,9 +89,9 @@
 			<p:commandButton action="#{listarDescuentoProducto.onCrear}"
 				value="Crear Descuento por Producto" ajax="false" />
 			<p:commandButton actionListener="#{listarDescuentoProducto.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formDescuentoProducto" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarDescuentoProducto.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formDescuentoProducto" value="Dar de Alta" />
 		</h:form>
 
 

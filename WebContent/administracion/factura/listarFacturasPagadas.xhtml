@@ -9,38 +9,38 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formFacturaPagada">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTableFactura" var="fac"
+			<p:dataTable id="dataTableFacturaPagada" var="facPag"
 				value="#{listarFacturaPagada.listaFacturasPagadas}" paginator="true"
 				rows="10" filteredValue="#{listarFacturaPagadas.filteredFacturas}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				rowKey="#{fac.id}">
+				rowKey="#{facPag.id}">
 
 				<f:facet name="header">
             		Listado de Facturas Pagadas
         		</f:facet>
 
-				<p:column filterBy="#{fac.id}">
+				<p:column filterBy="#{facPag.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{fac.id}" />
+					<h:outputText value="#{facPag.id}" />
 				</p:column>
 
-				<p:column filterBy="#{fac.cliente}">
+				<p:column filterBy="#{facPag.cliente}">
 					<f:facet name="header">
 						<h:outputText value="Cliente" />
 					</f:facet>
-					<h:outputText value="#{fac.cliente}" />
+					<h:outputText value="#{facPag.cliente}" />
 				</p:column>
 
-				<p:column filterBy="#{fac.fecha}">
+				<p:column filterBy="#{facPag.fecha}">
 					<f:facet name="header">
 						<h:outputText value="Fecha" />
 					</f:facet>
-					<h:outputText value="#{fac.fecha}">
+					<h:outputText value="#{facPag.fecha}">
 						<f:convertDateTime pattern="dd-MM-yyyy" />
 					</h:outputText>
 				</p:column>
@@ -49,44 +49,43 @@
 					<f:facet name="header">
 						<h:outputText value="Total" />
 					</f:facet>
-					<h:outputText value="#{fac.total}" />
+					<h:outputText value="#{facPag.total}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Medio de Pago" />
 					</f:facet>
-					<h:outputText value="#{fac.medioDePago}" />
+					<h:outputText value="#{facPag.medioDePago}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<h:outputText value="Si" rendered="#{fac.eliminado}" />
-					<h:outputText value="No" rendered="#{!fac.eliminado}" />
+					<h:outputText value="Si" rendered="#{facPag.eliminado}" />
+					<h:outputText value="No" rendered="#{!facPag.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
-					<p:commandButton id="selectButton" update=":form:display"
-						oncomplete="carDialog.show()" icon="ui-icon-search" title="Ver">
-						<f:setPropertyActionListener value="#{fac}"
-							target="#{listarFacturaPendiente.selectedFactura}" />
+					<p:commandButton id="selectButton"
+						update=":formFacturaPagada:display" oncomplete="carDialog.show()"
+						icon="ui-icon-search" title="Ver">
+						<f:setPropertyActionListener value="#{facPag}"
+							target="#{listarFacturaPagada.selectedFactura}" />
 					</p:commandButton>
 				</p:column>
 
 				<p:column style="width:6%">
-					<h:commandLink id="nonAjax" value="Imprimir" action="#{listarFacturaPagada.onImprimir}"
+					<h:commandLink id="nonAjax" value="Imprimir"
+						action="#{listarFacturaPagada.onImprimir}"
 						style="margin-right:20px;">
-						<f:setPropertyActionListener value="#{fac}"
+						<f:setPropertyActionListener value="#{facPag}"
 							target="#{listarFacturaPagada.selectedFactura}" />
 					</h:commandLink>
 				</p:column>
 
 			</p:dataTable>
-
-
-
 
 			<p:dialog header="Factura Detalle" widgetVar="carDialog"
 				resizable="false" id="carDlg" showEffect="fade" hideEffect="explode"
@@ -133,7 +132,7 @@
 
 					</p:panelGrid>
 
-					<p:dataTable id="dataTableDetalle" var="det"
+					<p:dataTable id="dataTableDetallePagadas" var="det"
 						value="#{listarFacturaPagada.listaFacturaDetalle}">
 
 						<p:column>

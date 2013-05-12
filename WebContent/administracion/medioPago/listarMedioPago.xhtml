@@ -9,48 +9,48 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formMedioPago">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item"
+			<p:dataTable id="dataTableMedioPago" var="medPag"
 				value="#{listarMedioPago.lista}" paginator="true" rows="10"
 				filteredValue="#{listarMedioPago.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true" selection="#{listarMedioPago.selectedMedioPagos}"
-				rowKey="#{item.id}">
+				rowKey="#{medPag.id}">
 
 				<f:facet name="header">
             		Listado de Medios de Pago
         		</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{listarMedioPago.onModificar}"
-					update=":form:messages" />
+					update=":formMedioPago:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarMedioPago.onCancel}"
-					update=":form:messages" />
+					update=":formMedioPago:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
 
 
-				<p:column filterBy="#{item.id}">
+				<p:column filterBy="#{medPag.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{item.id}" />
+					<h:outputText value="#{medPag.id}" />
 				</p:column>
 
 
 
-				<p:column filterBy="#{item.nombre}">
+				<p:column filterBy="#{medPag.nombre}">
 					<f:facet name="header">
 						<h:outputText value="MedioPago" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.nombre}" />
+							<h:outputText value="#{medPag.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.nombre}" style="width:100%"
+							<p:inputText value="#{medPag.nombre}" style="width:100%"
 								label="Nombre" required="true"
 								requiredMessage="Debe ingresar la nombre de la medio_pago" />
 						</f:facet>
@@ -62,8 +62,8 @@
 						<h:outputText value="Eliminado" />
 					</f:facet>
 
-					<h:outputText value="Si" rendered="#{item.eliminado}" />
-					<h:outputText value="No" rendered="#{!item.eliminado}" />
+					<h:outputText value="Si" rendered="#{medPag.eliminado}" />
+					<h:outputText value="No" rendered="#{!medPag.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
@@ -73,9 +73,9 @@
 			<p:commandButton action="#{listarMedioPago.onCrear}"
 				value="Crear MedioPago" ajax="false" />
 			<p:commandButton actionListener="#{listarMedioPago.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formMedioPago" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarMedioPago.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formMedioPago" value="Dar de Alta" />
 		</h:form>
 
 

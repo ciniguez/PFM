@@ -9,43 +9,44 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formRol">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item" value="#{listarRol.lista}"
+			<p:dataTable id="dataTableRol" var="rol" value="#{listarRol.lista}"
 				paginator="true" rows="10" filteredValue="#{listarRol.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				editable="true" selection="#{listarRol.selectedRoles}" rowKey="#{item.id}">
+				editable="true" selection="#{listarRol.selectedRoles}"
+				rowKey="#{rol.id}">
 
 				<f:facet name="header">
             		Listado de Roles
         		</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{listarRol.onModificar}"
-					update=":form:messages" />
+					update=":formRol:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarRol.onCancel}"
-					update=":form:messages" />
+					update=":formRol:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
-				<p:column filterBy="#{item.id}">
+				<p:column filterBy="#{rol.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{item.id}" />
+					<h:outputText value="#{rol.id}" />
 				</p:column>
 
 
-				<p:column filterBy="#{item.nombre}">
+				<p:column filterBy="#{rol.nombre}">
 					<f:facet name="header">
 						<h:outputText value="Rol" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.nombre}" />
+							<h:outputText value="#{rol.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.nombre}" style="width:100%"
+							<p:inputText value="#{rol.nombre}" style="width:100%"
 								label="NOMBRE" required="true"
 								requiredMessage="Debe ingresar la nombre de la rol" />
 						</f:facet>
@@ -59,8 +60,8 @@
 						<h:outputText value="Eliminado" />
 					</f:facet>
 
-					<h:outputText value="Si" rendered="#{item.eliminado}" />
-					<h:outputText value="No" rendered="#{!item.eliminado}" />
+					<h:outputText value="Si" rendered="#{rol.eliminado}" />
+					<h:outputText value="No" rendered="#{!rol.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
@@ -70,9 +71,9 @@
 			<p:commandButton action="#{listarRol.onCrear}" value="Crear Rol"
 				ajax="false" />
 			<p:commandButton actionListener="#{listarRol.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formRol" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarRol.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formRol" value="Dar de Alta" />
 		</h:form>
 
 	</ui:define>

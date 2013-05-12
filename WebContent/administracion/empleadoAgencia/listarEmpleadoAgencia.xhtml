@@ -9,16 +9,16 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formEmpleadoAgencia">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="emp"
+			<p:dataTable id="dataTableEmpleadoAgencia" var="empAge"
 				value="#{listarEmpleadoAgencia.lista}" paginator="true" rows="10"
 				filteredValue="#{listarEmpleadoAgencia.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true"
 				selection="#{listarEmpleadoAgencia.selectedEmpleadoAgencia}"
-				rowKey="#{emp.id}">
+				rowKey="#{empAge.id}">
 
 				<f:facet name="header">
             		Listado de Empleados por Agencia
@@ -26,27 +26,27 @@
 
 				<p:ajax event="rowEdit"
 					listener="#{listarEmpleadoAgencia.onModificar}"
-					update=":form:messages" />
+					update=":formEmpleadoAgencia:messages" />
 				<p:ajax event="rowEditCancel"
 					listener="#{listarEmpleadoAgencia.onCancel}"
-					update=":form:messages" />
+					update=":formEmpleadoAgencia:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
-				<p:column filterBy="#{emp.id}">
+				<p:column filterBy="#{empAge.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{emp.id}" />
+					<h:outputText value="#{empAge.id}" />
 				</p:column>
 
-				<p:column filterBy="#{emp.agencia}">
+				<p:column filterBy="#{empAge.agencia}">
 					<f:facet name="header">
 						<h:outputText value="Agencia" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{emp.agencia}" />
+							<h:outputText value="#{empAge.agencia}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:selectOneMenu value="#{listarEmpleadoAgencia.agencia}"
@@ -57,13 +57,13 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column filterBy="#{emp.empleado}">
+				<p:column filterBy="#{empAge.empleado}">
 					<f:facet name="header">
 						<h:outputText value="Empleado" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{emp.empleado}" />
+							<h:outputText value="#{empAge.empleado}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:selectOneMenu value="#{listarEmpleadoAgencia.empleado}"
@@ -78,8 +78,8 @@
 					<f:facet name="header">
 						<h:outputText value="Eliminado" />
 					</f:facet>
-					<h:outputText value="Si" rendered="#{emp.eliminado}" />
-					<h:outputText value="No" rendered="#{!emp.eliminado}" />
+					<h:outputText value="Si" rendered="#{empAge.eliminado}" />
+					<h:outputText value="No" rendered="#{!empAge.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
@@ -89,9 +89,9 @@
 			<p:commandButton action="#{listarEmpleadoAgencia.onCrear}"
 				value="Crear Empleado por Agencia" ajax="false" />
 			<p:commandButton actionListener="#{listarEmpleadoAgencia.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formEmpleadoAgencia" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarEmpleadoAgencia.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formEmpleadoAgencia" value="Dar de Alta" />
 		</h:form>
 
 

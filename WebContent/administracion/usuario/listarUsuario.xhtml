@@ -9,61 +9,61 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formUsuario">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="item" value="#{listarUsuario.lista}"
+			<p:dataTable id="dataTableUsuario" var="usu" value="#{listarUsuario.lista}"
 				paginator="true" rows="10" filteredValue="#{listarUsuario.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true" selection="#{listarUsuario.selectedUsuarios}"
-				rowKey="#{item.id}">
+				rowKey="#{usu.id}">
 
 				<f:facet name="header">
             		Listado de Usuarios
         		</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{listarUsuario.onModificar}"
-					update=":form:messages" />
+					update=":formUsuario:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarUsuario.onCancel}"
-					update=":form:messages" />
+					update=":formUsuario:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
 
 
-				<p:column filterBy="#{item.id}">
+				<p:column filterBy="#{usu.id}">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
-					<h:outputText value="#{item.id}" />
+					<h:outputText value="#{usu.id}" />
 				</p:column>
 
-				<p:column filterBy="#{item.username}">
+				<p:column filterBy="#{usu.username}">
 					<f:facet name="header">
 						<h:outputText value="Usuario de Acceso" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.username}" />
+							<h:outputText value="#{usu.username}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.username}" style="width:100%"
+							<p:inputText value="#{usu.username}" style="width:100%"
 								label="Nombre de Usuario" required="true"
 								requiredMessage="Debe ingresar la username de la usuario" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
-				<p:column filterBy="#{item.nombres}">
+				<p:column filterBy="#{usu.nombres}">
 					<f:facet name="header">
 						<h:outputText value="Nombres" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.nombres}" />
+							<h:outputText value="#{usu.nombres}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.nombres}" style="width:100%"
+							<p:inputText value="#{usu.nombres}" style="width:100%"
 								label="Nombres" required="true"
 								requiredMessage="Debe ingresar la nombres de la usuario" />
 						</f:facet>
@@ -71,16 +71,16 @@
 				</p:column>
 
 
-				<p:column filterBy="#{item.apellidos}">
+				<p:column filterBy="#{usu.apellidos}">
 					<f:facet name="header">
 						<h:outputText value="Apellidos" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.apellidos}" />
+							<h:outputText value="#{usu.apellidos}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.apellidos}" style="width:100%"
+							<p:inputText value="#{usu.apellidos}" style="width:100%"
 								label="Apellidos" required="true"
 								requiredMessage="Debe ingresar la apellidos de la usuario" />
 						</f:facet>
@@ -89,16 +89,16 @@
 
 
 
-				<p:column filterBy="#{item.email}">
+				<p:column filterBy="#{usu.email}">
 					<f:facet name="header">
 						<h:outputText value="Email" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.email}" />
+							<h:outputText value="#{usu.email}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText id="email" value="#{item.email}" label="Email"
+							<p:inputText id="email" value="#{usu.email}" label="Email"
 								required="true" requiredMessage="Debe ingresar el EMAIL"
 								validatorMessage="El correo ingresado no tiene formato.">
 								<f:validateRegex
@@ -110,16 +110,16 @@
 
 
 
-				<p:column filterBy="#{item.fechaNacimiento}">
+				<p:column filterBy="#{usu.fechaNacimiento}">
 					<f:facet name="header">
 						<h:outputText value="Fecha Nacimiento" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.fechaNacimiento}" />
+							<h:outputText value="#{usu.fechaNacimiento}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:calendar id="cal" value="#{item.fechaNacimiento}"
+							<p:calendar id="cal" value="#{usu.fechaNacimiento}"
 								navigator="true" display="inline" required="true"
 								requiredMessage="Debe ingresar la Fecha de Nacimiento" />
 						</f:facet>
@@ -128,32 +128,32 @@
 
 
 
-				<p:column filterBy="#{item.telefono}">
+				<p:column filterBy="#{usu.telefono}">
 					<f:facet name="header">
 						<h:outputText value="Telefono" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.telefono}" />
+							<h:outputText value="#{usu.telefono}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.telefono}" style="width:100%"
+							<p:inputText value="#{usu.telefono}" style="width:100%"
 								label="Telefono" required="true"
 								requiredMessage="Debe ingresar la telefono de la usuario" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
-				<p:column filterBy="#{item.direccion}">
+				<p:column filterBy="#{usu.direccion}">
 					<f:facet name="header">
 						<h:outputText value="Direccion" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.direccion}" />
+							<h:outputText value="#{usu.direccion}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{item.direccion}" style="width:100%"
+							<p:inputText value="#{usu.direccion}" style="width:100%"
 								label="Direccion" required="true"
 								requiredMessage="Debe ingresar la direccion de la usuario" />
 						</f:facet>
@@ -162,13 +162,13 @@
 
 
 
-				<p:column filterBy="#{item.rol}">
+				<p:column filterBy="#{usu.rol}">
 					<f:facet name="header">
 						<h:outputText value="Rol" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{item.rol}" />
+							<h:outputText value="#{usu.rol}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:selectOneMenu value="#{listarUsuario.rol}" style="width:150px">
@@ -185,8 +185,8 @@
 						<h:outputText value="Eliminado" />
 					</f:facet>
 
-					<h:outputText value="Si" rendered="#{item.eliminado}" />
-					<h:outputText value="No" rendered="#{!item.eliminado}" />
+					<h:outputText value="Si" rendered="#{usu.eliminado}" />
+					<h:outputText value="No" rendered="#{!usu.eliminado}" />
 				</p:column>
 
 				<p:column style="width:6%">
@@ -196,9 +196,9 @@
 			<p:commandButton action="#{listarUsuario.onCrear}"
 				value="Crear Usuario" ajax="false" />
 			<p:commandButton actionListener="#{listarUsuario.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formUsuario" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarUsuario.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formUsuario" value="Dar de Alta" />
 		</h:form>
 
 

@@ -9,11 +9,11 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formProducto">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="pro" value="#{listarProducto.lista}"
-				paginator="true" rows="10"
+			<p:dataTable id="dataTableProducto" var="pro"
+				value="#{listarProducto.lista}" paginator="true" rows="10"
 				filteredValue="#{listarProducto.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true" selection="#{listarProducto.selectedProductos}"
@@ -24,9 +24,9 @@
         		</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{listarProducto.onModificar}"
-					update=":form:messages" />
+					update=":formProducto:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarProducto.onCancel}"
-					update=":form:messages" />
+					update=":formProducto:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
@@ -102,9 +102,9 @@
 			<p:commandButton action="#{listarProducto.onCrear}"
 				value="Crear Producto" ajax="false" />
 			<p:commandButton actionListener="#{listarProducto.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formProducto" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarProducto.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formProducto" value="Dar de Alta" />
 		</h:form>
 
 

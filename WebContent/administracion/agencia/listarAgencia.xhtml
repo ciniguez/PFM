@@ -9,11 +9,12 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formAgencia">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="age" value="#{listarAgencia.lista}"
-				paginator="true" rows="10" filteredValue="#{listarAgencia.filtered}"
+			<p:dataTable id="dataTableAgencia" var="age"
+				value="#{listarAgencia.lista}" paginator="true" rows="10"
+				filteredValue="#{listarAgencia.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true" rowKey="#{age.id}"
 				selection="#{listarAgencia.selectedAgencias}">
@@ -23,9 +24,9 @@
         		</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{listarAgencia.onModificar}"
-					update=":form:messages" />
+					update=":formAgencia:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarAgencia.onCancel}"
-					update=":form:messages" />
+					update=":formAgencia:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
@@ -114,9 +115,9 @@
 			<p:commandButton action="#{listarAgencia.onCrear}"
 				value="Crear Agencia" ajax="false" />
 			<p:commandButton actionListener="#{listarAgencia.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formAgencia" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarAgencia.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formAgencia" value="Dar de Alta" />
 		</h:form>
 
 

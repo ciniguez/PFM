@@ -9,10 +9,10 @@
 
 	<ui:define name="body">
 
-		<h:form id="form">
+		<h:form id="formBodega">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTable" var="bod" value="#{listarBodega.lista}"
+			<p:dataTable id="dataTableBodega" var="bod" value="#{listarBodega.lista}"
 				paginator="true" rows="10" filteredValue="#{listarBodega.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true" selection="#{listarBodega.selectedBodegas}"
@@ -23,9 +23,9 @@
         		</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{listarBodega.onModificar}"
-					update=":form:messages" />
+					update=":formBodega:messages" />
 				<p:ajax event="rowEditCancel" listener="#{listarBodega.onCancel}"
-					update=":form:messages" />
+					update=":formBodega:messages" />
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
@@ -113,9 +113,9 @@
 			<p:commandButton action="#{listarBodega.onCrear}"
 				value="Crear Bodega" ajax="false" />
 			<p:commandButton actionListener="#{listarBodega.onBaja}"
-				update=":form :form:messages" value="Dar de Baja" />
+				update=":formBodega" value="Dar de Baja" />
 			<p:commandButton actionListener="#{listarBodega.onAlta}"
-				update=":form :form:messages" value="Dar de Alta" />
+				update=":formBodega" value="Dar de Alta" />
 		</h:form>
 
 

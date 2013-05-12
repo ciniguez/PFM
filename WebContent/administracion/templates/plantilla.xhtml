@@ -13,64 +13,109 @@
 	<f:view>
 		<h:form>
 			<p:menubar>
-				
-				<p:submenu label="Gestion Empresa" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">
-					<p:menuitem value="Empresa" action="#{menu.listarEmpresa}"	icon="ui-icon-contact" />
-					<p:menuitem value="Agencia" action="#{menu.listarAgencia}" 	icon="ui-icon-contact" />
-					<p:menuitem value="Bodega" action="#{menu.listarBodega}" icon="ui-icon-contact" />
+
+				<p:submenu label="Gestion Empresa" icon="ui-icon-pencil"
+					rendered="#{menu.isAdmin}">
+					<p:menuitem value="Empresa"
+						url="/administracion/empresa/listarEmpresa.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Agencia"
+						url="/administracion/agencia/listarAgencia.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Bodega"
+						url="/administracion/bodega/listarBodega.xhtml"
+						icon="ui-icon-contact" />
 				</p:submenu>
-				
-				<p:submenu label="Gestion Productos" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">
-					<p:menuitem value="Marca" action="#{menu.listarMarca}" icon="ui-icon-contact" />
-					<p:menuitem value="Categoria" action="#{menu.listarCategoria}" icon="ui-icon-contact" />
-					<p:menuitem value="Producto" action="#{menu.listarProducto}" icon="ui-icon-contact" />
-					<p:menuitem value="Productos por bodega" action="#{menu.listarBodegaDetalle}" icon="ui-icon-contact" />
+
+				<p:submenu label="Gestion Productos" icon="ui-icon-pencil"
+					rendered="#{menu.isAdmin}">
+					<p:menuitem value="Marca"
+						url="/administracion/marca/listarMarca.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Categoria"
+						url="/administracion/categoria/listarCategoria.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Producto"
+						url="/administracion/producto/listarProducto.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Productos por bodega"
+						url="/administracion/bodegaDetalle/listarBodegaDetalle.xhtml"
+						icon="ui-icon-contact" />
 				</p:submenu>
-				
-				<p:submenu label="Gestion Descuentos" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">
-					<p:menuitem value="Descuento" action="#{menu.listarDescuento}" icon="ui-icon-contact" />
-					<p:menuitem value="Descuento por productos y bodega" action="#{menu.listarDescuentoProducto}" icon="ui-icon-contact" />
+
+				<p:submenu label="Gestion Descuentos" icon="ui-icon-pencil"
+					rendered="#{menu.isAdmin}">
+					<p:menuitem value="Descuento"
+						url="/administracion/descuento/listarDescuento.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Descuento por productos"
+						url="/administracion/descuentoProducto/listarDescuentoProducto.xhtml"
+						icon="ui-icon-contact" />
 				</p:submenu>
-				
+
 				<p:submenu label="Gestion Facturas" icon="ui-icon-pencil">
-					<p:menuitem value="Medio de Pago" action="#{menu.listarMedioPago}" icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
-					<p:menuitem value="Facturas Pendiente" action="#{menu.listarFacturaPendiente}" icon="ui-icon-contact" />
-					<p:menuitem value="Facturas Pagadas" action="#{menu.listarFacturasPagadas}" icon="ui-icon-contact" />
+					<p:menuitem value="Medio de Pago"
+						url="/administracion/medioPago/listarMedioPago.xhtml"
+						icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
+					<p:menuitem value="Facturas Pendiente"
+						url="/administracion/factura/listarFacturaPendiente.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Facturas Pagadas"
+						url="/administracion/factura/listarFacturaPendiente.xhtml"
+						icon="ui-icon-contact" />
 				</p:submenu>
-				
-				<p:submenu label="Gestion Usuarios" icon="ui-icon-pencil" rendered="#{menu.isAdmin}">
-					<p:menuitem value="Rol" action="#{menu.listarRol}" icon="ui-icon-contact" />
-					<p:menuitem value="Usuario" action="#{menu.listarUsuario}" icon="ui-icon-contact" />
-					<p:menuitem value="Empleado por Agencia" action="#{menu.listarEmpleadoAgencia}" icon="ui-icon-contact" />
+
+				<p:submenu label="Gestion Usuarios" icon="ui-icon-pencil"
+					rendered="#{menu.isAdmin}">
+					<p:menuitem value="Rol" url="/administracion/rol/listarRol.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Usuario"
+						url="/administracion/usuario/listarUsuario.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Empleado por Agencia"
+						url="/administracion/empleadoAgencia/listarEmpleadoAgencia.xhtml"
+						icon="ui-icon-contact" />
 				</p:submenu>
-				
+
 				<p:submenu label="Gestion Reportes" icon="ui-icon-pencil">
-					<p:menuitem value="Cierre de Caja" action="#{menu.listarReportes}" icon="ui-icon-contact" />
-					<p:menuitem value="Consolidado de Ventas" action="#{menu.listarReportes}" icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
-					<p:menuitem value="Stock de Productos" action="#{menu.listarReportes}" icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
+					<p:menuitem value="Cierre de Caja"
+						url="/administracion/reportes/reporteMenu.xhtml"
+						icon="ui-icon-contact" />
+					<p:menuitem value="Consolidado de Ventas"
+						url="/administracion/reportes/reporteMenu.xhtml"
+						icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
+					<p:menuitem value="Stock de Productos"
+						url="/administracion/reportes/reporteMenu.xhtml"
+						icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
 				</p:submenu>
-				
+
 				<p:menuitem value="Salir" action="#{loginUsuario.logout}" />
-			
+
 			</p:menubar>
-			
-			
-			<p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval}" />
-      <p:dialog header="Sesión Caducada?" widgetVar="sessionTimeOutDialog" modal="true" fixedCenter="true" closable="false" width="400" visible="false">
-         <h:outputText value="Su sesión ha finalizado. Haga click sobre el botón para iniciar nuevamente." />
-         <input id="confirmBackToLogin" type="button" value="Iniciar sesión nuevamente"
-                    onclick="window.location='#{facesContext.externalContext.requestContextPath}/login/loginUsuario.jsf';" />
-      </p:dialog>
-            
-	
+
+
+			<p:idleMonitor onactive="sessionTimeOutDialog.show();"
+				timeout="#{session.maxInactiveInterval}" />
+			<p:dialog header="Sesión Caducada?" widgetVar="sessionTimeOutDialog"
+				modal="true" fixedCenter="true" closable="false" width="400"
+				visible="false">
+				<h:outputText
+					value="Su sesión ha finalizado. Haga click sobre el botón para iniciar nuevamente." />
+				<input id="confirmBackToLogin" type="button"
+					value="Iniciar sesión nuevamente"
+					onclick="window.location='#{facesContext.externalContext.requestContextPath}/login/loginUsuario.jsf';" />
+			</p:dialog>
+
+
 		</h:form>
-		
+
 		<p:separator />
 		<h1>
 			<ui:insert name="title">JSF 2.0. Plantillas</ui:insert>
 		</h1>
-		<ui:insert name="body">Cuerpo</ui:insert>
-
+		<div style="width: 100%">
+			<ui:insert name="body">Cuerpo</ui:insert>
+		</div>
 	</f:view>
 </h:body>
 </html>

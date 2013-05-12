@@ -179,7 +179,8 @@ public class ListarFacturaPendiente implements Serializable {
 			setListaFacturaDetalle(facturaDetalleDAO
 					.getFacturaDetalleByFactura(getSelectedFactura(), false));
 		} catch (Exception e) {
-			System.out.println("ERROR <<ModificarFactura>>: getLista()" + e);
+			System.out.println("ERROR <<ListarFacturaPendiente>>: getLista()"
+					+ e);
 		}
 		return listaFacturaDetalle;
 	}
