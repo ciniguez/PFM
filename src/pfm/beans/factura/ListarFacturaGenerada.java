@@ -16,12 +16,12 @@ import pfm.entidades.Factura;
 import pfm.entidades.FacturaDetalle;
 import pfm.entidades.Usuario;
 
-@ManagedBean(name = "listarFacturaPagada")
+@ManagedBean(name = "listarFacturaGenerada")
 @RequestScoped
-public class ListarFacturaPagada implements Serializable {
+public class ListarFacturaGenerada implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private List<Factura> listaFacturasPagadas;
+	private List<Factura> listaFacturas;
 	private List<FacturaDetalle> listaFacturaDetalle;
 	private Usuario empleado;
 	private EmpleadoAgencia empleadoAgencia;
@@ -36,7 +36,7 @@ public class ListarFacturaPagada implements Serializable {
 	private ReporteMenu reporteMenuBEAN;
 	private Factura selectedFactura;
 
-	public ListarFacturaPagada() {
+	public ListarFacturaGenerada() {
 		this.empleado = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("UsuarioBean");
 	}
@@ -101,15 +101,15 @@ public class ListarFacturaPagada implements Serializable {
 
 	}
 
-	public List<Factura> getListaFacturasPagadas() {
+	public List<Factura> getListaFacturas() {
 		try {
 			// TODO: poner en enumeracion los roles
 			if (getEmpleado().getRol().getId() == 1) {
-				setListaFacturasPagadas(facturaDAO
+				setListaFacturas(facturaDAO
 						.getFacturasPagadasByEmpleado(this.getEmpleado()));
 				// TODO: poner en enumeracion los roles
 			} else if (getEmpleado().getRol().getId() == 3) {
-				setListaFacturasPagadas(facturaDAO.getFacturasPagadas());
+				setListaFacturas(facturaDAO.getFacturasPagadas());
 			}
 
 		} catch (Exception e) {
@@ -117,11 +117,11 @@ public class ListarFacturaPagada implements Serializable {
 					.println("ERROR <<ListarFacturaPagadas>>: getListaFacturas()"
 							+ e);
 		}
-		return this.listaFacturasPagadas;
+		return this.listaFacturas;
 	}
 
-	public void setListaFacturasPagadas(List<Factura> listaFacturasPagadas) {
-		this.listaFacturasPagadas = listaFacturasPagadas;
+	public void setListaFacturas(List<Factura> listaFacturas) {
+		this.listaFacturas = listaFacturas;
 	}
 
 	public List<Factura> getFilteredFacturas() {

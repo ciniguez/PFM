@@ -5,7 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="../templates/plantilla.xhtml">
-	<ui:define name="title">FACTURAS PAGADAS</ui:define>
+	<ui:define name="title">FACTURAS GENERADAS</ui:define>
 
 	<ui:define name="body">
 
@@ -13,13 +13,13 @@
 			<p:growl id="messages" showDetail="true" />
 
 			<p:dataTable id="dataTableFacturaPagada" var="facPag"
-				value="#{listarFacturaPagada.listaFacturasPagadas}" paginator="true"
+				value="#{listarFacturaGenerada.listaFacturas}" paginator="true"
 				rows="10" filteredValue="#{listarFacturaPagadas.filteredFacturas}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				rowKey="#{facPag.id}">
 
 				<f:facet name="header">
-            		Listado de Facturas Pagadas
+            		Listado de Facturas Generadas
         		</f:facet>
 
 				<p:column filterBy="#{facPag.id}">
@@ -72,16 +72,16 @@
 						update=":formFacturaPagada:display" oncomplete="carDialog.show()"
 						icon="ui-icon-search" title="Ver">
 						<f:setPropertyActionListener value="#{facPag}"
-							target="#{listarFacturaPagada.selectedFactura}" />
+							target="#{listarFacturaGenerada.selectedFactura}" />
 					</p:commandButton>
 				</p:column>
 
 				<p:column style="width:6%">
 					<h:commandLink id="nonAjax" value="Imprimir"
-						action="#{listarFacturaPagada.onImprimir}"
+						action="#{listarFacturaGenerada.onImprimir}"
 						style="margin-right:20px;">
 						<f:setPropertyActionListener value="#{facPag}"
-							target="#{listarFacturaPagada.selectedFactura}" />
+							target="#{listarFacturaGenerada.selectedFactura}" />
 					</h:commandLink>
 				</p:column>
 
@@ -96,44 +96,44 @@
 					<p:panelGrid id="gridCabecera" columns="6" cellpadding="5"
 						style="width:100%;">
 						<f:facet name="header">          			
-        					Factura No: #{listarFacturaPendiente.selectedFactura.id}
+        					Factura No: #{listarFacturaGenerada.selectedFactura.id}
 						</f:facet>
 
 						<h:outputLabel for="empresa" value="Empresa:"
 							style="font-weight:bold" />
 						<h:outputText id="empresa"
-							value="#{listarFacturaPendiente.selectedFactura.agencia.empresa.razonSocial}" />
+							value="#{listarFacturaGenerada.selectedFactura.agencia.empresa.razonSocial}" />
 
 						<h:outputLabel for="agencia" value="Agencia:"
 							style="font-weight:bold" />
 						<h:outputText id="agencia"
-							value="#{listarFacturaPendiente.selectedFactura.agencia.nombre}" />
+							value="#{listarFacturaGenerada.selectedFactura.agencia.nombre}" />
 
 						<h:outputLabel for="fecha" value="Fecha:" style="font-weight:bold" />
 						<h:outputText id="fecha"
-							value="#{listarFacturaPendiente.selectedFactura.fecha}">
+							value="#{listarFacturaGenerada.selectedFactura.fecha}">
 							<f:convertDateTime pattern="dd-MM-yyyy" />
 						</h:outputText>
 
 						<h:outputLabel for="cliente" value="Cliente:"
 							style="font-weight:bold" />
 						<h:outputText id="cliente"
-							value="#{listarFacturaPendiente.selectedFactura.cliente}" />
+							value="#{listarFacturaGenerada.selectedFactura.cliente}" />
 
 						<h:outputLabel for="direccion" value="Direccion:"
 							style="font-weight:bold" />
 						<h:outputText id="direccion"
-							value="#{listarFacturaPendiente.selectedFactura.cliente.direccion}" />
+							value="#{listarFacturaGenerada.selectedFactura.cliente.direccion}" />
 
 						<h:outputLabel for="telefono" value="Telefono:"
 							style="font-weight:bold" />
 						<h:outputText id="telefono"
-							value="#{listarFacturaPendiente.selectedFactura.cliente.telefono}" />
+							value="#{listarFacturaGenerada.selectedFactura.cliente.telefono}" />
 
 					</p:panelGrid>
 
 					<p:dataTable id="dataTableDetallePagadas" var="det"
-						value="#{listarFacturaPagada.listaFacturaDetalle}">
+						value="#{listarFacturaGenerada.listaFacturaDetalle}">
 
 						<p:column>
 							<f:facet name="header">
@@ -205,22 +205,22 @@
 						<h:outputLabel for="descuentoTotal" value="Descuento:"
 							style="font-weight:bold" />
 						<h:outputText id="descuentoTotal"
-							value="#{listarFacturaPagada.selectedFactura.descuento}" />
+							value="#{listarFacturaGenerada.selectedFactura.descuento}" />
 
 						<h:outputLabel for="ivaTotal" value="Iva:"
 							style="font-weight:bold" />
 						<h:outputText id="ivaTotal"
-							value="#{listarFacturaPagada.selectedFactura.iva}" />
+							value="#{listarFacturaGenerada.selectedFactura.iva}" />
 
 						<h:outputLabel for="subtotalTotal" value="Subtotal:"
 							style="font-weight:bold" />
 						<h:outputText id="subtotalTotal"
-							value="#{listarFacturaPagada.selectedFactura.subtotal}" />
+							value="#{listarFacturaGenerada.selectedFactura.subtotal}" />
 
 						<h:outputLabel for="totalTotal" value="Total:"
 							style="font-weight:bold" />
 						<h:outputText id="totalTotal"
-							value="#{listarFacturaPagada.selectedFactura.total}" />
+							value="#{listarFacturaGenerada.selectedFactura.total}" />
 
 					</p:panelGrid>
 				</p:panelGrid>
