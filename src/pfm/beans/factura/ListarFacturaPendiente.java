@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import pfm.beans.reportes.ReporteMenu;
 import pfm.dao.EmpleadoAgenciaDAO;
 import pfm.dao.FacturaDAO;
 import pfm.dao.FacturaDetalleDAO;
@@ -33,8 +32,6 @@ public class ListarFacturaPendiente implements Serializable {
 	private FacturaDetalleDAO facturaDetalleDAO;
 	@ManagedProperty(value = "#{generarFactura}")
 	private GenerarFactura generarFacturaBEAN;
-	@ManagedProperty(value = "#{reporte}")
-	private ReporteMenu reporteMenuBEAN;
 	@ManagedProperty(value = "#{bajaFactura}")
 	private BajaFactura bajaFacturaBEAN;
 	@ManagedProperty(value = "#{altaFactura}")
@@ -89,14 +86,6 @@ public class ListarFacturaPendiente implements Serializable {
 
 	public void setGenerarFacturaBEAN(GenerarFactura generarFacturaBEAN) {
 		this.generarFacturaBEAN = generarFacturaBEAN;
-	}
-
-	public ReporteMenu getReporteMenuBEAN() {
-		return reporteMenuBEAN;
-	}
-
-	public void setReporteMenuBEAN(ReporteMenu reporteMenuBEAN) {
-		this.reporteMenuBEAN = reporteMenuBEAN;
 	}
 
 	public BajaFactura getBajaFacturaBEAN() {
@@ -216,11 +205,6 @@ public class ListarFacturaPendiente implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarFacturaPendiente";
-	}
-
-	public String onImprimir() {
-		reporteMenuBEAN.imprimirFactura(this.getSelectedFactura());
-		return null;
 	}
 
 	public String onBaja() {
