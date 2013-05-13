@@ -91,6 +91,14 @@ public class ListarFacturaPendiente implements Serializable {
 		this.generarFacturaBEAN = generarFacturaBEAN;
 	}
 
+	public ReporteMenu getReporteMenuBEAN() {
+		return reporteMenuBEAN;
+	}
+
+	public void setReporteMenuBEAN(ReporteMenu reporteMenuBEAN) {
+		this.reporteMenuBEAN = reporteMenuBEAN;
+	}
+
 	public BajaFactura getBajaFacturaBEAN() {
 		return bajaFacturaBEAN;
 	}
@@ -242,14 +250,6 @@ public class ListarFacturaPendiente implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		return "listarFacturaPendiente";
-	}
-
-	public ReporteMenu getReporteMenuBEAN() {
-		return reporteMenuBEAN;
-	}
-
-	public void setReporteMenuBEAN(ReporteMenu reporteMenuBEAN) {
-		this.reporteMenuBEAN = reporteMenuBEAN;
 	}
 
 }
