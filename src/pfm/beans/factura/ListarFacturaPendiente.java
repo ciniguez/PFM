@@ -129,10 +129,10 @@ public class ListarFacturaPendiente implements Serializable {
 	public List<Factura> getListaFacturas() {
 		try {
 			if (getEmpleado().getRol().getId() == 1) {
-				setListaFacturas(facturaDAO.getFacturasByAgencia(
+				setListaFacturas(facturaDAO.getFacturasPendientesByAgencia(
 						getEmpleadoAgencia().getAgencia(), false));
 			} else if (getEmpleado().getRol().getId() == 3) {
-				setListaFacturas(facturaDAO.getFacturasByAdmin(false));
+				setListaFacturas(facturaDAO.getFacturasPendientes(false));
 			}
 
 		} catch (Exception e) {

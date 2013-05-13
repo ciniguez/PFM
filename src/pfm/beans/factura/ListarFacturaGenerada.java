@@ -106,10 +106,10 @@ public class ListarFacturaGenerada implements Serializable {
 			// TODO: poner en enumeracion los roles
 			if (getEmpleado().getRol().getId() == 1) {
 				setListaFacturas(facturaDAO
-						.getFacturasPagadasByEmpleado(this.getEmpleado()));
+						.getFacturasGeneradasByEmpleado(this.getEmpleado()));
 				// TODO: poner en enumeracion los roles
 			} else if (getEmpleado().getRol().getId() == 3) {
-				setListaFacturas(facturaDAO.getFacturasPagadas());
+				setListaFacturas(facturaDAO.getFacturasGeneradas());
 			}
 
 		} catch (Exception e) {
