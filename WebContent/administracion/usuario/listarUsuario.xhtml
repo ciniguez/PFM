@@ -12,8 +12,9 @@
 		<h:form id="formUsuario">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable id="dataTableUsuario" var="usu" value="#{listarUsuario.lista}"
-				paginator="true" rows="10" filteredValue="#{listarUsuario.filtered}"
+			<p:dataTable id="dataTableUsuario" var="usu"
+				value="#{listarUsuario.lista}" paginator="true" rows="10"
+				filteredValue="#{listarUsuario.filtered}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				editable="true" selection="#{listarUsuario.selectedUsuarios}"
 				rowKey="#{usu.id}">
@@ -40,7 +41,7 @@
 
 				<p:column filterBy="#{usu.username}">
 					<f:facet name="header">
-						<h:outputText value="Usuario de Acceso" />
+						<h:outputText value="Usuario" />
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
@@ -50,6 +51,24 @@
 							<p:inputText value="#{usu.username}" style="width:100%"
 								label="Nombre de Usuario" required="true"
 								requiredMessage="Debe ingresar la username de la usuario" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column filterBy="#{usu.password}">
+					<f:facet name="header">
+						<h:outputText value="Contraseña" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usu.password}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:password id="password" value="#{usu.password}" required="true"
+								rendered="true" requiredMessage="Debe ingresar la Contraseña"
+								match="passwordRepeticion" style="width:100%">
+								<f:validateLength minimum="4" maximum="8" />
+							</p:password>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -116,7 +135,9 @@
 					</f:facet>
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{usu.fechaNacimiento}" />
+							<h:outputText value="#{usu.fechaNacimiento}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
 						</f:facet>
 						<f:facet name="input">
 							<p:calendar id="cal" value="#{usu.fechaNacimiento}"

@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.EmpresaDAO;
 import pfm.entidades.Empresa;
 
 @ManagedBean(name = "bajaEmpresa")
-@SessionScoped
+@RequestScoped
 public class BajaEmpresa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +50,7 @@ public class BajaEmpresa implements Serializable {
 			FacesMessage msg = new FacesMessage("Error",
 					"Empresa no dada de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 		return "listarEmpresa";
 	}

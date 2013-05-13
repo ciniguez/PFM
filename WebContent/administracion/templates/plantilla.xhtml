@@ -7,9 +7,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
+	<style>
+ul.ui-menu-child {
+	width: 180px !important;
+}
+</style>
 	<title><ui:insert name="title">JSF 2.0. Plantilla</ui:insert></title>
 </h:head>
-<h:body>
+<h:body style="font-size:10px;">
 	<f:view>
 		<h:form>
 			<p:menubar>
@@ -113,7 +118,7 @@
 		<h1>
 			<ui:insert name="title">JSF 2.0. Plantillas</ui:insert>
 		</h1>
-		<div style="width: 100%">
+		<div style="position: absolute; padding: 50px 20px;">
 			<ui:insert name="body">Cuerpo</ui:insert>
 		</div>
 	</f:view>

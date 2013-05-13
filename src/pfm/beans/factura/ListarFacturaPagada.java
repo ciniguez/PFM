@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.beans.reportes.ReporteMenu;
@@ -17,7 +17,7 @@ import pfm.entidades.FacturaDetalle;
 import pfm.entidades.Usuario;
 
 @ManagedBean(name = "listarFacturaPagada")
-@SessionScoped
+@RequestScoped
 public class ListarFacturaPagada implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	template="../templates/plantilla.xhtml">
+	template="../templates/plantillaCreate.xhtml">
 	<ui:define name="title">PRODUCTOS POR BODEGA</ui:define>
 
 	<ui:define name="body">
@@ -20,14 +20,14 @@
 
 				<h:outputLabel for="bodega" value="Bodega" style="font-weight:bold" />
 				<p:selectOneMenu id="bodega" value="#{crearBodegaDetalle.bodega}"
-					style="width:210px">
+					style="width:220px">
 					<f:selectItems value="#{crearBodegaDetalle.bodegas}" />
 				</p:selectOneMenu>
 
 				<h:outputLabel for="producto" value="Producto"
 					style="font-weight:bold" />
 				<p:selectOneMenu id="producto"
-					value="#{crearBodegaDetalle.producto}" style="width:210px">
+					value="#{crearBodegaDetalle.producto}" style="width:220px">
 					<f:selectItems value="#{crearBodegaDetalle.productos}" />
 				</p:selectOneMenu>
 
@@ -36,7 +36,8 @@
 				<p:inputText id="cantidad"
 					value="#{crearBodegaDetalle.bodegaDetalle.cantidad}"
 					required="true" requiredMessage="Debe ingresar la cantidad"
-					converterMessage="Debe ingresar un valor numerico entero">
+					converterMessage="Debe ingresar un valor numerico entero"
+					style="width:210px">
 					<f:convertNumber integerOnly="true" />
 				</p:inputText>
 
@@ -44,7 +45,8 @@
 				<p:inputText id="precio"
 					value="#{crearBodegaDetalle.bodegaDetalle.precio}" required="true"
 					requiredMessage="Debe ingresar el precio"
-					converterMessage="Debe ingresar un valor numerico decimal">
+					converterMessage="Debe ingresar un valor numerico decimal"
+					style="width:210px">
 					<f:convertNumber maxFractionDigits="2" />
 				</p:inputText>
 

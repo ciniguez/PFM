@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.BodegaDAO;
 import pfm.entidades.Bodega;
 
 @ManagedBean(name = "altaBodega")
-@SessionScoped
+@RequestScoped
 public class AltaBodega implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +50,7 @@ public class AltaBodega implements Serializable {
 			FacesMessage msg = new FacesMessage("Error",
 					"Bodega no dada de alta");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 		return "listarBodega";
 	}

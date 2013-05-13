@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	template="../templates/plantilla.xhtml">
+	template="../templates/plantillaCreate.xhtml">
 	<ui:define name="title">EMPRESA</ui:define>
 
 	<ui:define name="body">
@@ -22,26 +22,30 @@
 					style="font-weight:bold" />
 				<p:inputText id="razonSocial"
 					value="#{crearEmpresa.empresa.razonSocial}" required="true"
-					requiredMessage="Debe ingresar la razon social de la empresa" />
+					requiredMessage="Debe ingresar la razon social de la empresa"
+					style="width:210px" />
 
 				<h:outputLabel for="ruc" value="Ruc:" style="font-weight:bold" />
 				<p:inputText id="ruc" value="#{crearEmpresa.empresa.ruc}"
 					required="true"
-					requiredMessage="Debe ingresar el ruc de la empresa" />
+					requiredMessage="Debe ingresar el ruc de la empresa"
+					style="width:210px" />
 
 				<h:outputLabel for="iva" value="Iva:" style="font-weight:bold" />
 				<p:inputText id="iva" value="#{crearEmpresa.empresa.iva}"
 					required="true"
-					requiredMessage="Debe ingresar el iva de la empresa" />
+					requiredMessage="Debe ingresar el iva de la empresa"
+					style="width:210px" />
 
 				<h:outputLabel for="direccion" value="Direccion"
 					style="font-weight:bold" />
 				<p:inputText id="direccion"
-					value="#{crearEmpresa.empresa.direccion}" />
+					value="#{crearEmpresa.empresa.direccion}" style="width:210px" />
 
 				<h:outputLabel for="telefono" value="Telefono"
 					style="font-weight:bold" />
-				<p:inputText id="telefono" value="#{crearEmpresa.empresa.telefono}" />
+				<p:inputText id="telefono" value="#{crearEmpresa.empresa.telefono}"
+					style="width:210px" />
 
 				<f:facet name="footer">
 					<p:commandButton value="Aceptar" action="#{crearEmpresa.crear}"

@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	template="../templates/plantilla.xhtml">
+	template="../templates/plantillaCreate.xhtml">
 	<ui:define name="title">USUARIO</ui:define>
 
 	<ui:define name="body">
@@ -18,27 +18,28 @@
         			<p:messages />
 				</f:facet>
 
-				<h:outputLabel for="nombres" value="Nombres: *"
+				<h:outputLabel for="nombres" value="Nombres:"
 					style="font-weight:bold" />
 				<p:inputText id="nombres" value="#{crearUsuario.usuario.nombres}"
-					required="true" requiredMessage="Debe ingresar los NOMBRES" />
+					required="true" requiredMessage="Debe ingresar los Nombres"
+					style="width:210px" />
 
-				<h:outputLabel for="apellidos" value="Apellidos: *"
+				<h:outputLabel for="apellidos" value="Apellidos:"
 					style="font-weight:bold" />
 				<p:inputText id="apellidos"
 					value="#{crearUsuario.usuario.apellidos}" required="true"
-					requiredMessage="Debe ingresar el APELLIDOS" />
+					requiredMessage="Debe ingresar el Apellidos" style="width:210px" />
 
-				<h:outputLabel for="email" value="Email: *" style="font-weight:bold" />
+				<h:outputLabel for="email" value="Email:" style="font-weight:bold" />
 				<h:panelGroup>
 					<p:inputText id="email" value="#{crearUsuario.usuario.email}"
-						required="true" requiredMessage="Debe ingresar el EMAIL"
-						validatorMessage="El correo ingresado no tiene formato.">
+						required="true" requiredMessage="Debe ingresar el Email"
+						validatorMessage="El correo ingresado no tiene formato."
+						style="width:210px">
 						<f:validateRegex
 							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
 					</p:inputText>
-					<p:watermark for="email" value="Correo Electronico *" />
 					<p:message for="email" />
 				</h:panelGroup>
 
@@ -49,44 +50,48 @@
 					display="inline" required="true"
 					requiredMessage="Debe ingresar la Fecha de Nacimiento" />
 
-				<h:outputLabel for="telefono" value="Telefono: "
+				<h:outputLabel for="telefono" value="Telefono:"
 					style="font-weight:bold" />
-				<p:inputText id="telefono" value="#{crearUsuario.usuario.telefono}"/>
+				<p:inputText id="telefono" value="#{crearUsuario.usuario.telefono}"
+					style="width:210px" />
 
-				<h:outputLabel for="rol_id" value="Rol: *" style="font-weight:bold" />
+				<h:outputLabel for="rol_id" value="Rol:" style="font-weight:bold" />
 				<p:selectOneMenu id="rol_id" value="#{crearUsuario.rol}"
-					style="width:210px">
+					style="width:220px">
 					<f:selectItems value="#{crearUsuario.roles}" />
 				</p:selectOneMenu>
 
 				<h:outputLabel for="direccion" value="Direccion:"
 					style="font-weight:bold" />
 				<p:inputText id="direccion"
-					value="#{crearUsuario.usuario.direccion}"/>
+					value="#{crearUsuario.usuario.direccion}" style="width:210px" />
 
-				<h:outputLabel for="username" value="Nombre de Usuario: *"
+				<h:outputLabel for="username" value="Nombre de Usuario:"
 					style="font-weight:bold" />
 				<h:panelGroup>
 					<p:inputText id="username" value="#{crearUsuario.usuario.username}"
-						required="true" requiredMessage="Debe ingresar el NOMBRE DE USUARIO" />
+						required="true"
+						requiredMessage="Debe ingresar el Nombre de usuario"
+						style="width:210px" />
 					<p:message for="username" />
 				</h:panelGroup>
 
-				<h:outputLabel for="password" value="Clave: *"
+				<h:outputLabel for="password" value="Contraseña:"
 					style="font-weight:bold" />
 				<h:panelGroup>
-					<p:password id="password" value="#{crearUsuario.usuario.password}" required="true"
-						rendered="true" requiredMessage="Debe ingresar el PASSWORD"
-						match="passwordRepeticion">
+					<p:password id="password" value="#{crearUsuario.usuario.password}"
+						required="true" rendered="true"
+						requiredMessage="Debe ingresar la Contraseña"
+						match="passwordRepeticion" style="width:210px">
 						<f:validateLength minimum="4" maximum="8" />
 					</p:password>
 					<p:message for="password" />
 				</h:panelGroup>
 
-				<h:outputLabel for="passwordRepeticion" value="Repita Clave: *"
+				<h:outputLabel for="passwordRepeticion" value="Repita Contraseña:"
 					style="font-weight:bold" />
 				<p:password id="passwordRepeticion" rendered="true"
-					requiredMessage="Debe ingresar el PASSWORD" />
+					requiredMessage="Debe ingresar la Contraseña" style="width:210px" />
 
 
 				<f:facet name="footer">

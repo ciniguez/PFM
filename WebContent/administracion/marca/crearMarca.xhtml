@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	template="../templates/plantilla.xhtml">
+	template="../templates/plantillaCreate.xhtml">
 	<ui:define name="title">MARCA</ui:define>
 
 	<ui:define name="body">
@@ -22,7 +22,8 @@
 				<h:outputLabel for="nombre" value="Nombre:" style="font-weight:bold" />
 				<p:inputText id="nombre" value="#{crearMarca.marca.nombre}"
 					required="true"
-					requiredMessage="Debe ingresar el NOMBRE de la Marca" />
+					requiredMessage="Debe ingresar el NOMBRE de la Marca"
+					style="width:210px" />
 
 
 				<f:facet name="footer">

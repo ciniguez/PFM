@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.DescuentoProductoDAO;
 import pfm.entidades.DescuentoProducto;
 
 @ManagedBean(name = "bajaDescuentoProducto")
-@SessionScoped
+@RequestScoped
 public class BajaDescuentoProducto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -53,6 +53,7 @@ public class BajaDescuentoProducto implements Serializable {
 			FacesMessage msg = new FacesMessage("Error",
 					"Descuento por Producto no dado de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 
 		return "listarDescuentoProducto";

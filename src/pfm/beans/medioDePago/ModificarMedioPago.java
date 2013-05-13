@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.MedioPagoDAO;
 import pfm.entidades.MedioDePago;
 
 @ManagedBean(name = "modificarMedioPago")
-@SessionScoped
+@RequestScoped
 public class ModificarMedioPago implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +50,7 @@ public class ModificarMedioPago implements Serializable {
 			FacesMessage msg = new FacesMessage("Error",
 					"Medio de Pago no actualizado");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 		return "listarMedioPago";
 	}

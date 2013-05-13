@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.UsuarioDAO;
 import pfm.entidades.Usuario;
 
 @ManagedBean(name = "modificarUsuario")
-@SessionScoped
+@RequestScoped
 public class ModificarUsuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -47,6 +47,7 @@ public class ModificarUsuario implements Serializable {
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Error", "Usuario no actualizada");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 		return "listarUsuario";
 	}

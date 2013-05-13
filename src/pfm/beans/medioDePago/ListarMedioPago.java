@@ -6,7 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
@@ -15,7 +15,7 @@ import pfm.dao.MedioPagoDAO;
 import pfm.entidades.MedioDePago;
 
 @ManagedBean(name = "listarMedioPago")
-@SessionScoped
+@RequestScoped
 public class ListarMedioPago implements Serializable {
 
 	private static final long serialVersionUID = 1L;

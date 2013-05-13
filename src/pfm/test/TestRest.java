@@ -34,6 +34,7 @@ public class TestRest {
 			BodegaDetalle bodegaDetalle = JPADAOFactory.getFactory().getBodegaDetalleDAO().read(idBodegaDetalle);
 			Producto producto = bodegaDetalle.getProducto();
 			Empresa empresa = bodegaDetalle.getBodega().getAgencia().getEmpresa();
+			@SuppressWarnings("unused")
 			int idDescuento = JPADAOFactory.getFactory().getDescuentoProductoDAO().getDescuentoId(producto, false);
 			//double valorDescuento = JPADAOFactory.getFactory().getDescuentoDAO().getValorDescuentoByFecha(idDescuento, false);
 			//double subtotal = (cantidad * bodegaDetalle.getPrecio()) - valorDescuento;
@@ -120,6 +121,7 @@ public class TestRest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 		int n = 0;
 

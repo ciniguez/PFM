@@ -7,7 +7,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -21,7 +21,7 @@ import pfm.entidades.DescuentoProducto;
 import pfm.entidades.Producto;
 
 @ManagedBean(name = "listarDescuentoProducto")
-@SessionScoped
+@RequestScoped
 public class ListarDescuentoProducto implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.MedioPagoDAO;
 import pfm.entidades.MedioDePago;
 
 @ManagedBean(name = "altaMedioPago")
-@SessionScoped
+@RequestScoped
 public class AltaMedioPago implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -51,6 +51,7 @@ public class AltaMedioPago implements Serializable {
 			FacesMessage msg = new FacesMessage("Error",
 					"Medio de pago no dado de alta");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 		return "listarMedioPago";
 	}

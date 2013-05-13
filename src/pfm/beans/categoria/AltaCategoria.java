@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.CategoriaDAO;
 import pfm.entidades.Categoria;
 
 @ManagedBean(name = "altaCategoria")
-@SessionScoped
+@RequestScoped
 public class AltaCategoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -48,6 +48,7 @@ public class AltaCategoria implements Serializable {
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Error", "Categoria no dada de alta");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 		return "listarCategoria";
 	}

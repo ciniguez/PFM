@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.RolDAO;
 import pfm.entidades.Rol;
 
 @ManagedBean(name = "altaRol")
-@SessionScoped
+@RequestScoped
 public class AltaRol implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManagedProperty(value = "#{DAOFactory.rolDAO}")
@@ -49,6 +49,7 @@ public class AltaRol implements Serializable {
 		} catch (Exception e) {
 			FacesMessage msg = new FacesMessage("Error", "Rol no dado de alta");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 
 		return "listarRol";

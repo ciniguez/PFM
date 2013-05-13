@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.EmpresaDAO;
 import pfm.entidades.Empresa;
 
 @ManagedBean(name = "modificarEmpresa")
-@SessionScoped
+@RequestScoped
 public class ModificarEmpresa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -49,6 +49,7 @@ public class ModificarEmpresa implements Serializable {
 			FacesMessage msg = new FacesMessage("Error",
 					"Empresa no actualizada");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 		return "listarEmpresa";
 	}

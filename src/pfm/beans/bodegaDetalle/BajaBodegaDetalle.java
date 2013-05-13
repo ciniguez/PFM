@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import pfm.dao.BodegaDetalleDAO;
 import pfm.entidades.BodegaDetalle;
 
 @ManagedBean(name = "bajaBodegaDetalle")
-@SessionScoped
+@RequestScoped
 public class BajaBodegaDetalle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -51,6 +51,7 @@ public class BajaBodegaDetalle implements Serializable {
 			FacesMessage msg = new FacesMessage("Error",
 					"Producto por Bodega no dado de baja");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 		return "listarBodegaDetalle";
 	}
