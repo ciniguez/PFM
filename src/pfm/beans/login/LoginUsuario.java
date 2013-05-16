@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import pfm.dao.UsuarioDAO;
 import pfm.entidades.Usuario;
@@ -31,13 +30,7 @@ public class LoginUsuario implements Serializable {
 
 	public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
 		this.usuarioDAO = usuarioDAO;
-	}
-
-	public String logout() {
-		this.setLogeado(false);
-		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
-		return "logout";
-	}
+	}	
 
 	//OPERACIONES
 	public String procesar() {
