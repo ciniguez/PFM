@@ -7,7 +7,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import pfm.beans.reportes.ReporteMenu;
 import pfm.dao.FacturaDAO;
 import pfm.dao.FacturaDetalleDAO;
 import pfm.dao.UsuarioDAO;
@@ -32,8 +31,8 @@ public class ListarFacturaGenerada implements Serializable {
 	private UsuarioDAO empleadoDAO;
 	@ManagedProperty(value = "#{DAOFactory.facturaDetalleDAO}")
 	private FacturaDetalleDAO facturaDetalleDAO;
-	@ManagedProperty(value = "#{reporte}")
-	private ReporteMenu reporteMenuBEAN;
+	@ManagedProperty(value = "#{imprimirFactura}")
+	private ImprimirFactura imprimirFacturaBEAN;
 	private Factura selectedFactura;
 
 	public ListarFacturaGenerada() {
@@ -95,18 +94,12 @@ public class ListarFacturaGenerada implements Serializable {
 		this.empleadoAgencia = empleadoAgencia;
 	}
 
-	public String onImprimir() {
-		reporteMenuBEAN.imprimirFactura(getSelectedFactura());
-		return null;
-
-	}
-
 	public List<Factura> getListaFacturas() {
 		try {
 			// TODO: poner en enumeracion los roles
 			if (getEmpleado().getRol().getId() == 1) {
-				setListaFacturas(facturaDAO
-						.getFacturasGeneradasByEmpleado(this.getEmpleado()));
+				setListaFacturas(facturaDAO.getFacturasGeneradasByEmpleado(this
+						.getEmpleado()));
 				// TODO: poner en enumeracion los roles
 			} else if (getEmpleado().getRol().getId() == 3) {
 				setListaFacturas(facturaDAO.getFacturasGeneradas());
@@ -132,12 +125,12 @@ public class ListarFacturaGenerada implements Serializable {
 		this.filteredFacturas = filteredFacturas;
 	}
 
-	public ReporteMenu getReporteMenuBEAN() {
-		return reporteMenuBEAN;
+	public ImprimirFactura getImprimirFacturaBEAN() {
+		return imprimirFacturaBEAN;
 	}
 
-	public void setReporteMenuBEAN(ReporteMenu reporteMenuBEAN) {
-		this.reporteMenuBEAN = reporteMenuBEAN;
+	public void setImprimirFacturaBEAN(ImprimirFactura imprimirFacturaBEAN) {
+		this.imprimirFacturaBEAN = imprimirFacturaBEAN;
 	}
 
 	public Factura getSelectedFactura() {
@@ -146,6 +139,12 @@ public class ListarFacturaGenerada implements Serializable {
 
 	public void setSelectedFactura(Factura selectedFactura) {
 		this.selectedFactura = selectedFactura;
+	}
+
+	public String onImprimir() {
+		imprimirFacturaBEAN.imprimirFactura(getSelectedFactura());
+		return null;
+
 	}
 
 }

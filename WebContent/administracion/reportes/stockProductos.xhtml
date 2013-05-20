@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">STOCK DE PRODUCTOS</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
+				<f:facet name="header">  
+        			Stock de Productos
+        			<p:messages />
+				</f:facet>
+
+				<h:outputLabel for="empresa" value="Empresa:"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="empresa" value="#{stockProductos.empresa}"
+					style="width:210px" required="true"
+					requiredMessage="Debe seleccionar una empresa">
+					<f:selectItems value="#{stockProductos.empresas}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="agencia" value="Agencia:"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="agencia" value="#{stockProductos.agencia}"
+					style="width:210px" required="true"
+					requiredMessage="Debe seleccionar una agencia">
+					<f:selectItems value="#{stockProductos.agencias}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="categoria" value="Categoria:"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="categoria" value="#{stockProductos.categoria}"
+					style="width:210px" required="true"
+					requiredMessage="Debe seleccionar una categoria">
+					<f:selectItems value="#{stockProductos.categorias}" />
+				</p:selectOneMenu>
+
+				<f:facet name="footer">
+					<p:commandButton value="Generar Reporte"
+						actionListener="#{stockProductos.generarPDF}" ajax="false" />
+				</f:facet>
+			</p:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

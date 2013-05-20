@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
@@ -24,17 +23,11 @@ import pfm.dao.EmpresaDAO;
 import pfm.entidades.Agencia;
 import pfm.entidades.Categoria;
 import pfm.entidades.Empresa;
-import pfm.entidades.Factura;
 import pfm.jpa.JPADAOFactory;
 
-@ManagedBean(name = "reporte")
-@RequestScoped
-public class ReporteMenu {
+@ManagedBean(name = "stockProductos")
+public class StockProductos {
 
-	private JasperPrint jasperPrint;
-	private int idEmpresa;
-	private int idAgencia;
-	private int idCategoria;
 	@ManagedProperty(value = "#{DAOFactory.empresaDAO}")
 	private EmpresaDAO empresaDAO;
 	@ManagedProperty(value = "#{DAOFactory.agenciaDAO}")
@@ -44,85 +37,14 @@ public class ReporteMenu {
 	private SelectItem[] empresas;
 	private SelectItem[] agencias;
 	private SelectItem[] categorias;
+	private int empresa;
+	private int agencia;
+	private int categoria;
+	private JasperPrint jasperPrint;
+	private String pathReportes = "/reportes/rptStockProductos.jasper";
 
-	private String[] pathReportes = new String[] { "/reportes/rptStockProductos.jasper", "/reportes/rptFactura.jasper" };
+	public StockProductos() {
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void init() throws Exception {
-		Map parameters = new HashMap();
-		parameters.put("parIdEmpresa", this.getIdEmpresa());
-		parameters.put("parIdAgencia", this.getIdAgencia());
-		parameters.put("parIdCategoria", this.getIdCategoria());
-		Connection connection = JPADAOFactory.getFactory().getAgenciaDAO().getConexion();
-		String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.pathReportes[0]);
-		jasperPrint = JasperFillManager.fillReport(reportPath, parameters, connection);
-	}
-
-	public void generarPDF(ActionEvent event) {
-		try {
-			init();
-			HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-			httpServletResponse.addHeader("Content-disposition", "attachment; filename=report.pdf");
-			ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
-			JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
-			FacesContext.getCurrentInstance().responseComplete();
-			
-			
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		
-			
-		}
-		
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void imprimirFactura(Factura f) {
-		try {
-			Empresa e = f.getAgencia().getEmpresa();
-			
-			Map parameters = new HashMap();
-			parameters.put("parIdFactura", f.getId());
-			parameters.put("nombreEmpresa", e.getRazonSocial());
-			parameters.put("direccionEmpresa", e.getDireccion());
-			parameters.put("telefonoEmpresa", e.getTelefono());
-			parameters.put("rucEmpresa", e.getRuc());
-			Connection connection = JPADAOFactory.getFactory().getAgenciaDAO().getConexion();
-			String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.pathReportes[1]);
-			JasperPrint jasperPrintFactura = JasperFillManager.fillReport(reportPath, parameters, connection);
-
-			HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-			httpServletResponse.addHeader("Content-disposition", "attachment; filename=factura.pdf");
-			ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
-			JasperExportManager.exportReportToPdfStream(jasperPrintFactura, servletOutputStream);
-			FacesContext.getCurrentInstance().responseComplete();
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
-
-	public int getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	public void setIdEmpresa(int idEmpresa) {
-		this.idEmpresa = idEmpresa;
-	}
-
-	public int getIdAgencia() {
-		return idAgencia;
-	}
-
-	public void setIdAgencia(int idAgencia) {
-		this.idAgencia = idAgencia;
-	}
-
-	public int getIdCategoria() {
-		return idCategoria;
-	}
-
-	public void setIdCategoria(int idCategoria) {
-		this.idCategoria = idCategoria;
 	}
 
 	public EmpresaDAO getEmpresaDAO() {
@@ -186,7 +108,8 @@ public class ReporteMenu {
 		int i = 0;
 
 		List<Categoria> listaCategorias = new ArrayList<Categoria>();
-		listaCategorias = categoriaDAO.find(attributes, values, order, index, size);
+		listaCategorias = categoriaDAO.find(attributes, values, order, index,
+				size);
 		this.categorias = new SelectItem[listaCategorias.size()];
 		for (Categoria e : listaCategorias) {
 			this.categorias[i] = new SelectItem(e.getId(), e.getNombre());
@@ -215,4 +138,77 @@ public class ReporteMenu {
 		this.categoriaDAO = categoriaDAO;
 	}
 
+	public int getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(int empresa) {
+		this.empresa = empresa;
+	}
+
+	public int getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(int agencia) {
+		this.agencia = agencia;
+	}
+
+	public int getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(int categoria) {
+		this.categoria = categoria;
+	}
+
+	public JasperPrint getJasperPrint() {
+		return jasperPrint;
+	}
+
+	public void setJasperPrint(JasperPrint jasperPrint) {
+		this.jasperPrint = jasperPrint;
+	}
+
+	public String getPathReportes() {
+		return pathReportes;
+	}
+
+	public void setPathReportes(String pathReportes) {
+		this.pathReportes = pathReportes;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void init() throws Exception {
+		Map parameters = new HashMap();
+		parameters.put("parIdEmpresa", getEmpresa());
+		parameters.put("parIdAgencia", getAgencia());
+		parameters.put("parIdCategoria", getCategoria());
+		Connection connection = JPADAOFactory.getFactory().getAgenciaDAO()
+				.getConexion();
+		String reportPath = FacesContext.getCurrentInstance()
+				.getExternalContext().getRealPath(pathReportes);
+		jasperPrint = JasperFillManager.fillReport(reportPath, parameters,
+				connection);
+	}
+
+	public void generarPDF(ActionEvent event) {
+		try {
+			init();
+			HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext
+					.getCurrentInstance().getExternalContext().getResponse();
+			httpServletResponse.addHeader("Content-disposition",
+					"attachment; filename=report.pdf");
+			ServletOutputStream servletOutputStream = httpServletResponse
+					.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint,
+					servletOutputStream);
+			FacesContext.getCurrentInstance().responseComplete();
+
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+
+		}
+
+	}
 }

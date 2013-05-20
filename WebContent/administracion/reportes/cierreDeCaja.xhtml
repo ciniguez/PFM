@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/plantilla.xhtml">
+	<ui:define name="title">CIERRE DE CAJA</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:panelGrid id="grid" columns="2" cellpadding="5">
+				<f:facet name="header">  
+        			Cierre de Caja
+        			<p:messages />
+				</f:facet>
+
+				<h:outputLabel for="empleadoAgencia" value="Empleado:"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="empleadoAgencia"
+					value="#{cierreDeCaja.empleadoAgencia}" style="width:210px"
+					required="true" requiredMessage="Debe seleccionar un empleado">
+					<f:selectItems value="#{cierreDeCaja.empleadosAgencia}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="fecha" value="Fecha:" style="font-weight:bold" />
+				<p:calendar id="fecha" value="#{cierreDeCaja.fecha}"
+					navigator="true" display="inline" required="true"
+					requiredMessage="Debe ingresar la Fecha" />
+
+
+				<f:facet name="footer">
+					<p:commandButton value="Generar Reporte"
+						actionListener="#{cierreDeCaja.generarPDF}" ajax="false" />
+				</f:facet>
+			</p:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
