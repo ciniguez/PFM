@@ -188,7 +188,8 @@ public class StockProductos {
 				.getConexion();
 		String reportPath = FacesContext.getCurrentInstance()
 				.getExternalContext().getRealPath(pathReportes);
-		jasperPrint = JasperFillManager.fillReport(reportPath, parameters,
+		System.out.println("Path: " + reportPath);
+		jasperPrint = JasperFillManager.fillReport(pathReportes, parameters,
 				connection);
 	}
 
@@ -206,7 +207,8 @@ public class StockProductos {
 			FacesContext.getCurrentInstance().responseComplete();
 
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+			System.out.println(ex.getStackTrace());
 
 		}
 
