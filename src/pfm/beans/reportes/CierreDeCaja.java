@@ -1,5 +1,8 @@
 package pfm.beans.reportes;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -13,12 +16,16 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import pfm.dao.EmpleadoAgenciaDAO;
 import pfm.dao.UsuarioDAO;
@@ -38,8 +45,7 @@ public class CierreDeCaja implements Serializable {
 	private String empleadoAgencia;
 	private SelectItem[] empleadosAgencia;
 	private Date fecha;
-	private JasperPrint jasperPrint;
-	private String pathReportes = "/reportes/rptVentaCaja.jasper";
+	private String pathReportes = "rptVentaCaja.jrxml";
 
 	public CierreDeCaja() {
 
@@ -121,14 +127,6 @@ public class CierreDeCaja implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public JasperPrint getJasperPrint() {
-		return jasperPrint;
-	}
-
-	public void setJasperPrint(JasperPrint jasperPrint) {
-		this.jasperPrint = jasperPrint;
-	}
-
 	public String getPathReportes() {
 		return pathReportes;
 	}
@@ -138,36 +136,50 @@ public class CierreDeCaja implements Serializable {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void init() throws Exception {
+	public void generarPDF(ActionEvent event) {
 		Map parameters = new HashMap();
 		parameters.put("parIdEmpleadoAgencia",
 				Integer.parseInt(empleadoAgencia));
 		parameters.put("parFechaActual", fecha);
-		Connection connection = JPADAOFactory.getFactory().getAgenciaDAO()
-				.getConexion();
-		String reportPath = FacesContext.getCurrentInstance()
-				.getExternalContext().getRealPath(pathReportes);
-		jasperPrint = JasperFillManager.fillReport(reportPath, parameters,
-				connection);
-	}
-
-	public void generarPDF(ActionEvent event) {
+		JasperPrint print = null;
+		HttpServletResponse response = null;
+		OutputStream out = null;
+		FacesContext context = null;
 		try {
-			init();
-			HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			httpServletResponse.addHeader("Content-disposition",
-					"attachment; filename=report.pdf");
-			ServletOutputStream servletOutputStream = httpServletResponse
-					.getOutputStream();
-			JasperExportManager.exportReportToPdfStream(jasperPrint,
-					servletOutputStream);
-			FacesContext.getCurrentInstance().responseComplete();
 
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			context = FacesContext.getCurrentInstance();
+			response = (HttpServletResponse) context.getExternalContext()
+					.getResponse();
+			out = response.getOutputStream();
 
+			InputStream is = this.getClass().getResourceAsStream(pathReportes);
+			JasperDesign masterDesign = JRXmlLoader.load(is);
+			JasperReport masterReport = JasperCompileManager
+					.compileReport(masterDesign);
+
+			Connection connection = JPADAOFactory.getFactory().getAgenciaDAO()
+					.getConexion();
+			print = JasperFillManager.fillReport(masterReport, parameters,
+					connection);
+
+			byte[] bytes = JasperExportManager.exportReportToPdf(print);
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ "Cierre de Caja" + "PDF");
+			response.setHeader("Cache-Control", "max-age=30");
+			response.setHeader("Pragma", "No-cache");
+			response.setDateHeader("Expires", 0);
+			response.setContentType("application/pdf");
+			response.setContentLength(bytes.length);
+			out.write(bytes);
+			out.flush();
+			out.close();
+			context.responseComplete();
+		} catch (JRException e) {
+			response.setContentType("text/plain");
+		} catch (IOException io) {
+			System.out.println("ERROR IO: " + io.getMessage());
+		} finally {
+			// conn.close();
 		}
-
 	}
 }

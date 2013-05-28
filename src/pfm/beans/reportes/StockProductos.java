@@ -5,17 +5,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import pfm.dao.AgenciaDAO;
 import pfm.dao.CategoriaDAO;
@@ -39,9 +47,8 @@ public class StockProductos {
 	private SelectItem[] categorias;
 	private int empresa;
 	private int agencia;
-	private int categoria;
-	private JasperPrint jasperPrint;
-	private String pathReportes = "/reportes/rptStockProductos.jasper";
+	private int categoria;	
+	private String pathReportes = "rptStockProductos.jrxml";
 
 	public StockProductos() {
 
@@ -162,14 +169,6 @@ public class StockProductos {
 		this.categoria = categoria;
 	}
 
-	public JasperPrint getJasperPrint() {
-		return jasperPrint;
-	}
-
-	public void setJasperPrint(JasperPrint jasperPrint) {
-		this.jasperPrint = jasperPrint;
-	}
-
 	public String getPathReportes() {
 		return pathReportes;
 	}
@@ -179,37 +178,55 @@ public class StockProductos {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void init() throws Exception {
+	public void generarPDF(ActionEvent event) {
 		Map parameters = new HashMap();
 		parameters.put("parIdEmpresa", getEmpresa());
 		parameters.put("parIdAgencia", getAgencia());
 		parameters.put("parIdCategoria", getCategoria());
-		Connection connection = JPADAOFactory.getFactory().getAgenciaDAO()
-				.getConexion();
-		String reportPath = FacesContext.getCurrentInstance()
-				.getExternalContext().getRealPath(pathReportes);
-		System.out.println("Path: " + reportPath);
-		jasperPrint = JasperFillManager.fillReport(pathReportes, parameters,
-				connection);
-	}
+		JasperPrint print = null;
+		HttpServletResponse response = null;
+		OutputStream out = null;
+		FacesContext context = null;
 
-	public void generarPDF(ActionEvent event) {
 		try {
-			init();
-			HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			httpServletResponse.addHeader("Content-disposition",
-					"attachment; filename=report.pdf");
-			ServletOutputStream servletOutputStream = httpServletResponse
-					.getOutputStream();
-			JasperExportManager.exportReportToPdfStream(jasperPrint,
-					servletOutputStream);
+
+			context = FacesContext.getCurrentInstance();
+			response = (HttpServletResponse) context.getExternalContext()
+					.getResponse();
+			out = response.getOutputStream();
+
+			InputStream is = this.getClass().getResourceAsStream(pathReportes);
+			JasperDesign masterDesign = JRXmlLoader.load(is);
+			JasperReport masterReport = JasperCompileManager
+					.compileReport(masterDesign);
+
+			Connection connection = JPADAOFactory.getFactory().getAgenciaDAO()
+					.getConexion();
+			print = JasperFillManager.fillReport(masterReport, parameters,
+					connection);
+
+			byte[] bytes = JasperExportManager.exportReportToPdf(print);
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ "Stock de Productos" + "PDF");
+			response.setHeader("Cache-Control", "max-age=30");
+			response.setHeader("Pragma", "No-cache");
+			response.setDateHeader("Expires", 0);
+			response.setContentType("application/pdf");
+			response.setContentLength(bytes.length);
+			out.write(bytes);
+			out.flush();
+			out.close();
 			FacesContext.getCurrentInstance().responseComplete();
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println(ex.getStackTrace());
-
+		} catch (JRException e) {
+			System.out.println("ERROR JREXCEPTION: ");
+			e.printStackTrace();
+			response.setContentType("text/plain");
+		} catch (IOException io) {
+			io.printStackTrace();
+			System.out.println("ERROR IOEXCEPTION: " + io.getMessage());
+		} finally {
+			// conn.close();
 		}
 
 	}
