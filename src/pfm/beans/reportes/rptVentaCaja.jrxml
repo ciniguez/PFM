@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptVentaCaja" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="64c83927-e902-486d-af73-8458994f3fa4">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="415"/>
 	<property name="ireport.y" value="99"/>
 	<parameter name="parIdEmpleadoAgencia" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -18,7 +18,7 @@
        EMPRESA.IVA AS iva,
        AGENCIA.NOMBRE AS nombreagencia,
        FACTURA.DESCUENTO,
-       FACTURA.IVA,
+       FACTURA.IVA as FACTURA_IVA,
        FACTURA.SUBTOTAL,
        FACTURA.TOTAL,
        FACTURA.CLIENTE_ID,
@@ -59,6 +59,7 @@
 	<field name="DESCUENTO" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="FACTURA_IVA" class="java.lang.Double"/>
 	<field name="SUBTOTAL" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -249,11 +250,6 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{DESCUENTO}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="c2d16954-505e-4ae2-9713-83453029053f" x="275" y="0" width="61" height="15"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{iva}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement uuid="82245828-55aa-4099-80e2-3412283b2422" x="5" y="15" width="426" height="1"/>
 			</line>
@@ -263,14 +259,19 @@
 				<textFieldExpression><![CDATA[$F{idfactura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="712de6de-a6c3-445d-ac26-6f29d262a4ce" x="336" y="1" width="61" height="15"/>
+				<reportElement uuid="712de6de-a6c3-445d-ac26-6f29d262a4ce" x="336" y="0" width="61" height="15"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="20da8867-67e5-4cab-ae88-9d6ad05d7c3f" x="426" y="1" width="79" height="15"/>
+				<reportElement uuid="20da8867-67e5-4cab-ae88-9d6ad05d7c3f" x="426" y="0" width="79" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{CLIENTE_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2a052371-4d61-4604-95b3-65a94f006095" x="275" y="0" width="61" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{FACTURA_IVA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptVentas" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="64c83927-e902-486d-af73-8458994f3fa4">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="98"/>
-	<property name="ireport.y" value="17"/>
+	<property name="ireport.y" value="129"/>
 	<parameter name="parIdEmpresa" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -22,7 +22,7 @@
        EMPRESA.IVA AS iva,
        AGENCIA.NOMBRE AS nombreagencia,
        FACTURA.DESCUENTO,
-       FACTURA.IVA,
+       FACTURA.IVA as FACTURA_IVA,
        FACTURA.SUBTOTAL,
        FACTURA.TOTAL,
        FACTURA.CLIENTE_ID,
@@ -72,6 +72,7 @@
 	<field name="DESCUENTO" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="FACTURA_IVA" class="java.lang.Double"/>
 	<field name="SUBTOTAL" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -196,7 +197,7 @@
 				</staticText>
 				<staticText>
 					<reportElement uuid="3ed93256-6c8d-4ed4-8e37-421c0e09ae4b" x="280" y="25" width="32" height="20"/>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[IVA]]></text>
@@ -334,14 +335,14 @@
 				<textFieldExpression><![CDATA[$F{idempleadoagencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="851a6b23-df23-401a-8048-439844dc39c9" x="280" y="0" width="32" height="15"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{iva}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement uuid="89802f17-3a7e-4748-ad19-1db8f4922363" x="418" y="0" width="52" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{CLIENTE_ID}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="9a153f90-9298-4a05-9ef9-e281702356aa" x="264" y="0" width="48" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{FACTURA_IVA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

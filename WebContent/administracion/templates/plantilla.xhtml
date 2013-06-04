@@ -94,10 +94,9 @@ ul.ui-menu-child {
 						icon="ui-icon-contact" rendered="#{menu.isAdmin}" />
 				</p:submenu>
 
-				<p:menuitem value="Salir" action="#{logoutUsuario.logout}" />
+				<p:menuitem value="Salir" action="#{logoutUsuario.logout}"/>
 
 			</p:menubar>
-
 
 			<p:idleMonitor onactive="sessionTimeOutDialog.show();"
 				timeout="#{session.maxInactiveInterval}" />
@@ -110,7 +109,6 @@ ul.ui-menu-child {
 					value="Iniciar sesión nuevamente"
 					onclick="window.location='#{facesContext.externalContext.requestContextPath}/login/loginUsuario.jsf';" />
 			</p:dialog>
-
 
 		</h:form>
 

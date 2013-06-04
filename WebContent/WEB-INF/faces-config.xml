@@ -22,16 +22,13 @@
 		</navigation-case>
 	</navigation-rule>
 
-
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>logout</from-outcome>
-			<to-view-id>/login/loginUsuario.xhtml</to-view-id>
+			<to-view-id>/login/loginUsuario.xhtml</to-view-id>						
 		</navigation-case>
 	</navigation-rule>
-
-
 
 	<lifecycle>
 		<phase-listener>pfm.beans.cicloVida.MyPhaseListener</phase-listener>

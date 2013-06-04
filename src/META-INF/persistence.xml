@@ -29,7 +29,7 @@
 			<property name="eclipselink.ddl-generation" value="none" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/miw06" />
 			<property name="javax.persistence.jdbc.user" value="miw06" />
-			<property name="javax.persistence.jdbc.password" value="132212241" />														
+			<property name="javax.persistence.jdbc.password" value="132212241" />																	
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 		</properties>
 	</persistence-unit>
